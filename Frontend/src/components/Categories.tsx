@@ -3,7 +3,7 @@
 import { IconType } from "react-icons";
 import { MdPhoneIphone } from "react-icons/md";
 import { CiLaptop } from "react-icons/ci";
-import { FaHeadphonesAlt } from "react-icons/fa";
+import { FaHeadphonesAlt, FaHome } from "react-icons/fa";
 import { CiCamera } from "react-icons/ci";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { FaComputer } from "react-icons/fa6";
@@ -21,7 +21,7 @@ interface CategoryItem {
 
 // Gán type cho mảng
 const categoriesList: CategoryItem[] = [
-  { href: "#", title: "All", icon: MdPhoneIphone },
+  { href: "#", title: "All", icon: FaHome },
   { href: "#", title: "Phone", icon: MdPhoneIphone },
   { href: "#", title: "Laptop", icon: CiLaptop },
   { href: "#", title: "headphone", icon: FaHeadphonesAlt },

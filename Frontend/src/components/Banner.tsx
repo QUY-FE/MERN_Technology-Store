@@ -8,6 +8,10 @@ import Carousel from "react-multi-carousel";
 import banner1 from "#/assets/images/banner1_hd.jpeg";
 import banner3 from "#/assets/images/banner3.jpg";
 import banner4 from "#/assets/images/banner4.webp";
+
+
+
+
 const tabbarMenu = [
   {
     href: "/",
@@ -51,7 +55,7 @@ const tabbarMenu = [
     title: "Health & Beauty",
   },
 ];
-const allBanner = [banner1, banner3, banner4];
+const allBanner = [ banner1, banner3, banner4];
 
 export default function Banner() {
   return (
@@ -74,7 +78,7 @@ export default function Banner() {
 
       <div className="w-full lg:w-9/12 lg:max-h-[500px] lg:py-[30px] lg:pl-[30px] ">
         <Carousel
-          // autoPlay
+          autoPlay
           arrows={false}
           additionalTransfrom={0}
           autoPlaySpeed={5000}

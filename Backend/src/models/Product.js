@@ -9,7 +9,8 @@ const productShema = new mongoose.Schema({
     countStar: {type:Number, default: 0},
     totalBuy: {type:Number,default: 0},
     salePercent: {type:Number,default: 0},
-    category: {type: String, require:true}
+    category: {type: String, require:true},
+    description: {type: String, require:true},
 },{timestamps: true});
 
 const Product = mongoose.model('Product',productShema);

@@ -7,7 +7,8 @@
     "star": 5,
     "countBuy": 12,
     "salePercent": 60,
-    "category": "gaming"
+    "category": "gaming",
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates ducimus eos deleniti exercitationem cupiditate fugit assumenda dolore quos reiciendis, molestias optio enim fugiat illo vitae aliquid rem distinctio ratione. Reprehenderit."
 }
 {
     "title": "Chuột gaming black shark X11",
@@ -29,7 +30,9 @@
     "countStar": 4,
     "countBuy": 36,
     "salePercent": 36,
-    "category": "headphone"
+    "category": "headphone",
+        "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates ducimus eos deleniti exercitationem cupiditate fugit assumenda dolore quos reiciendis, molestias optio enim fugiat illo vitae aliquid rem distinctio ratione. Reprehenderit."
+
 }
 {
     "title": "iphone 14 PRO",
@@ -40,7 +43,9 @@
     "countStar": 4,
     "countBuy": 36,
     "salePercent": 36,
-    "category": "phone"
+    "category": "phone",
+        "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates ducimus eos deleniti exercitationem cupiditate fugit assumenda dolore quos reiciendis, molestias optio enim fugiat illo vitae aliquid rem distinctio ratione. Reprehenderit."
+
 }
 {
     "title": "iphone 11 Pro Max",
@@ -62,7 +67,9 @@
     "countStar": 4,
     "countBuy": 36,
     "salePercent": 36,
-    "category": "laptop"
+    "category": "laptop",
+            "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates ducimus eos deleniti exercitationem cupiditate fugit assumenda dolore quos reiciendis, molestias optio enim fugiat illo vitae aliquid rem distinctio ratione. Reprehenderit."
+
 }
 {
     "title": "Thinkpad carbon x1 gen 8",

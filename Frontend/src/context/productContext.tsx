@@ -9,14 +9,14 @@ type Product = {
     title: string;
     slug: string;
     url: string;
-    image?: string;
+    image: string;
     newPrice: number;
     oldPrice: number;
     countStar: number;
     totalBuy: number;
     salePercent: number;
     category: string;
-    
+    description: string;
 }
 
 type ProductContextType = {

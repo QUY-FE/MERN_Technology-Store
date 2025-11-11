@@ -96,12 +96,12 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
           >
             {products.map((product, index) => (
               <article
-                className="relative group block w-[270px] h-[330px] transition shadow-lg "
+                className="relative group block w-[270px] h-[330px] shadow-lg hover:-top-1 transition-all duration-300 ease-in-out"
                 key={`product__${index}`}
               >
                 <Link
                   href={`/products/${product?.slug}`}
-                  className="absolute inset-0 hidden rounded-lg group-hover:flex justify-between py-3 px-2 z-50 hover:bg-black/5"
+                  className="absolute inset-0 hidden  group-hover:flex justify-between py-3 px-2 z-50 hover:bg-black/5"
                 ></Link>
                 <img
                   src={product?.image || "/keyboard.jpg"}
@@ -135,7 +135,7 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
                     </p>
                   </div>
                 </div>
-              </article>
+            </article>
             ))}
           </Carousel>
         ) : (

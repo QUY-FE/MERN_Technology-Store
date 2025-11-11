@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import Link from "next/link";
@@ -9,15 +10,25 @@ import { FaRotate } from "react-icons/fa6";
 import { FaTruckFast } from "react-icons/fa6";
 import { useProducts } from "#/context/productContext";
 import { useAuth } from "#/context/authContext";
-
+import { useAppDispatch } from "#/hooks/redux.hook";
+import { addToCart } from "#/redux/features/cartSlice";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 export default function Product({
   params,
 }: {
   params: { product_slug: string };
 }) {
+  const dispatch = useAppDispatch();
   const { products, loading, error } = useProducts();
   const { user } = useAuth();
   const product = products.find((p) => p.slug === params.product_slug);
+  const router = useRouter();
+  // <-- added quantity state & handlers
+  const [quantity, setQuantity] = useState<number>(1);
+  const increase = () => setQuantity((q) => q + 1);
+  const decrease = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
+  // <-- end added
 
   if (!product) return <h1>Không tìm thấy sản phẩm</h1>;
   if (loading) return <h1>Loading...!</h1>;
@@ -26,11 +37,42 @@ export default function Product({
   // Sản phẩm liên quan (ví dụ: khác slug)
   const related = products.filter((p) => p.slug !== product.slug);
 
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        id: product._id,
+        name: product.title,
+        price: product.newPrice,
+        quantity,
+        image: product.image,
+      })
+    );
+    toast.success("Đã thêm sản phẩm vào giỏ hàng");
+  };
+
+  const handleBuyProduct = () => {
+    if (!user) {
+      router.push("/products/checkout");
+      return;
+    }
+    dispatch(
+      addToCart({
+        id: product._id,
+        name: product.title,
+        price: product.newPrice,
+        quantity,
+        image: product.image,
+      })
+    );
+    toast.success("Đã thêm sản phẩm vào giỏ hàng");
+    router.push("/products/checkout");
+  }
+
   return (
-    <section className="py-10 ">
-      <div className="flex flex-col md:flex-row gap-10">
+    <section className="pb-10 ">
+      <div className="flex flex-col md:flex-row gap-10 ">
         {/* Left: Ảnh sản phẩm */}
-        <div className="w-5/12 flex flex-col items-center gap-4">
+        <div className="w-5/12 p-4 flex flex-col items-center gap-4">
           <div className="w-[350px] h-[350px] bg-white flex items-center justify-center rounded-lg shadow">
             <Image
               src={product?.image || "/not_found.png"}
@@ -59,7 +101,7 @@ export default function Product({
           </div>
         </div>
         {/* Right: Thông tin sản phẩm */}
-        <div className="flex-1 w-7/12">
+        <div className="flex-1 w-7/12 p-4">
           <h1 className="text-2xl font-bold mb-2">{product.title}</h1>
           <div className="flex items-center gap-2 mb-2">
             {[...Array(5)].map((_, i) => (
@@ -79,30 +121,41 @@ export default function Product({
           <div className="text-gray-500 line-through mb-4 italic">
             ${product.oldPrice}
           </div>
-          <p className="mb-4 text-gray-700">Mô tả sản phẩm .</p>
-          {/* Demo chọn màu, size */}
+          
 
-          {/* <div className="mb-4">
-            <div className="mb-2 font-semibold">Size:</div>
-            <div className="flex gap-2">
-              {["XS", "S", "M", "L", "XL"].map((size) => (
-                <button key={size} className="px-3 py-1 border rounded">
-                  {size}
-                </button>
-              ))}
-            </div>
-          </div> */}
           {/* Số lượng + nút mua */}
-          <div className="flex items-center gap-2 mb-4">
-            <button className="px-3 py-1 border rounded">-</button>
-            <span className="px-3">2</span>
-            <button className="px-3 py-1 border rounded">+</button>
+          <div className="flex items-center gap-2 my-4">
+            <button
+              className="px-3 py-1 border rounded"
+              onClick={decrease}
+              aria-label="Decrease quantity"
+            >
+              -
+            </button>
 
-            <Button text="Thêm vào giỏ hàng" w={160} h={56} />
+            <span className="px-3 font-medium">{quantity}</span>
 
-            <Link href={user ? "/products/checkout" : "/login"}>
-              <Button text="Mua ngay" w={115} h={56} primary />
-            </Link>
+            <button
+              className="px-3 py-1 border rounded"
+              onClick={increase}
+              aria-label="Increase quantity"
+            >
+              +
+            </button>
+          </div>
+          <div className="flex items-center gap-4 my-4">
+            <Button
+              text="Thêm vào giỏ hàng"
+              w={160}
+              h={56}
+              onClick={handleAddToCart}
+            />
+
+            
+            <Button 
+            onClick={handleBuyProduct}
+            text="Mua ngay" w={115} h={56} primary />
+            
           </div>
           {/* Thông tin giao hàng */}
           <div className="border rounded p-4 mb-2 flex flex-col gap-2">
@@ -126,11 +179,17 @@ export default function Product({
           </div>
         </div>
       </div>
+      <div className="py-4 border-t-2 border-gray-300">
+        <h1 className="text-2xl my-4 font-bold text-primary">Chi tiết sản phẩm</h1>
+        <p className="mb-4 text-gray-700">{product.description}</p>
+      </div>    
+
+
       {/* Related items */}
       <div className="mt-12">
         <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
           <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
-          Related Item
+          Sản phẩm liên quan
         </div>
         <div className="w-full">
           <Carousel
@@ -158,12 +217,12 @@ export default function Product({
           >
             {related.map((product, index) => (
               <article
-                className="relative group block w-[270px] h-[330px] transition shadow-lg "
+                className="relative group block w-[270px] h-[330px] transition-all duration-300 ease-in-out shadow-lg hover:-top-1"
                 key={`product__${index}`}
               >
                 <Link
                   href={`/products/${product?.slug}`}
-                  className="absolute inset-0 hidden rounded-lg group-hover:flex justify-between py-3 px-2 z-50 hover:bg-black/5"
+                  className="absolute inset-0 hidden  group-hover:flex justify-between py-3 px-2 z-50 hover:bg-black/5"
                 ></Link>
                 <img
                   src={product?.image || "/keyboard.jpg"}
@@ -197,7 +256,7 @@ export default function Product({
                     </p>
                   </div>
                 </div>
-              </article>
+            </article>
             ))}
           </Carousel>
         </div>

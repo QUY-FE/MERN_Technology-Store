@@ -10,16 +10,18 @@ const ITEMS_PER_PAGE = 8;
 export default function Page() {
 
   const { products } = useProducts();
+  
   const [currentPage, setCurrentPage] = useState(1);
 
   // State for the selected category
-  const [selectedCategory, setSelectedCategory] = useState("gaming"); // TS infers this as 'string'
+  const [selectedCategory, setSelectedCategory] = useState("ALL"); // TS infers this as 'string'
 
   // Filter products based on selectedCategory
-  const filteredProducts = products.filter(
-    (product) =>
-      product.category.toLowerCase() === selectedCategory.toLowerCase()
-  ); // TS infers this as 'Product[]'
+  const filteredProducts = selectedCategory.toLowerCase() === "all" 
+  ? products  // Nếu category là "all" thì trả về toàn bộ products
+  : products.filter(
+      (product) => product.category.toLowerCase() === selectedCategory.toLowerCase()
+    ); // TS infers this as 'Product[]'
 
   // Calculate pagination based on filtered list
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -32,7 +34,7 @@ export default function Page() {
   // Add 'string' type to the parameter
   const handleCategoryChange = (categoryTitle: string) => {
     setSelectedCategory(categoryTitle);
-    setCurrentPage(1); // Reset to page 1
+    setCurrentPage(1); // Reset về trang 1 khi đổi category
   };
 
   return (
@@ -54,12 +56,12 @@ export default function Page() {
         <div className="h-screen grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
           {paginatedProducts.map((product, index) => (
            <article
-                className="relative group block w-[270px] h-[330px] transition shadow-lg "
+                className="relative group block w-[270px] h-[330px] shadow-lg hover:-top-1 transition-all duration-300 ease-in-out"
                 key={`product__${index}`}
               >
                 <Link
                   href={`/products/${product?.slug}`}
-                  className="absolute inset-0 hidden rounded-lg group-hover:flex justify-between py-3 px-2 z-50 hover:bg-black/5"
+                  className="absolute inset-0 hidden  group-hover:flex justify-between py-3 px-2 z-50 hover:bg-black/5"
                 ></Link>
                 <img
                   src={product?.image || "/keyboard.jpg"}
@@ -93,7 +95,7 @@ export default function Page() {
                     </p>
                   </div>
                 </div>
-              </article>
+            </article>
           ))}
         </div>
       ) : (
