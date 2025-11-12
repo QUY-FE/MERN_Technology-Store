@@ -9,6 +9,7 @@ import { useAuth } from "#/context/authContext";
 
 import { useForm } from "react-hook-form";
 import { loginValidation } from "#/utils/validation";
+import { FcGoogle } from "react-icons/fc";
 
 interface FormData {
   email: string;
@@ -38,9 +39,9 @@ export default function SignIn() {
           className="w-full h-full pt-[100px] px-[10px] md:px-[16px] "
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h1 className="text-3xl font-semibold  mb-4">Đăng nhập tài khoản</h1>
+          <h1 className="text-center text-3xl font-semibold  mb-4">Đăng nhập</h1>
           <div>
-            <label htmlFor="" className="font-semibold my-4 italic text-sm">
+            <label htmlFor="" className="font-semibold my-4  text-sm">
               Nhập Email
             </label>
             <div className="w-full flex items-center justify-between border-b-2 border-colorBorder group">
@@ -64,7 +65,7 @@ export default function SignIn() {
             )}
           </div>
           <div>
-            <label htmlFor="" className="font-semibold my-4 italic text-sm">
+            <label htmlFor="" className="font-semibold my-4 text-sm">
               Nhập mật khẩu
             </label>
             <div className="w-full flex items-center justify-between border-b-2 border-colorBorder group">
@@ -93,15 +94,16 @@ export default function SignIn() {
           </p>
           <div className="w-full">
             <button
-              className="cst_btn-primary w-full h-[56px]"
+              className="cst_btn-primary w-full h-[56px] text-xl font-bold"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Đang xử lý" : "Đăng nhập"}
             </button>
             <button
-              className="cst_btn w-full h-[56px]"
+              className="cst_btn w-full h-[56px] flex items-center justify-center gap-4 text-lg font-bold"
               onClick={loginWithGoogle}
             >
+              <FcGoogle size={24} />
               Đăng nhập với Google
             </button>
           </div>

@@ -9,6 +9,7 @@ import { useAuth } from "#/context/authContext";
 
 import { useForm } from "react-hook-form";
 import { registerValidation } from "#/utils/validation";
+import { FcGoogle } from "react-icons/fc";
 
 
 interface FormData {
@@ -49,12 +50,12 @@ export default function SignIn() {
           className="w-full h-full pt-10 pl-10"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <h1 className="text-3xl font-semibold  mb-4">Tạo tài khoản</h1>
+          <h1 className="text-center text-3xl font-semibold  mb-4">Tạo tài khoản</h1>
           <div >
-            <label htmlFor="" className="font-semibold my-4 italic text-sm">
+            <label htmlFor="" className="font-semibold my-4  text-sm">
               Nhập họ & tên
             </label>
-            <div className="w-full flex items-center justify-between border-b-2 border-colorBorder group">
+            <div className="w-full flex items-center justify-between border-b-2  border-colorBorder ">
               <input
                 {...register("username", registerValidation.username)}
                 type="text"
@@ -76,7 +77,7 @@ export default function SignIn() {
             )}
           </div>
           <div >
-            <label htmlFor="" className="font-semibold my-4 italic text-sm">
+            <label htmlFor="" className="font-semibold my-4  text-sm">
               Nhập Email
             </label>
             <div className="w-full flex items-center justify-between border-b-2 border-colorBorder group">
@@ -101,7 +102,7 @@ export default function SignIn() {
             )}
           </div>
           <div >
-            <label htmlFor="" className="font-semibold my-4 italic text-sm">
+            <label htmlFor="" className="font-semibold my-4  text-sm">
               Nhập mật khẩu
             </label>
             <div className="w-full flex items-center justify-between border-b-2 border-colorBorder group">
@@ -144,16 +145,17 @@ export default function SignIn() {
 
             </div>
           <button
-            className="cst_btn-primary w-full h-[56px]"
+            className="cst_btn-primary w-full h-[56px] text-xl font-bold"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Đang xử lý" : "Đăng ký"}
           </button>
           <button
             type="button"
-            className="cst_btn w-full h-[55px]"
+            className="cst_btn w-full h-[55px]  flex items-center justify-center gap-4 text-lg font-bold"
             onClick={loginWithGoogle}
           >
+             <FcGoogle size={24} />
             Đăng nhập với Google
           </button>
           <p className="w-full h-[30px] mt-10 text-center text-black/80">

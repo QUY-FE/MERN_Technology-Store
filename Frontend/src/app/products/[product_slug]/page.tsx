@@ -52,7 +52,7 @@ export default function Product({
 
   const handleBuyProduct = () => {
     if (!user) {
-      router.push("/products/checkout");
+      router.push("/login");
       return;
     }
     dispatch(
