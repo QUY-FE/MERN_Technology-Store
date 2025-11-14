@@ -69,7 +69,7 @@ export default function Product({
   }
 
   return (
-    <section className="pb-10 ">
+    <section className="max-w-[1200px] mx-auto pb-10 ">
       <div className="flex flex-col md:flex-row gap-10 ">
         {/* Left: Ảnh sản phẩm */}
         <div className="w-5/12 p-4 flex flex-col items-center gap-4">

@@ -55,7 +55,7 @@ export default function Cart() {
   }
 
   return (
-    <section>
+    <section className="max-w-[1200px] mx-auto">
       <div className="mt-6 flex items-center justify-between">
         <Link href="/">
           <Button w={180} h={46} text="Quay về trang chủ" />

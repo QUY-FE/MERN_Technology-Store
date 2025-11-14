@@ -39,7 +39,7 @@ export default function Page() {
 
   return (
 
-    <section className="w-full min-h-screen pb-10">
+    <section className="max-w-[1200px] mx-auto pb-10">
       {/* Pass state and handler down to Categories */}
       <Categories
         selectedCategory={selectedCategory}

@@ -17,8 +17,9 @@ import { Archivo } from "next/font/google";
 import { AuthProvider } from "#/context/authContext";
 import { Provider } from "react-redux";
 import { store } from "#/redux/store";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import { loadCartFromStorage } from "#/redux/features/cartSlice";
+import { usePathname } from "next/navigation";
 const geistArchivo = Archivo({
   variable: "--font-geist-archivo",
   subsets: ["latin"],
@@ -31,8 +32,10 @@ export default function RootLayout({
   useEffect(() => {
   store.dispatch(loadCartFromStorage());
 }, []);
-
-
+  const pathname = usePathname();
+  const decoration =  pathname ===  "/admin/dashboard" || pathname === "/admin/products" || pathname ===  "/admin/orders" ||  pathname === "/admin/users";
+    
+      
   return (
     <html lang="vi">
       <body className={`${geistArchivo.variable}  antialiased relative`}>
@@ -51,14 +54,17 @@ export default function RootLayout({
             theme="light"
           />
           <Provider store={store}>
-
-          <Header />
-          <div className="w-full ">
-            <main className="max-w-[1200px] mx-auto">{children}</main>
-          </div>
-          <Footer />
-          </Provider>
+          {
+            decoration ?  null : <Header />
+          }
           
+          <div className="w-full ">
+            <main>{children}</main>
+          </div>
+          {
+            decoration ?  null : <Footer />
+          }   
+          </Provider>
         </ProductProvider>
         </AuthProvider>
       </body>

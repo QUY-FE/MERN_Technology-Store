@@ -32,7 +32,7 @@ const staffList = [
 
 export default function About() {
   return (
-    <section>
+    <section className="max-w-[1200px] mx-auto">
       {/* Intro section */}
       <div className="mt-20 max-h-[600px] flex">
         <div className="w-1/2 max-h-[330px] pr-12">

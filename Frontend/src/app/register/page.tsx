@@ -40,7 +40,7 @@ export default function SignIn() {
   };
 
   return (
-    <section className="w-full h-screen flex">
+    <section className="max-w-[1200px] mx-auto h-screen flex">
       <div className="hidden  lg:block w-6/12">
         <Image src={registerURL} alt="Ảnh Đăng ký" width={600} height={600} />
       </div>

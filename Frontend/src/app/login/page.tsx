@@ -32,7 +32,7 @@ export default function SignIn() {
   const handleClearField = (field: keyof FormData) => setValue(field, "");
 
   return (
-    <section className="w-full h-screen flex">
+    <section className="max-w-[1200px] mx-auto h-screen flex">
       <div className="w-full lg:w-6/12  ">
         <form
           method="POST"

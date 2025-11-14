@@ -26,7 +26,7 @@ export default function Page() {
     setValue(field, "");
   };
   return (
-    <div className="w-full h-[50vh] flex items-center justify-center">
+    <div className="max-w-[1200px] mx-auto h-[50vh] flex items-center justify-center">
       <form
         action=""
         method="post"
