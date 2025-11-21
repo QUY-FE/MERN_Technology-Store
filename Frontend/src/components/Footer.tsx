@@ -44,8 +44,8 @@ export default function Footer() {
     }
   };
   return (
-    <footer className="w-full min-h-[300px] bg-[#24272e]">
-      <div className="w-full max-h-[400px] mt-10 flex gap-4 bg-white border-b-[2.5px] border-colorBorder">
+    <>
+      <div className="max-w-[1200px] mx-auto  max-h-[400px] mt-10 flex gap-4  ">
         <div className="w-1/3 p-4 text-center">
           <p className="w-[60px] h-[60px] flex items-center justify-center bg-black/25 rounded-full mx-auto mb-4">
             <span className="w-[45px] h-[45px] flex items-center justify-center bg-black/90 text-white rounded-full">
@@ -84,6 +84,7 @@ export default function Footer() {
           </p>
         </div>
       </div>
+    <footer className="w-full min-h-[300px] bg-[#24272e] border-t-[2.5px] border-colorBorder">
       <div className="max-w-[1200px] h-full mx-auto pt-4 flex text-white">
         <ul className="w-1/5 h-[300px] px-3 text-sm">
           <li className="w-full h-20 flex items-center justify-start gap-2">
@@ -93,15 +94,10 @@ export default function Footer() {
             >
               Qn
             </Link>
-            <p>
-              loraasdasdl
-            </p>
+            
           </li>
           <li className="text-justify text-xs ">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates
-            ducimus eos deleniti exercitationem cupiditate fugit assumenda
-            dolore quos reiciendis, molestias optio enim fugiat illo vitae
-            aliquid rem distinctio ratione. Reprehenderit.
+            Qn shop là nơi bán các sản phẩm công nghệ mới với giá rẻ và chất lượng 
           </li>
         </ul>
         <ul className="w-1/5 h-[300px] px-3 text-sm">
@@ -116,7 +112,7 @@ export default function Footer() {
           </li>
           <li>
             <Link
-              href="/settings"
+              href="/profile"
               className="block w-full h-full py-2 hover:underline"
             >
               Tài khoản của tôi
@@ -275,5 +271,7 @@ export default function Footer() {
         &copy; 2025 - QUY-FE [Quý Nguyễn]
       </p>
     </footer>
+    </>
+
   );
 }

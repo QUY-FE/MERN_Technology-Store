@@ -60,7 +60,13 @@ export default function Cart() {
         <Link href="/">
           <Button w={180} h={46} text="Quay về trang chủ" />
         </Link>
-        <Button w={180} h={46} primary text="Xoá Giỏ hàng" onClick={handleClear} />
+        <Button
+          w={180}
+          h={46}
+          primary
+          text="Xoá Giỏ hàng"
+          onClick={handleClear}
+        />
       </div>
 
       <ul className="w-full h-[72px] shadow flex items-center justify-between mt-10 rounded-2xl text-center">
@@ -77,11 +83,11 @@ export default function Cart() {
         >
           <div className="w-1/4 h-full flex items-start gap-2.5">
             <Image
-              src={item.image || "/not_found.png"}
-              alt={item.name}
-              className="object-cover bg-cover rounded"
+              src={`/${item.image}` || "/not_found.png"}
+              alt={item.name || "Sản phẩm"}
               width={65}
               height={65}
+              className="object-contain"
             />
             <div className="text-sm font-semibold">{item.name}</div>
           </div>
@@ -96,7 +102,9 @@ export default function Cart() {
               value={item.quantity}
               min={1}
               className="w-[60px] outline outline-[1.7px] pl-2 outline-black/90 rounded"
-              onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
+              onChange={(e) =>
+                handleQuantityChange(item.id, Number(e.target.value))
+              }
             />
             <button
               className="p-2 rounded hover:bg-red-50 text-red-600"

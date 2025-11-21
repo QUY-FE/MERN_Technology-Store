@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import productRoutes from './routes/productRoutes.js';
-import authRoutes from './routes/authRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import orderRoutes from "./routes/orderRoutes.js";
 const app = express();
 
@@ -16,6 +16,6 @@ app.use(cors({
 app.use(morgan("dev"));
 
 app.use('/api/products', productRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/order',orderRoutes)
+app.use('/api/admin', adminRoutes);
+app.use('/api/orders',orderRoutes)
 export default app;

@@ -16,11 +16,10 @@ export const createProduct = async (req, res, next) => {
     const newProduct = new Product(req.body);
     const saveProduct = await newProduct.save();
     res.status(201).json(saveProduct)
-
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
+}; 
 
 // GET /:id
 export const getOneProduct = async  (req, res, next) => {

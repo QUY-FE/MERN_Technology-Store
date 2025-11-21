@@ -20,10 +20,10 @@ const initialState: CartState = {
   totalPrice: 0,
 };
 
-// Hàm tính lại tổng
+// SỬA 1: Ép kiểu Number() ở đây để đảm bảo luôn tính toán ra số
 const calculateTotals = (state: CartState) => {
-  state.totalQuantity = state.items.reduce((sum, item) => sum + item.quantity, 0);
-  state.totalPrice = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  state.totalQuantity = state.items.reduce((sum, item) => sum + Number(item.quantity), 0);
+  state.totalPrice = state.items.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0);
 };
 
 const cartSlice = createSlice({
@@ -62,12 +62,17 @@ const cartSlice = createSlice({
     },
 
     loadCartFromStorage: (state) => {
+      if (typeof window === 'undefined') return; // Check window để tránh lỗi SSR
+      
       const stored = localStorage.getItem('cart');
       if (stored) {
-        const parsed: CartState = JSON.parse(stored);
-        state.items = parsed.items;
-        state.totalPrice = parsed.totalPrice;
-        state.totalQuantity = parsed.totalQuantity;
+        const parsed = JSON.parse(stored);
+        
+        // SỬA 2: Kiểm tra kỹ dữ liệu từ LocalStorage
+        state.items = parsed.items || [];
+        // Ép kiểu Number() ngay khi load lên để tránh "rác" từ quá khứ
+        state.totalPrice = Number(parsed.totalPrice) || 0; 
+        state.totalQuantity = Number(parsed.totalQuantity) || 0;
       }
     },
   },

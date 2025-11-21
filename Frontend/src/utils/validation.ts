@@ -53,3 +53,12 @@ export const checkoutValidation = {
     },
   },
 }
+
+export const adminValidation = {
+  username: {
+    required: { value: true, message: "Vui lòng nhập tên người dùng" },
+  },
+  password: {
+    required: { value: true, message: "Vui lòng nhập mật khẩu" },
+  },
+}

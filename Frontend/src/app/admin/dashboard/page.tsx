@@ -1,12 +1,15 @@
 "use client";
 
-import { useProducts } from "#/context/productContext";
-import useDebounce from "#/hooks/useDeboune";
-import {  useMemo, useState } from "react";
+import useDebounce from "#/hooks/useDebounce";
+import { useGetAllOrdersQuery } from "#/redux/features/ordersApi";
+import { useGetAllProductQuery } from "#/redux/features/productApi";
+import {  useEffect, useMemo, useState } from "react";
 import { TiDelete } from "react-icons/ti";
 
 export default function AdminPage() {
-  const { products } = useProducts();
+  const { data: products = [] } = useGetAllProductQuery(undefined);
+  const { data: orders = []} = useGetAllOrdersQuery();
+  const [totalUsers, setTotalUsers] = useState(0);
 
   const [keyword, setKeyword] = useState("");
   const debounceQuery = useDebounce(keyword, 700);
@@ -21,6 +24,20 @@ export default function AdminPage() {
       product?.title?.toLowerCase().includes(query)
     );
   }, [debounceQuery, products]);
+
+  useEffect(() => {
+  const fetchUsers = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users`);
+    const data = await res.json();
+
+    setTotalUsers(data.total);
+  };
+
+  fetchUsers();
+}, []);
+
+
+
   return (
     <div>
       <h1 className="text-2xl font-bold mb-6">Bảng điều khiển</h1>
@@ -32,13 +49,13 @@ export default function AdminPage() {
         </div>
 
         <div className="bg-white shadow rounded p-5">
-          <p className="text-gray-500">Đơn hàng (demo)</p>
-          <h2 className="text-2xl font-bold">12</h2>
+          <p className="text-gray-500">Đơn hàng</p>
+          <h2 className="text-2xl font-bold">{orders.length}</h2>
         </div>
 
         <div className="bg-white shadow rounded p-5">
-          <p className="text-gray-500">Người dùng (demo)</p>
-          <h2 className="text-2xl font-bold">5</h2>
+          <p className="text-gray-500">Người dùng</p>
+          <h2 className="text-2xl font-bold">{totalUsers}</h2>
         </div>
       </div>
 
@@ -75,10 +92,10 @@ export default function AdminPage() {
           <tbody>
             {filteredProducts.slice(0, 10).map((p) => (
               <tr key={p._id} className="border-t">
-                <td className="px-4 py-2">{p.title}</td>
-                <td className="px-4 py-2">${p.newPrice}</td>
+                <td className="px-4 py-2">{p?.title}</td>
+                <td className="px-4 py-2">${p?.newPrice}</td>
                 <td className="px-4 py-2 text-center">
-                  {p.salePercent || "N/A"}
+                  {p?.quantity || "N/A"}
                 </td>
               </tr>
             ))}

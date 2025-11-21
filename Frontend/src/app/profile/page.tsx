@@ -3,10 +3,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "#/context/authContext";
 import Image from "next/image";
-import Button from "#/components/Button";
 
 export default function ProfilePage() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
   useEffect(() => {
     if (!loading && !user) router.push("/login");
@@ -29,7 +28,7 @@ export default function ProfilePage() {
       <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md relative overflow-hidden">
         {/* Banner gradient */}
         <div className="absolute top-0 left-0 w-full h-28 bg-gradient-to-r from-red-500 to-orange-400 rounded-t-xl" />
-        
+
         {/* Avatar */}
         <div className="relative flex flex-col items-center mt-16">
           <Image
@@ -49,7 +48,9 @@ export default function ProfilePage() {
         <div className="mt-8 space-y-4 text-gray-700">
           <div className="flex justify-between border-b pb-2">
             <span className="font-medium text-gray-600">ID tài khoản:</span>
-            <span className="text-gray-800 truncate max-w-[180px]">{user.id}</span>
+            <span className="text-gray-800 truncate max-w-[180px]">
+              {user.id}
+            </span>
           </div>
           <div className="flex justify-between border-b pb-2">
             <span className="font-medium text-gray-600">Trạng thái:</span>
@@ -57,22 +58,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Actions */}
-        <div className="mt-8 flex flex-col items-center gap-3">
-          <Button
-            primary
-            w="100%"
-            h={48}
-            text="Đăng xuất"
-            onClick={logout}
-          />
-          <button
-            onClick={() => router.push("/")}
-            className="text-sm text-gray-500 hover:text-indigo-600 transition"
-          >
-            ← Quay về trang chủ
-          </button>
-        </div>
+        
       </div>
     </section>
   );

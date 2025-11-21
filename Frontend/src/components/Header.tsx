@@ -19,14 +19,19 @@ const navbarListDefault = [
     href: "/products",
   },
   {
-    id: 3,
-    name: "Liên hệ",
-    href: "/contact",
+    id: 5,
+    name: "Blog",
+    href: "/blog",
   },
   {
     id: 2,
-    name: "Giới thiệu",
+    name: "Về Qn",
     href: "/about",
+  },
+  {
+    id: 3,
+    name: "Liên hệ",
+    href: "/contact",
   },
 ];
 export default function Header() {

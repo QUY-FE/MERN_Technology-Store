@@ -2,16 +2,18 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './features/cartSlice';
-import orderApi from './features/orderApi';
+import ordersApi from './features/ordersApi';
+import productApi from './features/productApi';
 
 // Tạo store
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
-    [orderApi.reducerPath]: orderApi.reducer,
+    [ordersApi.reducerPath]: ordersApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
   },
   middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware().concat(orderApi.middleware),
+    getDefaultMiddleware().concat(ordersApi.middleware,productApi.middleware),
 });
 
 // Type hỗ trợ cho useSelector / useDispatch

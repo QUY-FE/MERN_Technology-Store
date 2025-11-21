@@ -2,10 +2,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import {
-  auth,
-  googleProvider,
-} from "#/firebase/firebase.config";
+import { auth, googleProvider } from "#/firebase/firebase.config";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -46,27 +43,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
-      if (firebaseUser) {
-        const formattedUser: User = {
-          id: firebaseUser.uid,
-          username: firebaseUser.displayName,
-          email: firebaseUser.email,
-          photoURL: firebaseUser.photoURL,
-        };
-        setUser(formattedUser);
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (firebaseUser: FirebaseUser | null) => {
+        if (firebaseUser) {
+          const formattedUser: User = {
+            id: firebaseUser.uid,
+            username: firebaseUser.displayName,
+            email: firebaseUser.email,
+            photoURL: firebaseUser.photoURL,
+          };
+          setUser(formattedUser);
 
-        if (typeof window !== "undefined") {
-          localStorage.setItem("user", JSON.stringify(formattedUser));
+          if (typeof window !== "undefined") {
+            localStorage.setItem("user", JSON.stringify(formattedUser));
+          }
+        } else {
+          setUser(null);
+          if (typeof window !== "undefined") {
+            localStorage.removeItem("user");
+          }
         }
-      } else {
-        setUser(null);
-        if (typeof window !== "undefined") {
-          localStorage.removeItem("user");
-        }
+        setLoading(false);
       }
-      setLoading(false);
-    });
+    );
     return () => unsubscribe();
   }, []);
 
@@ -76,10 +76,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await signInWithPopup(auth, googleProvider);
       toast.success("Đăng nhập Google thành công!");
       setTimeout(() => {
-        router.push('/')
+        router.push("/");
       }, 2000);
-    } catch (error: any) {
-      toast.error(error.message || "Đăng nhập Google thất bại!");
+    } catch (error) {
+      // SỬA LỖI: Ép kiểu error thành Error để lấy message
+      const err = error as Error;
+      toast.error(err.message || "Đăng nhập Google thất bại!");
     }
   };
 
@@ -89,10 +91,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success("Đăng nhập thành công!");
       setTimeout(() => {
-        router.push('/')
+        router.push("/");
       }, 2000);
-    } catch (error: any) {
-      toast.error(error.message || "Đăng nhập thất bại!");
+    } catch (error) {
+      // SỬA LỖI
+      const err = error as Error;
+      toast.error(err.message || "Đăng nhập thất bại!");
     }
   };
 
@@ -103,15 +107,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     password: string
   ) => {
     try {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       if (username) await updateProfile(user, { displayName: username });
       toast.success("Đăng ký thành công!");
       setTimeout(() => {
-        router.push('/')
+        router.push("/");
       }, 2000);
-      
-    } catch (error: any) {
-      toast.error(error.message || "Đăng ký thất bại!");
+    } catch (error) {
+      // SỬA LỖI
+      const err = error as Error;
+      toast.error(err.message || "Đăng ký thất bại!");
     }
   };
 
@@ -121,11 +130,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await signOut(auth);
       toast.info("Đã đăng xuất!");
       setTimeout(() => {
-        router.push('/')
+        router.push("/");
       }, 2000);
-      
-    } catch (error: any) {
-      toast.error(error.message || "Đăng xuất thất bại!");
+    } catch (error) {
+      // SỬA LỖI
+      const err = error as Error;
+      toast.error(err.message || "Đăng xuất thất bại!");
     }
   };
 
@@ -134,8 +144,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await sendPasswordResetEmail(auth, email);
       toast.info("Kiểm tra email để đặt lại mật khẩu!");
-    } catch (error: any) {
-      toast.error(error.message || "Không thể gửi email khôi phục!");
+    } catch (error) {
+      // SỬA LỖI
+      const err = error as Error;
+      toast.error(err.message || "Không thể gửi email khôi phục!");
     }
   };
 

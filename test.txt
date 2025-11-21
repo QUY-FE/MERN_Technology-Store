@@ -80,7 +80,9 @@
     "countStar": 4,
     "countBuy": 36,
     "salePercent": 36,
-    "category": "laptop"
+    "category": "laptop",
+                "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates ducimus eos deleniti exercitationem cupiditate fugit assumenda dolore quos reiciendis, molestias optio enim fugiat illo vitae aliquid rem distinctio ratione. Reprehenderit."
+
 }
 {
     "title": "Màn hình máy tính sonic 27inch",
@@ -93,16 +95,18 @@
     "salePercent": 36,
     "category": "computer"
 }
+
 {
     "title": "CPU Inter i5 9400F",
     "slug": "CPU-Inter-i5-9400F",
-    "url": "https://down-vn.img.susercontent.com/file/vn-11134258-820l4-mf12kldgfv9r29",
+    "url": "../src/assets/images/laptop.jpg",
     "newPrice": 1999,
     "oldPrice": 2400,
     "countStar": 4,
     "countBuy": 36,
-    "salePercent": 36,
-    "category": "computer"
+    "category": "computer",
+    "quantity": 25,
+            "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates ducimus eos deleniti exercitationem cupiditate fugit assumenda dolore quos reiciendis, molestias optio enim fugiat illo vitae aliquid rem distinctio ratione. Reprehenderit."
 }
 
 tài khoản test

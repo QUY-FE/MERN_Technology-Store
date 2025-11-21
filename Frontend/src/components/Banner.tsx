@@ -9,9 +9,6 @@ import banner1 from "#/assets/images/banner1_hd.jpeg";
 import banner3 from "#/assets/images/banner3.jpg";
 import banner4 from "#/assets/images/banner4.webp";
 
-
-
-
 const tabbarMenu = [
   {
     href: "/",
@@ -55,12 +52,12 @@ const tabbarMenu = [
     title: "Health & Beauty",
   },
 ];
-const allBanner = [ banner1, banner3, banner4];
+const allBanner = [banner1, banner3, banner4 ,"/banner_banphim.jpg", "/banner_laptop.jpg",'/banner_manhinh.jpg','/banner_phone.jpg'];
 
 export default function Banner() {
   return (
     <section className="w-full lg:flex mb-20 ">
-      <div className="lg:w-3/12 hidden lg:block   max-h-[500px] py-[30px] pr-[12px] border-r-2 border-[#dbdbdb]">
+      {/* <div className="lg:w-3/12 hidden lg:block   max-h-[500px] py-[30px] pr-[12px] border-r-2 border-[#dbdbdb]">
         <ul>
           {tabbarMenu.map((item, index: number) => (
             <li className="w-full h-full flex items-center" key={index}>
@@ -74,16 +71,15 @@ export default function Banner() {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
 
-      <div className="w-full lg:w-9/12 lg:max-h-[500px] lg:py-[30px] lg:pl-[30px] ">
+      <div className="w-full  lg:pt-4 ">
         <Carousel
           autoPlay
           arrows={false}
           additionalTransfrom={0}
-          autoPlaySpeed={5000}
+          autoPlaySpeed={2000}
           centerMode={false}
-          className=""
           containerClass="container"
           draggable
           infinite
@@ -103,13 +99,13 @@ export default function Banner() {
           {allBanner.map((imgURL, index) => (
             <article
               key={index}
-              className="relative w-full h-[280px] lg:h-[500px] rounded-lg overflow-hidden shadow-md"
+              className="relative w-full h-[280px] lg:h-[70vh] rounded-lg overflow-hidden shadow-md"
             >
               <Image
                 src={imgURL}
                 alt={`banner-${index}`}
                 fill
-                className="object-cover"
+                className="object-cover rounded-lg"
                 priority={index === 0}
               />
             </article>

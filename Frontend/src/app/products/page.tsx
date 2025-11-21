@@ -4,24 +4,26 @@ import Link from "next/link";
 import { FaStar, FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 import Categories from "#/components/Categories";
-import { useProducts } from "#/context/productContext";
-const ITEMS_PER_PAGE = 8;
+import Image from "next/image";
+import { useGetAllProductQuery } from "#/redux/features/productApi";
+const ITEMS_PER_PAGE = 28;
 
 export default function Page() {
-
-  const { products } = useProducts();
-  
+  const { data: products = []} = useGetAllProductQuery(undefined);
   const [currentPage, setCurrentPage] = useState(1);
-
+  
   // State for the selected category
   const [selectedCategory, setSelectedCategory] = useState("ALL"); // TS infers this as 'string'
 
   // Filter products based on selectedCategory
-  const filteredProducts = selectedCategory.toLowerCase() === "all" 
-  ? products  // Nếu category là "all" thì trả về toàn bộ products
-  : products.filter(
-      (product) => product.category.toLowerCase() === selectedCategory.toLowerCase()
-    ); // TS infers this as 'Product[]'
+  
+  const filteredProducts =
+    selectedCategory.toLowerCase() === "all"
+      ? products // Nếu category là "all" thì trả về toàn bộ products
+      : products.filter(
+          (product) =>
+            product.category?.toLowerCase() === selectedCategory.toLowerCase()
+        ); // TS infers this as 'Product[]'
 
   // Calculate pagination based on filtered list
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
@@ -38,7 +40,6 @@ export default function Page() {
   };
 
   return (
-
     <section className="max-w-[1200px] mx-auto pb-10">
       {/* Pass state and handler down to Categories */}
       <Categories
@@ -53,48 +54,72 @@ export default function Page() {
       {/* Kiểm tra xem filteredProducts có phần tử nào không */}
       {filteredProducts.length > 0 ? (
         // Nếu CÓ, hiển thị lưới sản phẩm
-        <div className="h-screen grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
-          {paginatedProducts.map((product, index) => (
-           <article
-                className="relative group block w-[270px] h-[330px] shadow-lg hover:-top-1 transition-all duration-300 ease-in-out"
-                key={`product__${index}`}
-              >
-                <Link
-                  href={`/products/${product?.slug}`}
-                  className="absolute inset-0 hidden  group-hover:flex justify-between py-3 px-2 z-50 hover:bg-black/5"
-                ></Link>
-                <img
-                  src={product?.image || "/keyboard.jpg"}
-                  alt={product?.title}
-                  className="w-full h-[200px] relative object-cover rounded-t-lg shadow-md"
+        <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+          {paginatedProducts.map((product) => (
+            <article key={product?._id} className="relative w-[270px] rounded-xl shadow-lg bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl group">
+              {/* Link hover overlay */}
+              <Link
+                href={`/products/${product._id}`}
+                className="absolute inset-0 z-20"
+              ></Link>
+
+              {/* Ảnh sản phẩm */}
+              <div className="relative w-full h-[190px] bg-white flex items-center justify-center overflow-hidden">
+                <Image
+                  src={`/${product.img}` || "/not_found.png"}
+                  alt={product.title || "Sản phẩm"}
+                  fill
+                  className="object-contain p-3 transition-all duration-300 group-hover:scale-105"
                 />
-                <span className="absolute top-4 left-3 w-[55px] h-[27px] bg-[#e34646] text-white rounded text-md text-center font-semibold">
-                  -{product?.salePercent}%
-                </span>
-                <div className="px-4 py-2">
-                  <h1 className="w-full h-[40px] font-medium leading-[40px]">
-                    {product?.title}
-                  </h1>
-                  <div className="flex items-center gap-3">
-                    <p className="h-[30px] text-[#e34646] text-lg font-medium leading-[30px]">
-                      ${product?.newPrice}
-                    </p>
-                    <p className="h-[30px] leading-[30px] font-medium text-sm italic line-through text-black/60">
-                      ${product?.oldPrice}
-                    </p>
-                  </div>
-                  <div className="flex items-center h-[30px] leading-[30px]">
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar
-                        key={i}
-                        color={i < product.countStar ? "#ffad33" : "gray"}
-                      />
-                    ))}
-                    <p className="px-4 text-black/70 font-medium">
-                      ({product?.totalBuy})
-                    </p>
-                  </div>
+              </div>
+
+              {/* Badge giảm giá */}
+               {/* Kiểm tra: Có giá cũ VÀ giá cũ > (giá mới hoặc 0) */}
+                {product.oldPrice &&
+                  product.oldPrice > (product.newPrice ?? 0) && (
+                    <span className="absolute top-3 left-3 px-3 py-[3px] bg-[#e34646] text-white rounded-md text-sm font-semibold shadow">
+                      -
+                      {Math.round(
+                        // Dùng (product.newPrice ?? 0) để tránh trừ cho undefined ra NaN
+                        ((product.oldPrice - (product.newPrice ?? 0)) /
+                          product.oldPrice) *
+                          100
+                      )}
+                      %
+                    </span>
+                  )}
+
+                  
+              {/* Nội dung */}
+              <div className="px-4 pb-4 pt-2">
+                <h2 className="text-base font-medium h-[42px] line-clamp-2">
+                  {product.title}
+                </h2>
+
+                {/* Giá */}
+                <div className="flex items-center gap-3 mt-2">
+                  <p className="text-lg font-semibold text-[#e34646]">
+                    ${product.newPrice}
+                  </p>
+                  <p className="text-sm font-medium text-black/60 line-through italic">
+                    ${product.oldPrice}
+                  </p>
                 </div>
+
+                {/* Rating */}
+                <div className="flex items-center mt-2">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar
+                      key={i}
+                      size={16}
+                      color={i < (product.countStar ?? 0) ? "#ffad33" : "#d1d1d1"}
+                    />
+                  ))}
+                  <span className="ml-3 text-sm text-black/60 font-medium">
+                    ({product.totalBuy})
+                  </span>
+                </div>
+              </div>
             </article>
           ))}
         </div>

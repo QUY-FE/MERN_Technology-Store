@@ -9,9 +9,9 @@ import { clearCart } from "#/redux/features/cartSlice";
 import { useAuth } from "#/context/authContext";
 import { useForm } from "react-hook-form";
 import { checkoutValidation } from "#/utils/validation";
-import { useCreateOrderMutation } from "#/redux/features/orderApi";
+// import { useCreateOrderMutation } from "#/redux/features/orderApi";
 import { toast } from "react-toastify";
-import { fetchData } from "#/utils/api";
+import { useCreateOrderMutation } from "#/redux/features/ordersApi";
 
 type FormData = {
   username: string;
@@ -62,7 +62,7 @@ export default function Checkout() {
       ...data,
       payment,
       productIds: items.map((item) => item?.id),
-      totalPrice,
+      totalPrice: totalPrice,
       coupon,
     }
     
@@ -167,7 +167,7 @@ export default function Checkout() {
               <div key={it.id} className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Image
-                    src={it.image || "/not_found.png"}
+                    src={`/${it.image}` || "/not_found.png"}
                     alt={it.name}
                     width={48}
                     height={48}
