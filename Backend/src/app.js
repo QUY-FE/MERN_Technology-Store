@@ -6,9 +6,15 @@ import adminRoutes from './routes/adminRoutes.js';
 import orderRoutes from "./routes/orderRoutes.js";
 const app = express();
 
+
+const allOrigin = [
+    'https://qn-technology-store.vercel.app',
+    'http://localhost:3000',
+]
+
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: allOrigin,
     credentials: true,
     methods: ['GET','POST','PUT','DELETE','OPTIONS'],
     allowedHeaders: ["Content-Type","Authorization"],

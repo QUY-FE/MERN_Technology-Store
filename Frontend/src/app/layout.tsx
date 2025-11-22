@@ -39,7 +39,8 @@ export default function RootLayout({
     pathname === "/admin/users" ||
     pathname === "/admin/products/create" ||
     pathname.startsWith("/admin/products/edit/") ||
-    pathname.startsWith("/admin/products/");
+    pathname.startsWith("/admin/products/") ||
+    pathname.startsWith("/blog/");
 
   return (
     <html lang="vi">

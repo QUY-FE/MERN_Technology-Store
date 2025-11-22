@@ -33,7 +33,7 @@ export type UpdateProductDto = Partial<CreateProductDto>;
 const productApi = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
     credentials: "include",
   }),
   tagTypes: ["products"],

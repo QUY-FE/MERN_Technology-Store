@@ -6,7 +6,7 @@ import { FaStar, FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Categories from "#/components/Categories";
 import Image from "next/image";
 import { useGetAllProductQuery } from "#/redux/features/productApi";
-const ITEMS_PER_PAGE = 28;
+const ITEMS_PER_PAGE = 15;
 
 export default function Page() {
   const { data: products = []} = useGetAllProductQuery(undefined);
@@ -54,9 +54,9 @@ export default function Page() {
       {/* Kiểm tra xem filteredProducts có phần tử nào không */}
       {filteredProducts.length > 0 ? (
         // Nếu CÓ, hiển thị lưới sản phẩm
-        <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+        <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-6 px-2">
           {paginatedProducts.map((product) => (
-            <article key={product?._id} className="relative w-[270px] rounded-xl shadow-lg bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl group">
+            <article key={product?._id} className="relative w-full  rounded-xl shadow-lg bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl group">
               {/* Link hover overlay */}
               <Link
                 href={`/products/${product._id}`}

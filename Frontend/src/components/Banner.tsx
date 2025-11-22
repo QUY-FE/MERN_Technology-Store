@@ -52,7 +52,7 @@ const tabbarMenu = [
     title: "Health & Beauty",
   },
 ];
-const allBanner = [banner1, banner3, banner4 ,"/banner_banphim.jpg", "/banner_laptop.jpg",'/banner_manhinh.jpg','/banner_phone.jpg'];
+const allBanner = [banner1, banner3, banner4];
 
 export default function Banner() {
   return (
@@ -112,8 +112,8 @@ export default function Banner() {
           ))}
         </Carousel>
       </div>
-
-      <div className="mt-4 snap-x">
+      {/* mobile tab */}
+      {/* <div className="mt-4 snap-x">
         <div className="lg:hidden w-full overflow-x-auto whitespace-nowrap px-2 py-3">
           <div className="flex space-x-3">
             {tabbarMenu.map((item, index: number) => (
@@ -127,7 +127,7 @@ export default function Banner() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

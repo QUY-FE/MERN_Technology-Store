@@ -83,7 +83,7 @@ export default function Checkout() {
   };
 
   return (
-    <form className="max-w-6xl mx-auto py-10 grid grid-cols-1 md:grid-cols-2 gap-10" onSubmit={handleSubmit(onSubmit)}>
+    <form className="max-w-6xl px-2 mx-auto py-10 grid grid-cols-1 md:grid-cols-2 gap-10" onSubmit={handleSubmit(onSubmit)}>
       {/* Left: form */}
       <div>
         <h2 className="text-2xl font-semibold mb-6">Thông tin đơn hàng</h2>

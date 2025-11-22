@@ -32,8 +32,8 @@ export default function ProfilePage() {
         {/* Avatar */}
         <div className="relative flex flex-col items-center mt-16">
           <Image
-            src={user.photoURL || "/default-avatar.png"}
-            alt="Avatar"
+            src={user.photoURL || "/men_avatar.jpg"}
+            alt="Avatar user"
             width={110}
             height={110}
             className="rounded-full border-4 border-white shadow-md"

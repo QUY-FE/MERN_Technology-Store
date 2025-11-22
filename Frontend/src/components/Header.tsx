@@ -20,7 +20,7 @@ const navbarListDefault = [
   },
   {
     id: 5,
-    name: "Blog",
+    name: "Bài viết",
     href: "/blog",
   },
   {
@@ -40,17 +40,17 @@ export default function Header() {
     <header id="Home">
       <Sales
         hasSales
-        totalSales={50}
-        titleSales="Giảm giá cực sốc trong mùa hè này với đồ gaming "
+        totalSales={28}
+        titleSales="Giảm giá cực sốc trong mùa hè này với đồ Gaming "
       />
-      <div className="border-b-2 border-colorBorder">
+      <div className="border-b-2 border-gray-100">
         <div className="max-w-[1200px] h-[80px] mx-auto  flex items-center ">
           {/* Navbar mobile */}
           <NavbarMobile
             list={navbarListDefault }
           />
           {/* Logo */}
-          <div className="w-6/12 lg:w-1/12 h-full  flex items-center lg:justify-start md:justify-center text-2xl lg:text-left lg:text-2xl font-semibold">
+          <div className="w-6/12 lg:w-1/12 h-full  flex items-center lg:justify-start justify-end text-2xl lg:text-left lg:text-2xl font-semibold">
             <Link
               href="/"
               className="px-3 py-2 bg-gradient-to-tr from-orange-400 to-red-400 text-white rounded-xl"

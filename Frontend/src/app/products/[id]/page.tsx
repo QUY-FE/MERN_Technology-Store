@@ -75,9 +75,31 @@ const anotherProducts = products.filter(
 
   return (
     <section className="max-w-[1200px] mx-auto pb-10 ">
-      <div className="flex flex-col md:flex-row gap-10 ">
+      {/* thông tin ở dạng mobile */}
+      <div className="block lg:hidden flex-1 w-full px-2 pt-2">
+          <h1 className="text-2xl font-bold mb-1">{product.title ?? "Không tải được"}</h1>
+          <div className="flex items-center gap-2">
+            {[...Array(5)].map((_, i) => (
+              <FaStar
+              key={i}
+              color={i < (product.countStar ?? 0)? "#ffad33" : "gray"}
+              />
+            ))}
+            <span className="text-gray-500 text-sm">
+              ({product.totalBuy ?? 0} Đánh giá)
+            </span>
+            {product?.quantity > 0 ? (
+              <span className="text-green-600 font-semibold ml-2">
+                Còn hàng
+              </span>
+            ) : (
+              <span className="text-red-500 font-semibold ml-2">Hết hàng</span>
+            )}
+          </div>
+      </div>
+      <div className="flex flex-col md:flex-row gap-2 ">
         {/* Left: Ảnh sản phẩm */}
-        <div className="w-5/12 p-4 flex flex-col items-center gap-4">
+        <div className="w-full lg:w-5/12 p-2 lg:p-4 flex flex-col items-center gap-4">
           <div className="w-[350px] h-[350px] bg-white flex items-center justify-center rounded-lg shadow">
             <Image
               src={`/${product?.img}` || "/not_found.png"}
@@ -106,24 +128,24 @@ const anotherProducts = products.filter(
           </div>
         </div>
         {/* Right: Thông tin sản phẩm */}
-        <div className="flex-1 w-7/12 p-4">
-          <h1 className="text-2xl font-bold mb-2">{product.title ?? "Không tải được"}</h1>
-          <div className="flex items-center gap-2 mb-2">
+        <div className="flex-1 w-full  lg:w-7/12 px-2 lg:p-4">
+          <h1 className="hidden lg:block text-2xl font-bold mb-2">{product.title ?? "Không tải được"}</h1>
+          <div className="hidden lg:flex items-center gap-2 mb-2">
             {[...Array(5)].map((_, i) => (
               <FaStar
                 key={i}
                 color={i < (product.countStar ?? 0)? "#ffad33" : "gray"}
               />
             ))}
-            <span className="text-gray-500 text-sm">
+            <span className="text-gray-500 text-sm hidden lg:block">
               ({product.totalBuy ?? 0} Đánh giá)
             </span>
             {product?.quantity > 0 ? (
-              <span className="text-green-600 font-semibold ml-2">
+              <span className="text-green-600 font-semibold ml-2 hidden lg:block">
                 Còn hàng
               </span>
             ) : (
-              <span className="text-red-500 font-semibold ml-2">Hết hàng</span>
+              <span className="text-red-500 font-semibold ml-2 hidden lg:block">Hết hàng</span>
             )}
           </div>
           <div className="text-2xl font-bold text-primary mb-2">
@@ -199,21 +221,79 @@ const anotherProducts = products.filter(
           </div>
         </div>
       </div>
-      <div className="py-4 border-t-2 border-gray-300">
-        <h1 className="text-2xl my-4 font-bold text-primary">
-          Chi tiết sản phẩm
-        </h1>
+      {/* chi tiết sản phẩm */}
+      <div className="p-2  border-t-2 border-gray-200">
+        <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
+          <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
+           Chi tiết sản phẩm
+        </div>
+        
         <p className="mb-4 text-gray-700">{product.description}</p>
       </div>
+      {/* Phần đánh giá */}
+      {/* Phần đánh giá */}
+<div className="p-2 mt-10">
+  <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
+    <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
+    Đánh giá
+  </div>
 
-      {/* Related items */}
-      <div className="mt-12">
+  {/* Đánh giá */}
+  <div className="border rounded p-4 mb-4 shadow-sm">
+    <div className="flex items-center gap-3 mb-2">
+      <Image
+        src="/men_avatar.jpg"
+        alt="avatar"
+        width={40}
+        height={40}
+        className="rounded-full object-cover"
+      />
+      <div>
+        <div className="font-semibold">minhbeo</div>
+        <div className="flex items-center gap-1 text-yellow-400">
+           {[...Array(5)].map((_, i) => (
+              <FaStar
+                key={i}
+                color="#ffad33"
+              />
+            ))}
+        </div>
+      </div>
+    </div>
+    <p className="mb-2 text-gray-700">
+      <span className="font-semibold">Chất lượng sản phẩm:</span> tốt
+    </p>
+    <p className="mb-2 text-gray-700">
+      <span className="font-semibold">Tính năng nổi bật:</span> âm thanh nghe rõ và to
+    </p>
+    <p className="mb-2 text-gray-700">
+      Sản phẩm tốt đúng với giá tiền 59.000đ, âm thanh nghe không bị rè, loa to, kết nối Bluetooth nhanh, màu sắc đẹp, cầm hơi nhẹ nhưng với giá tiền này thì hợp lý đáng để mọi người mua.
+    </p>
+
+    {/* Hình/ video */}
+    <div className="flex gap-2 mt-2">
+      <Image src="/phone2.png" alt="review1" width={64} height={64}  className="object-cover rounded" />
+      <Image src="/phone2.png" alt="review1" width={64} height={64}  className="object-cover rounded" />
+      <Image src="/phone2.png" alt="review1" width={64} height={64}  className="object-cover rounded" />
+      {/* Video có thể dùng thẻ video */}
+      {/* <video className="w-16 h-16 rounded" controls>
+        <source src="/mnt/data/9ada9d1a-3ee1-4a65-9916-4f0997aae300.png" type="video/mp4" />
+      </video> */}
+    </div>
+    <div className="mt-2 text-gray-400 text-sm">32 lượt thích</div>
+  </div>
+</div>
+
+      
+
+      {/* sản phẩm cùng loại */}
+      <div className="mt-12 px-2">
         <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
           <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
           Sản phẩm liên quan
         </div>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {related.slice(0, 24).map((product) => (
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4 ">
+          {related.slice(0, 20).map((product) => (
             <article
               key={product?._id}
               className="relative w-full rounded-xl shadow-lg bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl group"
@@ -274,14 +354,14 @@ const anotherProducts = products.filter(
           ))}
         </div>
       </div>
-      {/* another products */}
-      <div className="mt-12">
+      {/* sản phẩm khác */}
+      <div className="mt-12 px-2">
         <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
           <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
           Sản phẩm khác
         </div>
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {anotherProducts.slice(0, 24).map((product) => (
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4">
+          {anotherProducts.slice(0, 20).map((product) => (
             <article
               key={product?._id}
               className="relative w-full rounded-xl shadow-lg bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl group"

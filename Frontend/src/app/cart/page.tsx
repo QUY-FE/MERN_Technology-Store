@@ -78,10 +78,10 @@ export default function Cart() {
 
       {items.map((item) => (
         <article
-          className="w-full max-h-[120px] shadow-lg rounded-2xl flex items-center my-4 p-4"
+          className="w-full max-h-[120px] shadow-lg rounded-2xl flex items-center my-4  p-2 lg:p-4"
           key={item.id}
         >
-          <div className="w-1/4 h-full flex items-start gap-2.5">
+          <div className="w-1/4 h-full  block lg:flex items-start gap-2.5">
             <Image
               src={`/${item.image}` || "/not_found.png"}
               alt={item.name || "Sản phẩm"}
@@ -101,7 +101,7 @@ export default function Cart() {
               type="number"
               value={item.quantity}
               min={1}
-              className="w-[60px] outline outline-[1.7px] pl-2 outline-black/90 rounded"
+              className="w-[40px] outline outline-[1.7px] pl-2 outline-black/90 rounded"
               onChange={(e) =>
                 handleQuantityChange(item.id, Number(e.target.value))
               }

@@ -38,7 +38,7 @@ export type CreateOrderDto = {
 const orderApi = createApi({
   reducerPath: "orderApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/orders",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/orders`,
     credentials: "include",
   }),
   tagTypes: ["Orders"],

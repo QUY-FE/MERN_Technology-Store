@@ -60,7 +60,7 @@ export default function NewsSection() {
       </div>
 
       {/* Grid tin tức */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-6 mb-8">
         {paginatedNews.map((post) => (
           <Link
             key={post.id}

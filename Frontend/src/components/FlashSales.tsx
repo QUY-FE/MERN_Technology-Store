@@ -46,9 +46,17 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
 
   return (
     <section className="w-full border-b-1 border-[#b3b3b3]">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="w-2/6 text-3xl font-semibold">Flash Sales</h1>
-        <div className="w-3/6 h-full flex items-center gap-6 text-xl">
+      <div className="flex items-center justify-between mb-8 gap-4">
+        <h1 className="w-full lg:w-2/6 text-3xl font-bold text-primary py-4">Flash Sales</h1>
+        <Link
+          href="/products"
+          className="w-full lg:w-1/6 font-semibold text-red-600 hover:text-red-800 transition-colors flex items-center justify-end gap-1"
+        >
+          Xem tất cả
+          <BsArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+      <div className="w-full h-full flex items-center lg:justify-normal justify-center gap-6 text-xl">
           <h1>
             Ngày:
             <span className="text-md text-primary font-bold italic">
@@ -74,15 +82,6 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
             </span>
           </h1>
         </div>
-        <Link
-          href="/products"
-          className="w-1/6 font-semibold text-red-600 hover:text-red-800 transition-colors flex items-center justify-end gap-1"
-        >
-          Xem tất cả
-          <BsArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
-
       <div className="w-full py-10">
         {timeLeft ? (
           <Carousel
@@ -92,9 +91,9 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
             arrows
             containerClass="carousel-container"
             responsive={{
-              desktop: { breakpoint: { max: 3000, min: 1200 }, items: 4 },
+              desktop: { breakpoint: { max: 3000, min: 1200 }, items: 5 },
               tablet: { breakpoint: { max: 1024, min: 464 }, items: 3 },
-              mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
+              mobile: { breakpoint: { max: 464, min: 0 }, items: 2 },
             }}
             itemClass="px-2"
             customLeftArrow={<CustomLeftArrow />}

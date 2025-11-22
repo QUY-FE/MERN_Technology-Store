@@ -2,13 +2,16 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "#/context/authContext";
-import { useGetAllOrdersQuery } from "#/redux/features/ordersApi";
+import { useGetOrderByEmailQuery } from "#/redux/features/ordersApi";
 import { BsArrowLeft } from "react-icons/bs";
 
 export default function OrderHistoryPage() {
   const router = useRouter();
   const { user, loading } = useAuth();
-  const { data: orders = [], isLoading } = useGetAllOrdersQuery();
+  const emailUser = user?.email;
+  
+  const { data: orders = [], isLoading } = useGetOrderByEmailQuery(emailUser!);
+  
 
   useEffect(() => {
     if (!loading && !user) router.push("/login");
@@ -24,16 +27,16 @@ export default function OrderHistoryPage() {
 
   if (!user) return null;
 
-  // const userOrders =
-  // (orders
-  //   ?.filter((o) => o.email === user.email)
-  //   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))) || [];
+  
 
   return (
     <section className="min-h-screen w-full py-10 px-4 flex justify-center">
       <div className="w-full max-w-3xl">
         <h1 className="text-2xl font-semibold mb-6 text-gray-800">
-          Lịch sử đơn hàng
+          Lịch sử đơn hàng của bạn
+        </h1>
+        <h1 className="font-semibold mb-6 text-gray-500">
+          {emailUser}
         </h1>
 
         {orders.length === 0 && (

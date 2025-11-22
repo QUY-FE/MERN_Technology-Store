@@ -13,8 +13,8 @@ import { CustomLeftArrow, CustomRightArrow } from "#/components/Button";
 // ... (giữ nguyên staffList)
 const staffList = [
   {
-    url: "/my-avatar.jpg",
-    name: "Nguyễn Bỉnh Quý",
+    url: "/men_avatar.jpg",
+    name: "Mai Nam Hải",
     position: "Nhà sáng lập",
     socialNetwork: {
       fbUrl: "https://www.facebook.com/",
@@ -23,7 +23,29 @@ const staffList = [
       xUrl: "https://x.com/",
     },
   },
-  // Thêm các thành viên khác vào đây...
+  {
+    url: "/men_avatar.jpg",
+    name: "Vũ Đức Trung",
+    position: "Tổng Giám Đốc",
+    socialNetwork: {
+      fbUrl: "https://www.facebook.com/",
+      tiktokUrl: "https://www.tiktok.com/",
+      igUrl: "https://www.instagram.com/",
+      xUrl: "https://x.com/",
+    },
+  },
+  {
+    url: "/women_avatar.png",
+    name: "Hoàng Minh Ngân",
+    position: "Trưởng Phòng",
+    socialNetwork: {
+      fbUrl: "https://www.facebook.com/",
+      tiktokUrl: "https://www.tiktok.com/",
+      igUrl: "https://www.instagram.com/",
+      xUrl: "https://x.com/",
+    },
+  },
+  
 ];
 
 
@@ -90,7 +112,7 @@ export default function About() {
             centerMode={false}
             containerClass="carousel-container"
             draggable
-            infinite
+            // infinite
             keyBoardControl
             minimumTouchDrag={80}
             pauseOnHover
@@ -152,7 +174,7 @@ export default function About() {
                       className="
                         w-10 h-10 flex justify-center items-center rounded-full 
                         hover:bg-gray-100 hover:scale-110 
-                        transition-all duration-300 text-gray-600 hover:text-gray-900
+                        transition-all duration-300 text-gray-600 hover:text-pink-200
                       "
                     >
                       <FaInstagram size={24} />

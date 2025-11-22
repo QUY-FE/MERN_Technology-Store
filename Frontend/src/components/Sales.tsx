@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function Sales({
   hasSales = false,
   totalSales = 0,
-  titleSales = "Summer Sale For All Swim Suits And Free Express Delivery",
+  titleSales = "",
 }: {
   hasSales?: boolean;
   totalSales?: number;
@@ -16,9 +16,9 @@ export default function Sales({
       {hasSales ? (
         <div className="w-full h-[36px] bg-black">
           <p className="text-white block w-full h-full text-center leading-[36px] text-[13px]">
-            {titleSales} - OFF {totalSales}%!
+            {titleSales} - Giảm {totalSales}%!
             <span className="font-bold underline ml-3">
-              <Link href="/products">Shop now</Link>
+              <Link href="/products">Mua ngay</Link>
             </span>
           </p>
         </div>
