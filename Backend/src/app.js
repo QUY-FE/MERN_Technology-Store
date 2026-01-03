@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import productRoutes from './routes/productRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import orderRoutes from "./routes/orderRoutes.js";
+import reviewRoutes from './routes/reviewRoutes.js';
 const app = express();
 
 
@@ -24,4 +25,5 @@ app.use(morgan("dev"));
 app.use('/api/products', productRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/orders',orderRoutes)
+app.use('/api/reviews', reviewRoutes)
 export default app;

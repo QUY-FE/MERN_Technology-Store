@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "#/context/authContext";
 import { useGetOrderByEmailQuery } from "#/redux/features/ordersApi";
 import { BsArrowLeft } from "react-icons/bs";
+import Link from "next/link";
 
 export default function OrderHistoryPage() {
   const router = useRouter();
@@ -83,7 +84,9 @@ export default function OrderHistoryPage() {
                 <p className="font-medium text-gray-800 mb-1">Sản phẩm:</p>
                 <ul className="list-disc ml-6 text-gray-600 text-sm">
                   {order.productIds!.map((id) => (
-                    <li key={id}>{id}</li>
+                    <li key={id}>
+                      <Link href={`/products/${id}`} className="hover:text-primary hover:font-bold">{id}</Link>
+                      </li>
                   ))}
                 </ul>
               </div>

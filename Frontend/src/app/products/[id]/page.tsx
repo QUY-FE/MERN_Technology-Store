@@ -1,12 +1,6 @@
 "use client";
 import { useState } from "react";
-import Image from "next/image";
-import { FaStar } from "react-icons/fa";
-import Link from "next/link";
 
-import Button from "#/components/Button";
-import { FaRotate } from "react-icons/fa6";
-import { FaTruckFast } from "react-icons/fa6";
 import { useAuth } from "#/context/authContext";
 import { useAppDispatch } from "#/hooks/redux.hook";
 import { addToCart } from "#/redux/features/cartSlice";
@@ -16,6 +10,10 @@ import {
   useGetAllProductQuery,
   useGetOneProductQuery,
 } from "#/redux/features/productApi";
+import ReviewProduct from "../components/ReviewProduct";
+import ViewProduct from "../components/ViewProduct";
+import Error from "#/components/Error";
+import ProductCard from "../components/ProductCard";
 export default function Product() {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
@@ -31,7 +29,7 @@ export default function Product() {
   // <-- end added
 
   if (isLoading) return <h1 className="h-screen text-center text-3xl py-20">Loading...!</h1>;
-  if (isError || !product) return <h1 className="h-screen text-center text-3xl py-20">Không tìm thấy sản phẩm</h1>;
+  if (isError || !product) return <h1 className="h-screen text-center text-3xl py-20"><Error /></h1>;
 
   const related = products.filter(
   (p) => p.category === product.category && p._id !== product._id
@@ -75,350 +73,43 @@ const anotherProducts = products.filter(
 
   return (
     <section className="max-w-[1200px] mx-auto pb-10 ">
-      {/* thông tin ở dạng mobile */}
-      <div className="block lg:hidden flex-1 w-full px-2 pt-2">
-          <h1 className="text-2xl font-bold mb-1">{product.title ?? "Không tải được"}</h1>
-          <div className="flex items-center gap-2">
-            {[...Array(5)].map((_, i) => (
-              <FaStar
-              key={i}
-              color={i < (product.countStar ?? 0)? "#ffad33" : "gray"}
-              />
-            ))}
-            <span className="text-gray-500 text-sm">
-              ({product.totalBuy ?? 0} Đánh giá)
-            </span>
-            {product?.quantity > 0 ? (
-              <span className="text-green-600 font-semibold ml-2">
-                Còn hàng
-              </span>
-            ) : (
-              <span className="text-red-500 font-semibold ml-2">Hết hàng</span>
-            )}
-          </div>
-      </div>
-      <div className="flex flex-col md:flex-row gap-2 ">
-        {/* Left: Ảnh sản phẩm */}
-        <div className="w-full lg:w-5/12 p-2 lg:p-4 flex flex-col items-center gap-4">
-          <div className="w-[350px] h-[350px] bg-white flex items-center justify-center rounded-lg shadow">
-            <Image
-              src={`/${product?.img}` || "/not_found.png"}
-              alt={product?.title || "Sản phẩm"}
-              width={300}
-              height={300}
-              className="object-contain"
-            />
-          </div>
-          {/* Ảnh nhỏ (demo lặp lại ảnh chính) */}
-          <div className="flex gap-2">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="w-16 h-16 bg-white rounded flex items-center justify-center border"
-              >
-                <Image
-                  src={`/${product?.img}` || "/not_found.png"}
-                  alt={product?.title || "sản phẩm"}
-                  width={50}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Right: Thông tin sản phẩm */}
-        <div className="flex-1 w-full  lg:w-7/12 px-2 lg:p-4">
-          <h1 className="hidden lg:block text-2xl font-bold mb-2">{product.title ?? "Không tải được"}</h1>
-          <div className="hidden lg:flex items-center gap-2 mb-2">
-            {[...Array(5)].map((_, i) => (
-              <FaStar
-                key={i}
-                color={i < (product.countStar ?? 0)? "#ffad33" : "gray"}
-              />
-            ))}
-            <span className="text-gray-500 text-sm hidden lg:block">
-              ({product.totalBuy ?? 0} Đánh giá)
-            </span>
-            {product?.quantity > 0 ? (
-              <span className="text-green-600 font-semibold ml-2 hidden lg:block">
-                Còn hàng
-              </span>
-            ) : (
-              <span className="text-red-500 font-semibold ml-2 hidden lg:block">Hết hàng</span>
-            )}
-          </div>
-          <div className="text-2xl font-bold text-primary mb-2">
-            ${product.newPrice}
-          </div>
-          <div className="text-gray-500 line-through mb-4 italic">
-            ${product.oldPrice}
-          </div>
-
-          {/* Số lượng + nút mua */}
-          <div className="flex items-center gap-2 my-4">
-            <button
-              className="px-3 py-1 border rounded"
-              onClick={decrease}
-              aria-label="Decrease quantity"
-            >
-              -
-            </button>
-
-            <span className="px-3 font-medium">{quantity}</span>
-
-            <button
-              className="px-3 py-1 border rounded"
-              onClick={increase}
-              aria-label="Increase quantity"
-            >
-              +
-            </button>
-          </div>
-
-          <div className="py-2 font-bold">
-            <p>
-              Số lượng :
-              <span className="text-green-500"> {product?.quantity}</span>
-            </p>
-          </div>
-
-          <div className="flex items-center gap-4 my-4">
-            <Button
-              text="Thêm vào giỏ hàng"
-              w={160}
-              h={56}
-              onClick={handleAddToCart}
-            />
-
-            <Button
-              onClick={handleBuyProduct}
-              text="Mua ngay"
-              w={115}
-              h={56}
-              primary
-            />
-          </div>
-          {/* Thông tin giao hàng */}
-          <div className="border rounded p-4 mb-2 flex flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold flex items-center gap-3">
-                <FaTruckFast size={25} className="text-primary" /> Miễn phí ship
-              </span>
-              <span className="text-gray-500 text-sm">
-                Nhập địa chỉ để đơn hàng đến nhanh nhất
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="font-semibold flex items-center gap-3">
-                <FaRotate size={25} className="text-primary" /> Chính sách đổi
-                trả
-              </span>
-              <span className="text-gray-500 text-sm">
-                Hoàn hàng trong vòng 30 ngày
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* chi tiết sản phẩm */}
-      <div className="p-2  border-t-2 border-gray-200">
-        <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
-          <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
-           Chi tiết sản phẩm
-        </div>
-        
-        <p className="mb-4 text-gray-700">{product.description}</p>
-      </div>
-      {/* Phần đánh giá */}
-      {/* Phần đánh giá */}
-<div className="p-2 mt-10">
-  <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
-    <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
-    Đánh giá
-  </div>
-
-  {/* Đánh giá */}
-  <div className="border rounded p-4 mb-4 shadow-sm">
-    <div className="flex items-center gap-3 mb-2">
-      <Image
-        src="/men_avatar.jpg"
-        alt="avatar"
-        width={40}
-        height={40}
-        className="rounded-full object-cover"
+      {/* Thông tin sản phẩm */}
+      <ViewProduct 
+      product={product} 
+      quantity={quantity} 
+      increase={increase} 
+      decrease={decrease} 
+      handleAddToCart={handleAddToCart} 
+      handleBuyProduct={handleBuyProduct}
+      productId={product._id}
       />
-      <div>
-        <div className="font-semibold">minhbeo</div>
-        <div className="flex items-center gap-1 text-yellow-400">
-           {[...Array(5)].map((_, i) => (
-              <FaStar
-                key={i}
-                color="#ffad33"
-              />
-            ))}
-        </div>
-      </div>
-    </div>
-    <p className="mb-2 text-gray-700">
-      <span className="font-semibold">Chất lượng sản phẩm:</span> tốt
-    </p>
-    <p className="mb-2 text-gray-700">
-      <span className="font-semibold">Tính năng nổi bật:</span> âm thanh nghe rõ và to
-    </p>
-    <p className="mb-2 text-gray-700">
-      Sản phẩm tốt đúng với giá tiền 59.000đ, âm thanh nghe không bị rè, loa to, kết nối Bluetooth nhanh, màu sắc đẹp, cầm hơi nhẹ nhưng với giá tiền này thì hợp lý đáng để mọi người mua.
-    </p>
-
-    {/* Hình/ video */}
-    <div className="flex gap-2 mt-2">
-      <Image src="/phone2.png" alt="review1" width={64} height={64}  className="object-cover rounded" />
-      <Image src="/phone2.png" alt="review1" width={64} height={64}  className="object-cover rounded" />
-      <Image src="/phone2.png" alt="review1" width={64} height={64}  className="object-cover rounded" />
-      {/* Video có thể dùng thẻ video */}
-      {/* <video className="w-16 h-16 rounded" controls>
-        <source src="/mnt/data/9ada9d1a-3ee1-4a65-9916-4f0997aae300.png" type="video/mp4" />
-      </video> */}
-    </div>
-    <div className="mt-2 text-gray-400 text-sm">32 lượt thích</div>
-  </div>
-</div>
+      {/* Phần đánh giá */}
+      <ReviewProduct productId={product._id} />
 
       
 
-      {/* sản phẩm cùng loại */}
       <div className="mt-12 px-2">
-        <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
+        <h3 className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
           <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
           Sản phẩm liên quan
-        </div>
-        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4 ">
-          {related.slice(0, 20).map((product) => (
-            <article
-              key={product?._id}
-              className="relative w-full rounded-xl shadow-lg bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl group"
-            >
-              <Link
-                href={`/products/${product._id}`}
-                className="absolute inset-0 z-20"
-              ></Link>
-              <div className="relative w-full h-[190px] bg-white flex items-center justify-center overflow-hidden">
-                <Image
-                  src={`/${product.img}` || "/not_found.png"}
-                  alt={product.title || "Sản phẩm"}
-                  fill
-                  className="object-contain p-3 transition-all duration-300 group-hover:scale-105"
-                />
-              </div>
-                  {/* Badge giảm giá */}
-               {/* Kiểm tra: Có giá cũ VÀ giá cũ > (giá mới hoặc 0) */}
-                {product.oldPrice &&
-                  product.oldPrice > (product.newPrice ?? 0) && (
-                    <span className="absolute top-3 left-3 px-3 py-[3px] bg-[#e34646] text-white rounded-md text-sm font-semibold shadow">
-                      -
-                      {Math.round(
-                        // Dùng (product.newPrice ?? 0) để tránh trừ cho undefined ra NaN
-                        ((product.oldPrice - (product.newPrice ?? 0)) /
-                          product.oldPrice) *
-                          100
-                      )}
-                      %
-                    </span>
-                  )}
-              <div className="px-4 pb-4 pt-2">
-                <h2 className="text-base font-medium h-[42px] line-clamp-2">
-                  {product.title}
-                </h2>
-                <div className="flex items-center gap-3 mt-2">
-                  <p className="text-lg font-semibold text-[#e34646]">
-                    ${product.newPrice}
-                  </p>
-                  <p className="text-sm font-medium text-black/60 line-through italic">
-                    ${product.oldPrice}
-                  </p>
-                </div>
-                <div className="flex items-center mt-2">
-                  {[...Array(5)].map((_, i) => (
-                    <FaStar
-                      key={i}
-                      size={16}
-                      color={i < product.countStar! ? "#ffad33" : "#d1d1d1"}
-                    />
-                  ))}
-                  <span className="ml-3 text-sm text-black/60 font-medium">
-                    ({product.totalBuy})
-                  </span>
-                </div>
-              </div>
-            </article>
+        </h3>
+
+        <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4">
+          {related.slice(0, 20).map(p => (
+            <ProductCard key={p._id} product={p} />
           ))}
         </div>
       </div>
-      {/* sản phẩm khác */}
+
       <div className="mt-12 px-2">
-        <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
+        <h3 className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
           <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
           Sản phẩm khác
-        </div>
+        </h3>
+
         <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-4">
-          {anotherProducts.slice(0, 20).map((product) => (
-            <article
-              key={product?._id}
-              className="relative w-full rounded-xl shadow-lg bg-white overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl group"
-            >
-              <Link
-                href={`/products/${product._id}`}
-                className="absolute inset-0 z-20"
-              ></Link>
-              <div className="relative w-full h-[190px] bg-white flex items-center justify-center overflow-hidden">
-                <Image
-                  src={`/${product.img}` || "/not_found.png"}
-                  alt={product.title || "Sản phẩm"}
-                  fill
-                  className="object-contain p-3 transition-all duration-300 group-hover:scale-105"
-                />
-              </div>
-                 {/* Badge giảm giá */}
-               {/* Kiểm tra: Có giá cũ VÀ giá cũ > (giá mới hoặc 0) */}
-                {product.oldPrice &&
-                  product.oldPrice > (product.newPrice ?? 0) && (
-                    <span className="absolute top-3 left-3 px-3 py-[3px] bg-[#e34646] text-white rounded-md text-sm font-semibold shadow">
-                      -
-                      {Math.round(
-                        // Dùng (product.newPrice ?? 0) để tránh trừ cho undefined ra NaN
-                        ((product.oldPrice - (product.newPrice ?? 0)) /
-                          product.oldPrice) *
-                          100
-                      )}
-                      %
-                    </span>
-                  )}
-              <div className="px-4 pb-4 pt-2">
-                <h2 className="text-base font-medium h-[42px] line-clamp-2">
-                  {product.title}
-                </h2>
-                <div className="flex items-center gap-3 mt-2">
-                  <p className="text-lg font-semibold text-[#e34646]">
-                    ${product.newPrice}
-                  </p>
-                  <p className="text-sm font-medium text-black/60 line-through italic">
-                    ${product.oldPrice}
-                  </p>
-                </div>
-                <div className="flex items-center mt-2">
-                  {[...Array(5)].map((_, i) => (
-                    <FaStar
-                      key={i}
-                      size={16}
-                      color={i < product.countStar! ? "#ffad33" : "#d1d1d1"}
-                    />
-                  ))}
-                  <span className="ml-3 text-sm text-black/60 font-medium">
-                    ({product.totalBuy})
-                  </span>
-                </div>
-              </div>
-            </article>
+          {anotherProducts.slice(0, 20).map(p => (
+            <ProductCard key={p._id} product={p} />
           ))}
         </div>
       </div>
