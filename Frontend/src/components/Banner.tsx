@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 
 import { FaAngleRight } from "react-icons/fa6";
 import Carousel from "react-multi-carousel";
