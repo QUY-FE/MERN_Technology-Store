@@ -23,14 +23,14 @@ export default function AdminLayout({
   }, [pathname,router]);
 
   const handleLogout = () => {
-    if (!confirm("Bạn có muốn đăng xuất?")) return;
+    if (!confirm("Bạn có muốn thoát ?")) return;
     try {
       localStorage.removeItem("token");
     } catch (error) {
       console.error("Logout error:", error);
     }
-    toast.info('Đăng xuất thành công')
-    router.replace("/admin");
+    toast.info('Bạn đã rời khỏi trang Admin')
+    router.push("/");
   };
   const menu = [
     { name: "Dashboard", path: "/admin/dashboard" },

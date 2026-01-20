@@ -7,6 +7,7 @@ import { FaStar } from "react-icons/fa";
 import { CustomLeftArrow, CustomRightArrow } from "./Button";
 import { useGetAllProductQuery } from "#/redux/features/productApi";
 import { BsArrowRight } from "react-icons/bs";
+import ProductCard from "./ProductCard";
 
 interface CountDownTimeProps {
   targetDate: string;
@@ -46,7 +47,7 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
 
   return (
     <section className="w-full border-b-1 border-[#b3b3b3]">
-      <div className="flex items-center justify-between mb-8 gap-4">
+      {/* <div className="flex items-center justify-between mb-8 gap-4">
         <h1 className="w-full lg:w-2/6 text-3xl font-bold text-primary py-4">Flash Sales</h1>
         <Link
           href="/products"
@@ -55,34 +56,52 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
           Xem tất cả
           <BsArrowRight className="w-4 h-4" />
         </Link>
-      </div>
-      <div className="w-full h-full flex items-center lg:justify-normal justify-center gap-6 text-xl">
+      </div> */}
+      <div className="flex justify-between items-end mb-8 border-b pb-4 border-gray-200">
+              <div>
+                  <h2 className="text-2xl text-red-600 font-bold uppercase tracking-wide">
+                  Flash Sales
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1">Siêu sell ưu đãi </p>
+              </div>
+              
+              <Link
+                href="/products"
+                className="text-sm font-semibold text-gray-600 hover:text-red-600 transition-colors flex items-center gap-1"
+              >
+                Xem tất cả
+                <BsArrowRight className="w-4 h-4" />
+              </Link>
+            </div> 
+
+
+      <div className="w-full h-full flex items-center lg:justify-normal justify-center gap-1 text-xl">
           <h1>
             Ngày:
-            <span className="text-md text-primary font-bold italic">
+            <span className="px-2 text-primary  ">
               {timeLeft?.days || "00"}
             </span>
           </h1>
           <h1>
             Giờ:
-            <span className="text-md text-primary font-bold italic">
+            <span className="px-2 text-primary  ">
               {timeLeft?.hours || "00"}
             </span>
           </h1>
           <h1>
             Phút:
-            <span className="text-md text-primary font-bold italic">
+            <span className="px-2 text-primary  ">
               {timeLeft?.minutes || "00"}
             </span>
           </h1>
           <h1>
             Giây:
-            <span className="text-md text-primary font-bold italic">
+            <span className="px-2 text-primary  ">
               {timeLeft?.seconds || "00"}
             </span>
           </h1>
-        </div>
-      <div className="w-full py-10">
+      </div>
+      {/* <div className="w-full h-[400px] py-10"> */}
         {timeLeft ? (
           <Carousel
             autoPlay
@@ -95,76 +114,16 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
               tablet: { breakpoint: { max: 1024, min: 464 }, items: 3 },
               mobile: { breakpoint: { max: 464, min: 0 }, items: 2 },
             }}
-            itemClass="px-2"
+            itemClass="mt-10 pb-20 px-[5px]" 
             customLeftArrow={<CustomLeftArrow />}
             customRightArrow={<CustomRightArrow />}
           >
             {products.map((product) => (
-              <article
-                key={product._id}
-                className="relative w-full rounded-xl shadow-lg bg-white overflow-hidden transition-all duration-300 hover:shadow-2xl group"
-              >
-                <Link
-                  href={`/products/${product._id}`}
-                  className="absolute inset-0 z-20"
-                />
-
-                <div className="relative w-full h-[200px] flex items-center justify-center overflow-hidden">
-                  <Image
-                    src={`/${product.img}` || "/not_found.png"}
-                    alt={product.title || "sản phẩm"}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
-
-                {product.oldPrice &&
-                  product.oldPrice > (product.newPrice ?? 0) && (
-                    <span className="absolute top-3 left-3 px-3 py-[3px] bg-[#e34646] text-white rounded-md text-sm font-semibold shadow">
-                      -
-                      {Math.round(
-                        ((product.oldPrice - (product.newPrice ?? 0)) /
-                          product.oldPrice) *
-                          100
-                      )}
-                      %
-                    </span>
-                  )}
-
-                <div className="px-4 pb-4 pt-2">
-                  <h2 className="text-base font-medium h-[42px] line-clamp-2">
-                    {product.title}
-                  </h2>
-
-                  <div className="flex items-center gap-3 mt-2">
-                    <p className="text-lg font-semibold text-[#e34646]">
-                      ${product.newPrice}
-                    </p>
-                    <p className="text-sm font-medium text-black/60 line-through italic">
-                      ${product.oldPrice}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center mt-2">
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar
-                        key={i}
-                        size={16}
-                        color={
-                          i < (product.countStar ?? 0) ? "#ffad33" : "#d1d1d1"
-                        }
-                      />
-                    ))}
-                    <span className="ml-3 text-sm text-black/60 font-medium">
-                      ({product.totalBuy})
-                    </span>
-                  </div>
-                </div>
-              </article>
+              <ProductCard key={product._id} product={product} />
             ))}
           </Carousel>
         ) : (
-          <div className="w-full h-[400px] px-28">
+          <div className="w-full h-[400px] px-28 ">
             <h1 className="text-8xl text-primary font-semibold leading-[120px]">
               {":("}
             </h1>
@@ -173,7 +132,7 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
             </p>
           </div>
         )}
-      </div>
+      {/* </div> */}
     </section>
   );
 }

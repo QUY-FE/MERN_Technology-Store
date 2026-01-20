@@ -1,57 +1,74 @@
 "use client";
 import Image from "next/image";
 
-import { FaAngleRight } from "react-icons/fa6";
+// import { FaAngleRight } from "react-icons/fa6";
 import Carousel from "react-multi-carousel";
 
 import banner1 from "#/assets/images/banner1_hd.jpeg";
 import banner3 from "#/assets/images/banner3.jpg";
 import banner4 from "#/assets/images/banner4.webp";
+import Link from "next/link";
 
-const tabbarMenu = [
+// const tabbarMenu = [
+//   {
+//     href: "/",
+//     title: "Womens  Fashion",
+//     icon: <FaAngleRight />,
+//   },
+//   {
+//     href: "/",
+//     title: "Men Fashion",
+//     icon: <FaAngleRight />,
+//   },
+//   {
+//     href: "/",
+//     title: "Electronics",
+//   },
+//   {
+//     href: "/",
+//     title: "Home & Lifestyle",
+//     icon: <FaAngleRight />,
+//   },
+//   {
+//     href: "/",
+//     title: "Medicine",
+//   },
+//   {
+//     href: "/",
+//     title: "Sprots & Outdoor",
+//     icon: <FaAngleRight />,
+//   },
+//   {
+//     href: "/",
+//     title: "Baby & Toys",
+//   },
+//   {
+//     href: "/",
+//     title: "Groceries & Pets",
+//     icon: <FaAngleRight />,
+//   },
+//   {
+//     href: "/",
+//     title: "Health & Beauty",
+//   },
+// ];
+const allBanner = [
   {
-    href: "/",
-    title: "Womens  Fashion",
-    icon: <FaAngleRight />,
+    id: 1,
+    src: banner1,
+    link: "/",
   },
   {
-    href: "/",
-    title: "Men Fashion",
-    icon: <FaAngleRight />,
+    id: 2,
+    src: banner3,
+    link: "/",
   },
   {
-    href: "/",
-    title: "Electronics",
-  },
-  {
-    href: "/",
-    title: "Home & Lifestyle",
-    icon: <FaAngleRight />,
-  },
-  {
-    href: "/",
-    title: "Medicine",
-  },
-  {
-    href: "/",
-    title: "Sprots & Outdoor",
-    icon: <FaAngleRight />,
-  },
-  {
-    href: "/",
-    title: "Baby & Toys",
-  },
-  {
-    href: "/",
-    title: "Groceries & Pets",
-    icon: <FaAngleRight />,
-  },
-  {
-    href: "/",
-    title: "Health & Beauty",
+    id: 3,
+    src: banner4,
+    link: "/",
   },
 ];
-const allBanner = [banner1, banner3, banner4];
 
 export default function Banner() {
   return (
@@ -72,7 +89,7 @@ export default function Banner() {
         </ul>
       </div> */}
 
-      <div className="w-full  lg:pt-4 ">
+      <div className="w-full lg:pt-1 ">
         <Carousel
           autoPlay
           arrows={false}
@@ -95,19 +112,20 @@ export default function Banner() {
           slidesToSlide={1}
           swipeable
         >
-          {allBanner.map((imgURL, index) => (
-            <article
-              key={index}
-              className="relative w-full h-[280px] lg:h-[70vh] rounded-lg overflow-hidden shadow-md"
+          {allBanner.map((imgUrl) => (
+            <Link
+              href={imgUrl.link}
+              key={imgUrl.id}
+              className="block relative w-full h-[280px] lg:h-[60vh] rounded-lg overflow-hidden shadow-md"
             >
               <Image
-                src={imgURL}
-                alt={`banner-${index}`}
+                src={imgUrl?.src}
+                alt={`banner-${imgUrl.id}`}
                 fill
-                className="object-cover rounded-lg"
-                priority={index === 0}
+                className="object-cover rounded-xl"
+                priority={imgUrl.id === 1}
               />
-            </article>
+            </Link>
           ))}
         </Carousel>
       </div>

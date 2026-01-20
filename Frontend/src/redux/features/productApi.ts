@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export interface Product {
   _id: string;
   title: string;
-  img: string;
+  gallery?: string[];
   newPrice: number;
   oldPrice: number;
   countStar: number;
@@ -11,13 +11,15 @@ export interface Product {
   category: string;
   description: string;
   quantity: number;
+  views: number;
+  sold: number;
   createdAt: string;
   updatedAt: string;
 }
 
 export type CreateProductDto = {
   title: string;
-  img: string;
+  gallery?: string[];
   newPrice: number;
   oldPrice: number;
   quantity: number;

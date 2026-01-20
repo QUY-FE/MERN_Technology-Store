@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const productShema = new mongoose.Schema({
     title: {type: String ,require:true},
-    img: {type: String},
+    gallery: [{ type: String }],
     newPrice: { type: Number, require: true},
     oldPrice: {type:Number},
     countStar: {type:Number, default: 0},

@@ -13,7 +13,12 @@ export const getProducts = async (req, res, next) => {
 // POST /create-product
 export const createProduct = async (req, res, next) => {
   try {
-    const newProduct = new Product(req.body);
+    // gallery là mảng string, img là ảnh chính
+    const { gallery, ...rest } = req.body;
+    const newProduct = new Product({
+      ...rest,
+      gallery: Array.isArray(gallery) ? gallery : (gallery ? [gallery] : [])
+    });
     const saveProduct = await newProduct.save();
     res.status(201).json(saveProduct)
   } catch (error) {
@@ -35,7 +40,12 @@ export const getOneProduct = async  (req, res, next) => {
 // PUT /edit/:id
 export const updateProduct = async (req, res, next) => {
   try {
-    const updated = await Product.findByIdAndUpdate(req.params.id, req.body,{ new: true});
+    const { gallery, ...rest } = req.body;
+    const updateData = {
+      ...rest,
+      gallery: Array.isArray(gallery) ? gallery : (gallery ? [gallery] : [])
+    };
+    const updated = await Product.findByIdAndUpdate(req.params.id, updateData, { new: true });
     res.json(updated);
   } catch (error) {
     res.status(500).json({ message: error.message });

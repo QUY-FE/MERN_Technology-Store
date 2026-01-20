@@ -8,11 +8,11 @@ import NavbarMobile from "./Header/NavbarMobile";
 
 
 const navbarListDefault = [
-  {
-    id: 1,
-    name: "Trang chủ",
-    href: "/",
-  },
+  // {
+  //   id: 1,
+  //   name: "Trang chủ",
+  //   href: "/",
+  // },
   {
     id: 4,
     name: "Sản phẩm",
@@ -41,7 +41,7 @@ export default function Header() {
       <Sales
         hasSales
         totalSales={28}
-        titleSales="Giảm giá cực sốc trong mùa hè này với đồ Gaming "
+        titleSales="Giảm giá cực sốc trong mùa xuân này với đồ Gaming "
       />
       <div className="border-b-2 border-gray-100">
         <div className="max-w-[1200px] h-[80px] mx-auto  flex items-center ">

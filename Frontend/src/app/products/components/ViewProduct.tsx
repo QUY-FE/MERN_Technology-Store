@@ -1,17 +1,10 @@
 import Button from '#/components/Button'
 import { useGetReviewsByProductQuery } from '#/redux/features/reviewsApi'
 import Image from 'next/image'
-import React from 'react'
 import { FaStar } from 'react-icons/fa'
 import { FaRotate, FaTruckFast } from 'react-icons/fa6'
-
-
-
-
-
-
-// Import Product type from ProductCard for consistency
-import type { Product } from "./ProductCard";
+import type { Product } from "../../../components/ProductCard";
+import { useState } from "react";
 
 interface ProductInfoProps {
   product: Product;
@@ -35,6 +28,10 @@ const ViewProduct = ({
 }: ProductInfoProps) => {
   const { data: reviewsData } = useGetReviewsByProductQuery(productId);
   const reviews = reviewsData ?? [];
+
+  // State: ảnh chính đang hiển thị
+  const [mainImage, setMainImage] = useState<string>(product.gallery?.[0] || "");
+
   return (
     <>
       {/* thông tin ở dạng mobile */}
@@ -64,29 +61,33 @@ const ViewProduct = ({
         <div className="w-full lg:w-5/12 p-2 lg:p-4 flex flex-col items-center gap-4">
           <div className="w-[350px] h-[350px] bg-white flex items-center justify-center rounded-lg shadow">
             <Image
-              src={product?.img ? `/${product.img}` : "/not_found.png"}
+              src={mainImage ? `/${mainImage}` : "/not_found.png"}
               alt={product?.title || "Sản phẩm"}
               width={300}
               height={300}
               className="object-contain"
             />
           </div>
-          {/* Ảnh nhỏ (demo lặp lại ảnh chính) */}
+          {/* Gallery ảnh nhỏ */}
           <div className="flex gap-2">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="w-16 h-16 bg-white rounded flex items-center justify-center border"
-              >
-                <Image
-                  src={product?.img ? `/${product.img}` : "/not_found.png"}
-                  alt={product?.title || "sản phẩm"}
-                  width={50}
-                  height={50}
-                  className="object-contain"
-                />
-              </div>
-            ))}
+            {
+              product.gallery?.map((img, idx) => (
+                <div
+                  key={idx}
+                  className={`w-16 h-16 bg-white rounded flex items-center justify-center border cursor-pointer ${mainImage === img ? 'ring-2 ring-primary' : ''}`}
+                  onClick={() => setMainImage(img)}
+                  title="Xem ảnh này"
+                >
+                  <Image
+                    src={`/${img}`}
+                    alt={product?.title || "sản phẩm"}
+                    width={50}
+                    height={50}
+                    className="object-contain"
+                  />
+                </div>
+              ))
+            }
           </div>
         </div>
         {/* Right: Thông tin sản phẩm */}

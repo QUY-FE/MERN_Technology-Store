@@ -9,7 +9,7 @@ import { IoGameControllerOutline } from "react-icons/io5";
 import { FaComputer } from "react-icons/fa6";
 import { TbHorseToy } from "react-icons/tb";
 import Carousel from "react-multi-carousel";
-import { CustomLeftArrow, CustomRightArrow } from "./Button";
+import { CustomLeftArrow, CustomRightArrow } from "#/components/Button";
 
 
 // 2. (Nên làm) Định nghĩa type cho một category item

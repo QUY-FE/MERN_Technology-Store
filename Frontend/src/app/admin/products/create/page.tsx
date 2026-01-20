@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 interface FormData {
   title: string;
   img: FileList;
+  gallery: FileList;
   newPrice: number;
   oldPrice: number;
   quantity: number;
@@ -20,9 +21,9 @@ interface FormData {
   description: string;
 }
 
-export default function Page() {
-  const [imgFile, setImgFile] = useState<File | null>(null);
-  const [imageFileName, setImageFileName] = useState('');
+export default function CreateProductPage() {
+  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
+  const [galleryFileNames, setGalleryFileNames] = useState<string[]>([]);
   const [createProduct] = useCreateProductMutation();
   const router = useRouter();
   const {
@@ -33,17 +34,17 @@ export default function Page() {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    const newProduct= {
+    const newProduct = {
       ...data,
-      img: imageFileName,
-    }
+      gallery: galleryFileNames,
+    };
+    await console.log(newProduct);
     try {
       await createProduct(newProduct).unwrap();
       toast.success("Thêm sản phẩm thành công");
-      console.log(imgFile)
       reset();
-      setImageFileName('');
-      setImgFile(null);
+      setGalleryFiles([]);
+      setGalleryFileNames([]);
       router.push("/admin/products");
     } catch (error) {
       console.error(error);
@@ -51,13 +52,19 @@ export default function Page() {
     }
   };
 
- const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0]; // Dùng ?. để an toàn hơn
-  if (file) {
-    setImgFile(file);
-    setImageFileName(file.name);
-  }
-};
+
+
+ const handleGalleryChange = (e: ChangeEvent<HTMLInputElement>) => {
+   const files = e.target.files;
+   if (files && files.length > 0) {
+     const fileArr = Array.from(files);
+     setGalleryFiles(fileArr);
+     setGalleryFileNames(fileArr.map(f => f.name));
+   } else {
+     setGalleryFiles([]);
+     setGalleryFileNames([]);
+   }
+ };
 
   return (
     <div className="max-w-2xl w-full mx-auto">
@@ -138,11 +145,15 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Ảnh */}
+
+        {/* Gallery ảnh (nhiều ảnh) */}
         <div>
-          <label className="font-semibold text-sm">URL ảnh :</label>
+          <label className="font-semibold text-sm">Gallery ảnh (nhiều ảnh):</label>
           <div>
-            <input type="file" accept="image/*" onChange={handleFileChange} className="cst_input" />
+            <input type="file" accept="image/*" multiple onChange={handleGalleryChange} className="cst_input" />
+            {galleryFileNames.length > 0 && (
+              <div className="mt-2 text-xs text-gray-500">{galleryFileNames.join(', ')}</div>
+            )}
           </div>
         </div>
 

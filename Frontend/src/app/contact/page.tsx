@@ -36,32 +36,32 @@ export default function Contact() {
 
 
   return (
-    <section className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 mt-20">
+    <section className="max-w-[1200px] mx-auto flex flex-col-reverse  lg:grid grid-cols-1 lg:grid-cols-2 gap-6 mt-5">
       {/* Thông tin liên hệ - Giữ nguyên UI */}
-      <div className="rounded-2xl px-8 py-10 ">
-        <div className="pb-4">
+      <div className="rounded-2xl flex flex-col items-center justify-center lg:text-lg text-xs">
+        <div className="w-full pb-4 px-4 lg:px-0 ">
           <h1 className="mb-4 text-2xl font-semibold flex items-center gap-4">
             <span className="w-10 h-10 flex items-center justify-center bg-[#e34646] rounded-full text-white">
               <FaPhone />
             </span>
-            Gọi cho chúng tôi
+            Hotline
           </h1>
           <p className="mb-2 text-sm">
-            Chúng tôi luôn nghe 24/7 tất cả các ngày trong tuần
+            Chúng tôi luôn nghe bạn ^_^
           </p>
-          <p className="mb-2">Số điện thoại: 02xxxxxxxxxx</p>
+          <p className="mb-2 ">Số điện thoại : <span className="font-bold">1900 xxxx</span></p>
         </div>
-        <div className="pb-4">
+        <div className="w-full pb-4 px-4 lg:px-0">
           <h1 className="mb-4 text-2xl font-semibold flex items-center gap-4">
             <span className="w-10 h-10 flex items-center justify-center bg-[#e34646] rounded-full text-white">
               <TbMail />
             </span>
-            Gửi tin nhắn
+            Email
           </h1>
           <p className="mb-2 text-sm">
-            Chúng tôi sẽ phản hồi sớm nhất trong 24h
+            Chúng tôi sẽ phản hồi sớm nhất tới bạn trong vòng 24h
           </p>
-          <p className="mb-2">Email: cskhQn@gmail.com</p>
+          <p className="mb-2">Email: <span className="font-bold">cskh.qnshop@gmail.com</span></p>
           
         </div>
       </div>
@@ -69,37 +69,14 @@ export default function Contact() {
       {/* Form liên hệ - Refactor với react-hook-form */}
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="shadow-lg rounded-2xl px-8 py-10 flex flex-col bg-white"
+        className=" rounded-lg mt-10 px-2 py-4 lg:px-8 lg:py-10"
       >
-        <h1 className="text-2xl mb-4 font-semibold text-black/90">
-          Nhập thông tin của bạn
+        <h1 className="text-2xl text-center mb-4 font-semibold text-black/90">
+          Liên hệ
         </h1>
 
         <ul className=" mb-6">
-          {/* Input Email */}
-          <li className="flex flex-col gap-1 py-2">
-            <label
-              htmlFor="email"
-              className="text-sm font-semibold text-black/80"
-            >
-              Nhập email
-            </label>
-            <input
-              type="email"
-              placeholder="VD: user1@gmail.com"
-              className={`w-full pl-3 py-3 font-semibold outline-none rounded-lg bg-black/5 border ${errors.email ? 'border-red-500' : 'border-transparent'}`}
-              {...register("email", {
-                required: "Email là bắt buộc",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Email không hợp lệ",
-                },
-              })}
-            />
-            {errors.email && (
-              <span className="text-xs text-red-500">{errors.email.message}</span>
-            )}
-          </li>
+          
 
           {/* Input Username */}
           <li className="flex flex-col gap-1 py-2">
@@ -107,13 +84,13 @@ export default function Contact() {
               htmlFor="username"
               className="text-sm font-semibold text-black/80"
             >
-              Nhập họ tên
+              Họ & tên :
             </label>
             <input
               type="text"
-              placeholder="Nguyễn văn A"
+              placeholder="--- Nhập họ tên ---"
               className={`w-full pl-3 py-3 font-semibold outline-none rounded-lg bg-black/5 border ${errors.username ? 'border-red-500' : 'border-transparent'}`}
-              {...register("username", { required: "Họ tên là bắt buộc" })}
+              {...register("username", { required: "Vui lòng nhập đầy đủ họ & tên" })}
             />
             {errors.username && (
               <span className="text-xs text-red-500">
@@ -123,19 +100,19 @@ export default function Contact() {
           </li>
 
           {/* Input Phone Number */}
-          <li className="flex flex-col gap-1 py-2">
+          <li className="flex flex-col gap-1 py-1">
             <label
               htmlFor="number"
               className="text-sm font-semibold text-black/80"
             >
-              Nhập số điện thoại
+              Số điện thoại :
             </label>
             <input
               type="text"
-              placeholder="VD:0364XXXXXXXX"
+              placeholder="+84 xxxxxxxxxx"
               className={`w-full pl-3 py-3 font-semibold outline-none rounded-lg bg-black/5 border ${errors.number ? 'border-red-500' : 'border-transparent'}`}
               {...register("number", {
-                required: "SĐT là bắt buộc",
+                required: "Vui lòng nhập số điện thoại",
                 pattern: {
                   value: /^[0-9]+$/,
                   message: "Chỉ được nhập số",
@@ -153,17 +130,17 @@ export default function Contact() {
         </ul>
 
         {/* Textarea Description */}
-        <div className="w-full h-[200px] mb-6 rounded-lg flex flex-col gap-1">
+        <div className="w-full h-[200px] mb-2 rounded-lg flex flex-col gap-1">
           <label
             htmlFor="description"
             className="text-sm font-semibold text-black/80"
           >
-            Nhập nội dung
+            Nội dung :
           </label>
           <textarea
-            placeholder="Lý do liên hệ"
+            placeholder="Nội dung liên hệ . . ."
             className={`w-full h-full p-3 outline-none resize-none rounded-lg bg-black/5 border ${errors.description ? 'border-red-500' : 'border-transparent'}`}
-            {...register("description", { required: "Vui lòng nhập nội dung" })}
+            {...register("description", { required: "Vui lòng nhập nội dung cần liên hệ" })}
           />
           {errors.description && (
             <span className="text-xs text-red-500">
@@ -173,7 +150,7 @@ export default function Contact() {
         </div>
 
         <div className="flex justify-end">
-          <Button type="submit" primary w={215} h={56} text="Gửi" />
+          <Button type="submit" primary w={180} h={48} text="Gửi" />
         </div>
       </form>
     </section>

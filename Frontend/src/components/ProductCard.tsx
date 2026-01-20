@@ -3,11 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 
-// Define the Product interface based on usage
 export interface Product {
   _id: string;
   title: string;
-  img: string;
+  gallery?: string[]; 
   newPrice: number;
   oldPrice: number;
   countStar: number;
@@ -39,7 +38,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       
       <div className="relative w-full h-[190px] bg-white flex items-center justify-center overflow-hidden">
         <Image
-          src={product.img ? `/${product.img}` : "/not_found.png"}
+          // src={product.img ? `/${product.img}` : "/not_found.png"}
+          src={`/${product.gallery?.[0]}`}
           alt={product.title || "Sản phẩm"}
           fill
           className="object-contain p-3 transition-all duration-300 group-hover:scale-105"
@@ -73,9 +73,9 @@ export default function ProductCard({ product }: ProductCardProps) {
               color={i < (product.countStar ?? 0) ? "#ffad33" : "#d1d1d1"}
             />
           ))}
-          <span className="ml-3 text-sm text-black/60 font-medium">
+          {/* <span className="ml-3 text-sm text-black/60 font-medium">
             ({product.totalBuy ?? 0})
-          </span>
+          </span> */}
         </div>
       </div>
     </article>

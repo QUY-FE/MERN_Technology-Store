@@ -74,14 +74,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const loginWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
-      toast.success("Đăng nhập Google thành công!");
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
+      toast.success("Chào mừng bạn đến với QN Shop!");
+      router.push("/");
     } catch (error) {
-      // SỬA LỖI: Ép kiểu error thành Error để lấy message
       const err = error as Error;
-      toast.error(err.message || "Đăng nhập Google thất bại!");
+      toast.error( "Đăng nhập Google thất bại!");
     }
   };
 
@@ -89,14 +86,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Đăng nhập thành công!");
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
+      router.push("/");
     } catch (error) {
-      // SỬA LỖI
       const err = error as Error;
-      toast.error(err.message || "Đăng nhập thất bại!");
+      toast.error("Đăng nhập thất bại!");
     }
   };
 
@@ -114,11 +107,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       );
       if (username) await updateProfile(user, { displayName: username });
       toast.success("Đăng ký thành công!");
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
+      router.push("/");
     } catch (error) {
-      // SỬA LỖI
       const err = error as Error;
       toast.error(err.message || "Đăng ký thất bại!");
     }
@@ -128,12 +118,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const logout = async () => {
     try {
       await signOut(auth);
-      toast.info("Đã đăng xuất!");
-      setTimeout(() => {
-        router.push("/");
-      }, 2000);
+      router.push("/");
     } catch (error) {
-      // SỬA LỖI
       const err = error as Error;
       toast.error(err.message || "Đăng xuất thất bại!");
     }
@@ -145,7 +131,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await sendPasswordResetEmail(auth, email);
       toast.info("Kiểm tra email để đặt lại mật khẩu!");
     } catch (error) {
-      // SỬA LỖI
+      
       const err = error as Error;
       toast.error(err.message || "Không thể gửi email khôi phục!");
     }

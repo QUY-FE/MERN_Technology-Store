@@ -82,8 +82,8 @@ const Search = () => {
           onFocus={() => {
             if (keyword) setShowDropdown(true);
           }}
-          placeholder="Bạn cần tìm gì?"
-          className="w-[240px] h-[38px] px-2 outline-none bg-[#f5f5f5] text-black"
+          placeholder="Bạn cần tìm gì ?"
+          className="w-[300px] h-[38px] px-2 outline-none bg-[#f5f5f5] text-black"
         />
         
         {/* Logic hiển thị icon: Loading -> Delete -> Search */}

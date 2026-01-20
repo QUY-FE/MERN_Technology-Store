@@ -10,7 +10,7 @@ import Image from "next/image";
 
 interface FormData {
   title: string;
-  img: FileList;
+  gallery: FileList;
   newPrice: number;
   oldPrice: number;
   quantity: number;
@@ -20,6 +20,8 @@ interface FormData {
   category: string;
   description: string;
 }
+
+import { useState } from "react";
 
 export default function Page() {
   const { id } = useParams<{id: string}>();
@@ -35,6 +37,8 @@ export default function Page() {
   } = useForm<FormData>();
 
   const product = products.find((p) => p._id === id);
+  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
+  const [galleryFileNames, setGalleryFileNames] = useState<string[]>([]);
 
   // đổ dữ liệu cũ vào form
   useEffect(() => {
@@ -49,10 +53,13 @@ export default function Page() {
   }, [product, setValue]);
 
   const onSubmit = async (data: FormData) => {
-    const imgValue =
-      data.img && (data.img ).length > 0
-        ? (data.img )[0].name
-        : product?.img;
+    
+
+    // Gallery mới nếu có, nếu không thì giữ gallery cũ
+    const galleryValue =
+      galleryFileNames.length > 0
+        ? galleryFileNames
+        : product?.gallery || [];
 
     const editProduct = {
       title: data.title,
@@ -61,16 +68,29 @@ export default function Page() {
       quantity: data.quantity,
       category: data.category,
       description: data.description,
-      img: imgValue,
+      gallery: galleryValue,
     };
     try {
-      await updateProduct({ id, data: {...editProduct} }).unwrap();
+      await updateProduct({ id, data: { ...editProduct } }).unwrap();
       console.log(editProduct);
       toast.success("Cập nhật sản phẩm thành công");
       router.push("/admin/products");
     } catch (error) {
       console.log(error);
       toast.error("Cập nhật sản phẩm thất bại");
+    }
+  };
+
+  // Xử lý chọn nhiều ảnh gallery
+  const handleGalleryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const fileArr = Array.from(files);
+      setGalleryFiles(fileArr);
+      setGalleryFileNames(fileArr.map(f => f.name));
+    } else {
+      setGalleryFiles([]);
+      setGalleryFileNames([]);
     }
   };
 
@@ -91,27 +111,39 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Ảnh */}
-        <div>
-          <label className="font-semibold text-sm">Ảnh hiện tại:</label>
-          <div className="w-40 rounded mb-2">
-            <Image  
-            src={`/${product?.img}` || product?.img} 
-            width={160}
-            height={160}
-            alt={product?.title} 
-            className="object-cover rounded"  />
-          </div>
-          
+        
 
-          <label className="font-semibold text-sm">Ảnh mới (tuỳ chọn):</label>
+        {/* Gallery ảnh */}
+        <div>
+          <label className="font-semibold text-sm">Gallery hiện tại:</label>
+          <div className="flex gap-2 mb-2 flex-wrap">
+            {Array.isArray(product.gallery) && product.gallery.length > 0 ? (
+              product.gallery.map((img, idx) => (
+                <Image
+                  key={idx}
+                  src={`/${img}`}
+                  alt="gallery"
+                  width={60}
+                  height={60}
+                  className="object-cover rounded border"
+                />
+              ))
+            ) : (
+              <span className="text-xs text-gray-400">Không có</span>
+            )}
+          </div>
+          <label className="font-semibold text-sm">Gallery mới (chọn nhiều ảnh):</label>
           <div className="border-b-2 border-colorBorder">
             <input
-              {...register("img")}
               type="file"
               accept="image/*"
+              multiple
+              onChange={handleGalleryChange}
               className="cst_input"
             />
+            {galleryFileNames.length > 0 && (
+              <div className="mt-2 text-xs text-gray-500">{galleryFileNames.join(', ')}</div>
+            )}
           </div>
         </div>
 
@@ -176,10 +208,6 @@ export default function Page() {
         </div>
 
         <div className="flex gap-2 justify-end">
-          <Link href="/admin/products" className="cst_btn px-4 py-2">
-            Quay lại
-          </Link>
-
           <button
             type="submit"
             className="cst_btn-primary px-4 py-2"

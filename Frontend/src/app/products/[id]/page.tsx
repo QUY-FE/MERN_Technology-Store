@@ -13,7 +13,11 @@ import {
 import ReviewProduct from "../components/ReviewProduct";
 import ViewProduct from "../components/ViewProduct";
 import Error from "#/components/Error";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "#/components/ProductCard";
+
+
+
+
 export default function Product() {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id: string }>();
@@ -47,7 +51,7 @@ const anotherProducts = products.filter(
         name: product.title,
         price: product.newPrice,
         quantity,
-        image: product.img ?? "/defauft.jpg",
+        image: product.gallery?.[0] ?? "/defauft.jpg",
       })
     );
     toast.success("Đã thêm sản phẩm vào giỏ hàng");
@@ -64,7 +68,7 @@ const anotherProducts = products.filter(
         name: product.title,
         price: product.newPrice,
         quantity,
-        image: product.img ?? "/defauft.jpg",
+        image: product.gallery?.[0] ?? "/defauft.jpg",
       })
     );
     toast.success("Đã thêm sản phẩm vào giỏ hàng");
@@ -87,7 +91,7 @@ const anotherProducts = products.filter(
       <ReviewProduct productId={product._id} />
 
       
-
+      {/* Phần đề xuất sản phẩm cùng loại */}
       <div className="mt-12 px-2">
         <h3 className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
           <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
@@ -100,7 +104,7 @@ const anotherProducts = products.filter(
           ))}
         </div>
       </div>
-
+      {/* Phần đề xuất sản phẩm khác */}
       <div className="mt-12 px-2">
         <h3 className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
           <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
