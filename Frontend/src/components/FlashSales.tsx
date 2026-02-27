@@ -1,13 +1,12 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import Carousel from "react-multi-carousel";
-import { FaStar } from "react-icons/fa";
 import { CustomLeftArrow, CustomRightArrow } from "./Button";
 import { useGetAllProductQuery } from "#/redux/features/productApi";
 import { BsArrowRight } from "react-icons/bs";
 import ProductCard from "./ProductCard";
+import FlashSalesLoading from "./FlashSalesLoading";
 
 interface CountDownTimeProps {
   targetDate: string;
@@ -42,21 +41,12 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
     return () => clearInterval(timer);
   }, [handleCalcTimeLeft]);
 
-  if (isLoading) return <h1>Loading...!</h1>;
+  if (isLoading) return <FlashSalesLoading />;
   if (error) return <h1>Lỗi !</h1>;
 
   return (
     <section className="w-full border-b-1 border-[#b3b3b3]">
-      {/* <div className="flex items-center justify-between mb-8 gap-4">
-        <h1 className="w-full lg:w-2/6 text-3xl font-bold text-primary py-4">Flash Sales</h1>
-        <Link
-          href="/products"
-          className="w-full lg:w-1/6 font-semibold text-red-600 hover:text-red-800 transition-colors flex items-center justify-end gap-1"
-        >
-          Xem tất cả
-          <BsArrowRight className="w-4 h-4" />
-        </Link>
-      </div> */}
+      
       <div className="flex justify-between items-end mb-8 border-b pb-4 border-gray-200">
               <div>
                   <h2 className="text-2xl text-red-600 font-bold uppercase tracking-wide">

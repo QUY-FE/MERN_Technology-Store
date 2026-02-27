@@ -11,7 +11,7 @@ export default function OrderHistoryPage() {
   const { user, loading } = useAuth();
   const emailUser = user?.email;
   
-  const { data: orders = [], isLoading } = useGetOrderByEmailQuery(emailUser!);
+  const { data: orders = [], isLoading ,isError} = useGetOrderByEmailQuery(emailUser!);
   
 
   useEffect(() => {

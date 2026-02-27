@@ -26,10 +26,7 @@ const Page = () => {
           <span className="font-semibold">Title:</span>
           <span>{product.title}</span>
         </li>
-        <li className="flex justify-between p-3">
-          <span className="font-semibold">URL:</span>
-          <span>{product.img || "Không có"}</span>
-        </li>
+        
         <li className="flex justify-between p-3">
           <span className="font-semibold">Giá mới:</span>
           <span>${product.newPrice}</span>

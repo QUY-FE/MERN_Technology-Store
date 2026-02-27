@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import { BsFire, BsStarFill } from "react-icons/bs"; // Import thêm icon cho sidebar
+import { BsFire } from "react-icons/bs"; // Import thêm icon cho sidebar
+import BlogLoading from "./BlogLoading";
 
 // === Dữ liệu mẫu (Đã thêm data để test hiển thị) ===
 const mockNewsData = [
@@ -49,13 +50,21 @@ const sidebarNews = [
     "NVIDIA ra mắt dòng card đồ họa RTX 5000 series"
 ];
 
-// =================================
+// ================================= 
 
-const ITEMS_PER_PAGE = 12; // 12 chia hết cho 3 (số cột) nên layout sẽ đẹp
+const ITEMS_PER_PAGE = 12; 
 
 export default function NewsSection() {
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 300);
+        return () => clearTimeout(timer);
+      }, []);
+    
+      if (loading) {
+        return <BlogLoading />;
+      }
   // Tính toán phân trang
   const totalPages = Math.ceil(mockNewsData.length / ITEMS_PER_PAGE);
 

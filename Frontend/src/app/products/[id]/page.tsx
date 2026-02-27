@@ -14,6 +14,7 @@ import ReviewProduct from "../components/ReviewProduct";
 import ViewProduct from "../components/ViewProduct";
 import Error from "#/components/Error";
 import ProductCard from "#/components/ProductCard";
+import ProductDetailLoading from "./ProductDetailLoading";
 
 
 
@@ -32,7 +33,7 @@ export default function Product() {
   const decrease = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
   // <-- end added
 
-  if (isLoading) return <h1 className="h-screen text-center text-3xl py-20">Loading...!</h1>;
+  if (isLoading) return <ProductDetailLoading />;
   if (isError || !product) return <h1 className="h-screen text-center text-3xl py-20"><Error /></h1>;
 
   const related = products.filter(

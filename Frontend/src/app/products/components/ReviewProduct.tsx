@@ -80,7 +80,7 @@ const ReviewProduct = ({ productId }: { productId: string }) => {
           reviews.map((review: IReview) => (
             <div key={review._id} className="border rounded-lg p-4 shadow-sm bg-white hover:shadow-md transition">
               <div className="flex items-center gap-3 mb-2">
-                <Image src="/men_avatar.jpg" alt="avatar" width={40} height={40} className="rounded-full border" />
+                <Image src={user?.photoURL || "/men_avatar.jpg"} alt="avatar" width={40} height={40} className="rounded-full border" />
                 <div>
                   <div className="font-semibold text-sm text-gray-800">{review.username}</div>
                   <div className="flex text-yellow-400">

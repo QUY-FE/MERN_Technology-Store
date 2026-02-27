@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
-import { FaSearch, FaSpinner } from "react-icons/fa"; // Thêm icon Spinner
+import  { useEffect, useState, useRef } from "react";
+import { FaSearch } from "react-icons/fa"; 
 import useDebounce from "#/hooks/useDebounce";
 import { Product, useGetAllProductQuery } from "#/redux/features/productApi";
 import { TiDelete } from "react-icons/ti";
@@ -8,33 +8,35 @@ import Link from "next/link";
 
 const Search = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  // Lấy thêm isLoading để hiển thị trạng thái
-  const { data: products = [], isLoading } = useGetAllProductQuery();
-  const [keyword, setKeyword] = useState("");
   
-  // Ref để xử lý click outside
+  const { data: products = [] } = useGetAllProductQuery();
+  const [keyword, setKeyword] = useState("");
+
+  
   const searchRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
   const debounceQuery = useDebounce(keyword, 700);
 
-  // FIX: Thêm dependencies vào useEffect
+  
   useEffect(() => {
     if (!debounceQuery.trim()) {
       setFilteredProducts([]);
       return;
     }
 
-    // Chỉ lọc khi có dữ liệu sản phẩm
+    
     if (products.length > 0) {
       const results = products.filter((product) =>
-        product?.title?.toLowerCase().includes(debounceQuery.trim().toLowerCase())
+        product?.title
+          ?.toLowerCase()
+          .includes(debounceQuery.trim().toLowerCase()),
       );
       setFilteredProducts(results);
     }
-  }, [debounceQuery, products]); // Dependencies quan trọng
+  }, [debounceQuery, products]); 
 
-  // Xử lý hiển thị dropdown
+  
   useEffect(() => {
     if (debounceQuery && filteredProducts.length >= 0) {
       setShowDropdown(true);
@@ -46,7 +48,10 @@ const Search = () => {
   // Xử lý click outside để đóng dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     };
@@ -85,13 +90,8 @@ const Search = () => {
           placeholder="Bạn cần tìm gì ?"
           className="w-[300px] h-[38px] px-2 outline-none bg-[#f5f5f5] text-black"
         />
-        
-        {/* Logic hiển thị icon: Loading -> Delete -> Search */}
-        {isLoading ? (
-          <div className="w-10 h-10 flex items-center justify-center animate-spin text-gray-500">
-             <FaSpinner size={18} />
-          </div>
-        ) : keyword.length > 0 ? (
+
+        {keyword.length > 0 ? (
           <button
             onClick={handleDeleteInput}
             className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/10 cursor-pointer text-gray-600"

@@ -69,57 +69,56 @@ export default function Cart() {
         />
       </div>
 
-      <ul className="w-full h-[72px] shadow flex items-center justify-between mt-10 rounded-2xl text-center">
-        <li className="w-1/4">Sản phẩm</li>
-        <li className="w-1/4">Giá</li>
-        <li className="w-1/4">Số lượng</li>
-        <li className="w-1/4">Tổng tiền</li>
+      <ul className="w-full h-[56px] shadow flex items-center justify-between mt-8 rounded-xl text-center bg-white">
+        <li className="w-1/4 text-gray-700 font-medium">Sản phẩm</li>
+        <li className="w-1/4 text-gray-700 font-medium">Giá</li>
+        <li className="w-1/4 text-gray-700 font-medium">Số lượng</li>
+        <li className="w-1/4 text-gray-700 font-medium">Tổng tiền</li>
       </ul>
 
-      {items.map((item) => (
-        <article
-          className="w-full max-h-[120px] shadow-lg rounded-2xl flex items-center my-4  p-2 lg:p-4"
-          key={item.id}
-        >
-          <div className="w-1/4 h-full  block lg:flex items-start gap-2.5">
-            <Image
-              src={`/${item.image}` || "/not_found.png"}
-              alt={item.name || "Sản phẩm"}
-              width={65}
-              height={65}
-              className="object-contain"
-            />
-            <div className="text-sm font-semibold">{item.name}</div>
+      <div className="space-y-3 mt-2">
+        {items.map((item) => (
+          <div
+            className="w-full flex items-center p-2 bg-white rounded-xl shadow hover:shadow-md transition-shadow"
+            key={item.id}
+          >
+            <div className="w-1/4 flex items-center gap-2">
+              <Image
+                src={`/${item.image}` || "/not_found.png"}
+                alt={item.name || "Sản phẩm"}
+                width={65}
+                height={65}
+                className="object-contain rounded"
+              />
+              <div className="text-sm font-semibold line-clamp-2">{item.name}</div>
+            </div>
+            <div className="w-1/4 flex justify-center font-semibold">
+              <span>${item.price}</span>
+            </div>
+            <div className="w-1/4 flex justify-center font-semibold gap-2">
+              <input
+                type="number"
+                value={item.quantity}
+                min={1}
+                className="w-[40px] border border-gray-300 pl-2 rounded focus:outline-primary"
+                onChange={(e) =>
+                  handleQuantityChange(item.id, Number(e.target.value))
+                }
+              />
+              <button
+                className="p-2 rounded hover:bg-red-50 text-red-600"
+                onClick={() => handleRemove(item.id)}
+                title="Xóa"
+              >
+                <FaTrash />
+              </button>
+            </div>
+            <div className="w-1/4 flex justify-center font-semibold">
+              <span>${item.price * item.quantity}</span>
+            </div>
           </div>
-
-          <div className="w-1/4 h-full flex items-center justify-center font-semibold">
-            <p>${item.price}</p>
-          </div>
-
-          <div className="w-1/4 h-full flex items-center justify-center font-semibold gap-2">
-            <input
-              type="number"
-              value={item.quantity}
-              min={1}
-              className="w-[40px] outline outline-[1.7px] pl-2 outline-black/90 rounded"
-              onChange={(e) =>
-                handleQuantityChange(item.id, Number(e.target.value))
-              }
-            />
-            <button
-              className="p-2 rounded hover:bg-red-50 text-red-600"
-              onClick={() => handleRemove(item.id)}
-              title="Xóa"
-            >
-              <FaTrash />
-            </button>
-          </div>
-
-          <div className="w-1/4 h-full flex items-center justify-center font-semibold">
-            <p>${item.price * item.quantity}</p>
-          </div>
-        </article>
-      ))}
+        ))}
+      </div>
 
       <div className="my-4 flex flex-col lg:flex-row items-start lg:items-center gap-8">
         <div className="w-full lg:w-1/2">

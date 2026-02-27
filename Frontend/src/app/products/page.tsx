@@ -5,11 +5,13 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import Categories from "#/app/products/components/Categories";
 import { useGetAllProductQuery } from "#/redux/features/productApi";
 import ProductCard from "#/components/ProductCard";
+import ProductsLoading from "./ProductsLoading";
+import Link from "next/link";
 
 const ITEMS_PER_PAGE = 15;
 
 export default function Page() {
-  const { data: products = [] } = useGetAllProductQuery(undefined);
+  const { data: products = [] ,isLoading, isError } = useGetAllProductQuery(undefined);
   
   // Ref để scroll tới vị trí danh sách sản phẩm
   // const listTopRef = useRef<HTMLDivElement>(null);
@@ -80,6 +82,9 @@ export default function Page() {
   //   }
   // }, [currentPage]);
 
+  if(isLoading) return <ProductsLoading />;
+  if(isError) return <h1>Đã có lỗi xảy ra. <Link href="/">Quay lại trang chủ</Link></h1>;
+ 
   return (
     <section className="max-w-[1200px] mx-auto pb-10">
       <Categories
