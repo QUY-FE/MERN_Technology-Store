@@ -11,7 +11,7 @@ export default function Navbar({
   const pathname = usePathname();
   return (
     <nav className="hidden lg:block  lg:w-6/12 h-full leading-20 ">
-      <ul className=" flex items-center justify-center h-full gap-3 ">
+      <ul className=" flex items-center justify-center h-full gap-4 ">
         {list.map((item) => {
           const isActive = pathname === item.href;
 
@@ -19,13 +19,15 @@ export default function Navbar({
             <li key={item.id} className="relative">
               <Link
                 href={item.href}
-                className={`relative p-3 text-sm transition-all duration-300 ease-in-out 
+                className={`relative p-2 text-md transition-all duration-300 ease-in-out font-semibold 
                   ${
                     isActive
-                      ? "text-gray-900"
-                      : "text-gray-500 hover:text-gray-700"
+                      ? "text-black "
+                      : "text-gray-400 "
                   } 
-                  hover:scale-[1.05]`}
+                  hover:text-primary hover:underline
+                  
+                  `}
               >
                 {item.name}
 

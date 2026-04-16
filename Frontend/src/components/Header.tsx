@@ -39,7 +39,7 @@ export default function Header() {
   return (
     <header id="Home">
       <Sales
-        hasSales
+        
         totalSales={28}
         titleSales="Giảm giá cực sốc trong mùa xuân này với đồ Gaming "
       />
@@ -50,7 +50,7 @@ export default function Header() {
             list={navbarListDefault }
           />
           {/* Logo */}
-          <div className="w-6/12 lg:w-1/12 h-full  flex items-center lg:justify-start justify-end text-2xl lg:text-left lg:text-2xl font-semibold">
+          <div className="hidden lg:w-1/12 h-full  lg:flex items-center lg:justify-start justify-end text-2xl lg:text-left lg:text-2xl font-semibold">
             <Link
               href="/"
               className="px-3 py-2 bg-gradient-to-tr from-orange-400 to-red-400 text-white rounded-xl"
