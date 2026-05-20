@@ -1,25 +1,48 @@
 "use client";
-import { useDeletedProductMutation, useGetAllProductQuery } from "#/redux/features/productApi";
+import { useEffect, useMemo, useState } from "react";
+import useDebounce from "#/hooks/useDebounce";
 import Link from "next/link";
+import {
+  useDeletedProductMutation,
+  useGetAllProductQuery,
+} from "#/redux/features/productApi";
+
 import { useRouter } from "next/navigation";
-import { IoMdAdd } from "react-icons/io";
-import { MdDelete, MdOutlineFeaturedPlayList } from "react-icons/md";
-import { TiSpanner } from "react-icons/ti";
 import { toast } from "react-toastify";
-import { useState } from "react";
-import Image from "next/image";
+
+// icon
+import { IoMdAdd } from "react-icons/io";
+import { MdDeleteOutline } from "react-icons/md";
+import { FaCaretLeft, FaCaretRight, FaRegEdit, FaRegEye } from "react-icons/fa";
+import SearchInput from "#/components/SearchInput";
+
 export default function Page() {
   const router = useRouter();
   const [deleteProduct] = useDeletedProductMutation();
-  const { data: products = [] } = useGetAllProductQuery(undefined);
+
+  const { data: products = [],error, isLoading} = useGetAllProductQuery(undefined);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const [keyword, setKeyword] = useState("");
+  const debounceQuery = useDebounce(keyword, 700);
+  
+  
 
-  const paginatedProducts = products.slice(
+  // Lọc sản phẩm trước, sau đó phân trang
+  const filteredProducts = useMemo(() => {
+    const query = debounceQuery.trim().toLowerCase();
+    if (query === "") return products;
+    return products.filter((product) =>
+      product?.title?.toLowerCase().includes(query),
+    );
+  }, [debounceQuery, products]);
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
   );
+
   const handleDeleteProduct = async (id: string) => {
     if (!confirm("Bạn có muốn xoá sản phẩm?")) return;
     try {
@@ -31,100 +54,120 @@ export default function Page() {
       toast.error("Không thể xoá sản phẩm");
     }
   };
-  
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debounceQuery]);
+
+
+  if (isLoading) return <div className="text-center py-10">Đang tải...</div>;
+  if (error)
+    return (
+      <div className="text-center py-10 text-red-500">Lỗi tải dữ liệu</div>
+    );
+
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-4">Tất cả sản phẩm</h2>
-      <div className="flex items-center justify-end mb-4">
-        <Link
-          href="/admin/products/create"
-          className="cst_btn-primary px-6 py-2 flex items-center gap-2"
-        >
-          Thêm
+      <div className="mb-6">
+        <h1 className="text-2xl">
+          <strong>Tất cả sản phẩm</strong>
+        </h1>
+        <p>Tổng quan về sản phẩm trên hệ thống.</p>
+      </div>
+      {/* Pagination controls  */}
+      <div className="flex items-center justify-end gap-4 mb-4">
+        <div className="flex justify-center  my-4 gap-2 border border-colorBorder rounded-md">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-2  hover:bg-gray-200 disabled:opacity-50"
+          >
+            <FaCaretLeft />
+          </button>
+          <span className="px-3 py-2">
+            {currentPage} / {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="px-3 py-2 hover:bg-gray-200   disabled:opacity-50"
+          >
+            <FaCaretRight />
+          </button>
+        </div>
+        <Link href="/admin/products/create" className="cst_btn-primary">
           <IoMdAdd />
+          Thêm mới
         </Link>
       </div>
       {/* Pagination controls */}
-      <div className="flex justify-center my-4 gap-2">
-        <button
-          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-          disabled={currentPage === 1}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Trang trước
-        </button>
-        <span className="px-3 py-1">{currentPage} / {totalPages}</span>
-        <button
-          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-          disabled={currentPage === totalPages}
-          className="px-3 py-1 border rounded disabled:opacity-50"
-        >
-          Trang sau
-        </button>
-      </div>
+
+      {/* search controls */}
+      <SearchInput
+        value={keyword}
+        onChange={setKeyword}
+        placeholder="Tìm sản phẩm ?"
+      />
+      {/* search controls */}
+
+      {/* Product table */}
       <table className="w-full border text-center">
         <thead>
           <tr className="bg-gray-200">
-            <th className="px-4 py-2">Tên</th>
-            <th className="px-4 py-2">Giá</th>
             <th className="px-4 py-2">Tồn kho</th>
-            <th className="px-4 py-2">Gallery</th>
+            <th className="px-4 py-2">Tên sản phẩm</th>
+            <th className="px-4 py-2">Giá</th>
+            <th className="px-4 py-2">Phân loại</th>
             <th className="px-4 py-2">Hành động</th>
           </tr>
         </thead>
         <tbody>
-          {paginatedProducts.map((product) => (
-            <tr key={product._id} className="border-t">
-              <td className="px-4 py-2">{product.title}</td>
-              <td className="px-4 py-2">${product.newPrice}</td>
-              <td className="px-4 py-2">{product.quantity || "N/A"}</td>
-              <td className="px-4 py-2">
-                {/* Hiển thị số lượng ảnh gallery và ảnh đầu tiên nếu có */}
-                {Array.isArray(product.gallery) && product.gallery.length > 0 ? (
-                  <div className="flex flex-col items-center gap-1">
-                    <Image
-                      src={`/${product.gallery[0]}`}
-                      alt="gallery"
-                      width={48}
-                      height={48}
-                      className="object-cover rounded border mb-1"
-                    />
-                    <span className="text-xs text-gray-500">{product.gallery.length} ảnh</span>
+          {paginatedProducts.length > 0 ? (
+            paginatedProducts.map((product) => (
+              <tr key={product._id} className="border-t">
+                <td className="px-4 py-2 text-center ">
+                  <span className="px-2 py-1 bg-green-100 rounded-2xl font-semibold text-green-800">
+                    {product?.quantity > 1000
+                      ? "999+"
+                      : product?.quantity || "N/A"}
+                  </span>
+                </td>
+                <td className="px-4 py-2">{product.title}</td>
+                <td className="px-4 py-2">${product.newPrice}</td>
+                <td className="px-4 py-2">{product.category}</td>
+                <td className="px-4 py-2">
+                  <div className="flex items-center justify-center gap-3">
+                    <Link
+                      href={`/admin/products/${product._id}`}
+                      className="bg-green-100 rounded-lg text-green-600 px-3 py-2 flex items-center gap-2 hover:scale-110 transition-transform duration-300"
+                    >
+                      <FaRegEye size={22} />
+                    </Link>
+                    <Link
+                      href={`/admin/products/edit/${product._id}`}
+                      className="bg-yellow-100 rounded-lg text-yellow-600 px-3 py-2 flex items-center gap-2  hover:scale-110 transition-transform duration-300"
+                    >
+                      <FaRegEdit size={22} />
+                    </Link>
+                    <button
+                      onClick={() => handleDeleteProduct(product?._id)}
+                      className="bg-red-100 rounded-lg text-red-600 px-3 py-2 flex items-center gap-2 hover:scale-110 transition-transform duration-300"
+                    >
+                      <MdDeleteOutline size={22} />
+                    </button>
                   </div>
-                ) : (
-                  <span className="text-xs text-gray-400">Không có</span>
-                )}
-              </td>
-              <td className="px-4 py-2">
-                <div className="flex items-center justify-center gap-3">
-                  <Link
-                    href={`/admin/products/${product._id}`}
-                    className="cst_btn-primary px-4 py-2 flex items-center gap-2"
-                  >
-                    <MdOutlineFeaturedPlayList />
-                    Xem
-                  </Link>
-                  <Link
-                    href={`/admin/products/edit/${product._id}`}
-                    className="cst_btn-primary px-4 py-2 flex items-center gap-2"
-                  >
-                    <TiSpanner />
-                    Sửa
-                  </Link>
-                  <button
-                    onClick={() => handleDeleteProduct(product?._id)}
-                    className="cst_btn-primary px-4 py-2 flex items-center gap-2"
-                  >
-                    Xoá
-                    <MdDelete />
-                  </button>
-                </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5} className="px-4 py-2">
+                Không có sản phẩm nào.
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
-      
     </div>
   );
 }

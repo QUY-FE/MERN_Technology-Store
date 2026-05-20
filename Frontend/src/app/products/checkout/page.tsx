@@ -12,6 +12,7 @@ import { checkoutValidation } from "#/utils/validation";
 // import { useCreateOrderMutation } from "#/redux/features/orderApi";
 import { toast } from "react-toastify";
 import { useCreateOrderMutation } from "#/redux/features/ordersApi";
+import { RiCoupon3Line } from "react-icons/ri";
 
 type FormData = {
   username: string;
@@ -58,6 +59,7 @@ export default function Checkout() {
   }
 
   const onSubmit = async (data: FormData) => {
+
     const newOrder = {
       ...data,
       payment,
@@ -67,6 +69,11 @@ export default function Checkout() {
     }
     
     try {
+      if (!user) {
+        toast.error("Bạn cần đăng nhập để đặt hàng");
+        router.push("login");
+        return;
+      }
       await createOrder(newOrder).unwrap();
       dispatch(clearCart());
       reset();
@@ -203,6 +210,7 @@ export default function Checkout() {
             <input
               type="radio"
               name="payment"
+              disabled
               checked={payment === "bank"}
               onChange={() => setPayment("bank")}
               className="h-4 w-4 text-primary"
@@ -238,7 +246,7 @@ export default function Checkout() {
           </label>
         </div>
 
-        <div className="mt-6 flex items-center gap-3">
+        <div className="mt-6 flex items-center justify-center gap-3">
           <input
             type="text"
             placeholder="Nhập mã phiếu"
@@ -246,22 +254,28 @@ export default function Checkout() {
             value={coupon}
             onChange={(e) => setCoupon(e.target.value)}
           />
-          <Button
-            primary
-            w={218}
-            h={40}
-            text="Áp dụng phiếu giảm giá"
+          <button
+            className="cst_btn"
+            
             onClick={handleApplyCoupon}
-          />
+          >
+            <RiCoupon3Line size={24} className="text-primary"/>
+            Áp dụng phiếu giảm giá
+          </button>
         </div>
-        <div className="mt-6">
-          <Button
-            w={"100%"}
-            h={40}
-            primary
-            text={isSubmitting ? "Đang xử lý..." : "Xác nhận thanh toán"}
+        <div className="mt-6 flex items-center justify-end gap-3">
+          <button className="cst_btn" onClick={() => router.push("/products")}>
+            Quay lại giỏ hàng
+          </button>
+           <button
+            className="cst_btn-primary"
             type="submit"
-          />
+            onClick={handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Đang xử lý..." : "Xác nhận thanh toán"}
+          </button>
+          
         </div>
       </div>
     </form>

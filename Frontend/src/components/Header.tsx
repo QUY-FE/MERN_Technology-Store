@@ -37,13 +37,13 @@ const navbarListDefault = [
 export default function Header() {
 
   return (
-    <header id="Home">
+    <header id="Home" className="sticky top-0 z-[1000] bg-white">
       <Sales
-        
+        // hasSales
         totalSales={28}
         titleSales="Giảm giá cực sốc trong mùa xuân này với đồ Gaming "
       />
-      <div className="border-b-2 border-gray-100">
+      <div className="sticky top-0 z-[1000] border-b-2 border-gray-100">
         <div className="max-w-[1200px] h-[80px] mx-auto  flex items-center ">
           {/* Navbar mobile */}
           <NavbarMobile

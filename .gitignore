@@ -1,0 +1,12 @@
+node_modules/
+Backend/node_modules
+Frontend/node_modules
+.env
+.env.local
+serviceAccountKey.json.json
+Backend/src/serviceAccountKey.json.json
+dist/
+build/
+.next/
+
+.vscode/

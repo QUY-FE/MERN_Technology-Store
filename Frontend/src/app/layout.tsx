@@ -3,7 +3,8 @@ import "#/assets/css/globals.css";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Archivo } from "next/font/google";
 import WrapperClient from "./WrapperClient";
-
+import 'swiper/css';
+import 'swiper/css/pagination';
 const geistArchivo = Archivo({
   variable: "--font-geist-archivo",
   subsets: ["latin"],

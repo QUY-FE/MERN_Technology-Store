@@ -1,64 +1,67 @@
 "use client";
 
 import Image from "next/image";
-import Carousel from "react-multi-carousel";
-import Link from "next/link";
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
 
 import banner1 from "#/assets/images/banner1_hd.jpeg";
 import banner3 from "#/assets/images/banner3.jpg";
 import banner4 from "#/assets/images/banner4.webp";
 import BannerLoading from "./BannerLoading";
+import Link from "next/link";
+
+// 👉 đưa ra ngoài để tránh re-create
+const banners = [
+  { id: 1, src: banner1, link: "/" },
+  { id: 2, src: banner3, link: "/" },
+  { id: 3, src: banner4, link: "/" },
+];
+
+// 👉 tránh tạo object mới mỗi render
+const paginationConfig = {
+  dynamicBullets: true,
+};
 
 export default function Banner() {
   const [loading, setLoading] = useState(true);
-
-  const allBanner = useMemo(() => [
-    { id: 1, src: banner1, link: "/" },
-    { id: 2, src: banner3, link: "/" },
-    { id: 3, src: banner4, link: "/" },
-  ], []);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return <BannerLoading />;
-  }
+  if (loading) return <BannerLoading />;
 
   return (
-    <section className="w-full lg:flex mb-20">
-      <div className="w-full lg:pt-1">
-        <Carousel
-          autoPlay
-          arrows={false}
-          autoPlaySpeed={2000}
-          infinite
-          showDots
-          responsive={{
-            desktop: { breakpoint: { max: 3000, min: 1024 }, items: 1 },
-            tablet: { breakpoint: { max: 1024, min: 464 }, items: 1 },
-            mobile: { breakpoint: { max: 464, min: 0 }, items: 1 },
+    <section className="w-full lg:flex my-2 lg:mt-4  lg:mb-8">
+      <div className="w-full lg:pt-1 px-1 lg:px-0">
+        <Swiper
+          pagination={paginationConfig}
+          modules={[Pagination, Autoplay]}
+          loop={true}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
           }}
         >
-          {allBanner.map((imgUrl) => (
-            <Link
-              href={imgUrl.link}
-              key={imgUrl.id}
-              className="block relative w-full h-[280px] lg:h-[60vh] rounded-lg overflow-hidden"
-            >
-              <Image
-                src={imgUrl.src}
-                alt={`banner-${imgUrl.id}`}
-                fill
-                className="object-cover"
-                priority={imgUrl.id === 1}
-              />
-            </Link>
+          {banners.map((item) => (
+            <SwiperSlide key={item.id}>
+              <div className="relative block w-full h-[280px] lg:h-[60vh]  rounded-[32px] overflow-hidden">
+                <Link href={item.link}>
+                  <Image
+                    src={item.src}
+                    alt={`banner-${item.id}`}
+                    fill
+                    className="object-cover"
+                    priority={item.id === 1}
+                  />
+                </Link>
+              </div>
+            </SwiperSlide>
           ))}
-        </Carousel>
+        </Swiper>
       </div>
     </section>
   );

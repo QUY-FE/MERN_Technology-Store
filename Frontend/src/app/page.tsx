@@ -11,8 +11,6 @@ export default function Home() {
       <Banner />
       <FlashSales targetDate="2026-12-30T22:01:59" />
       <NewsSection />
-
-      
     </div>
   );
 }

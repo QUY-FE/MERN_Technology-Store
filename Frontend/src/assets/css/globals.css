@@ -7,7 +7,6 @@ html {
   scroll-behavior: smooth;
 }
 
-
 /* thanh scroll css */
 ::-webkit-scrollbar {
   width: 4px; /* Chiều rộng thanh cuộn dọc */
@@ -29,14 +28,12 @@ html {
   background: #ff4f4f;
 }
 
-
-
 .active {
   @apply border-b-[2.5px] border-[#b3b3b3] font-bold text-black/80;
 }
 
 .cst_input {
-  @apply w-full text-black/85 font-semibold py-3 pl-2  outline-none  ;
+  @apply w-full text-black/85 font-semibold py-3 pl-2  outline-none;
 }
 
 .categories_card_default {
@@ -47,8 +44,10 @@ html {
 }
 
 .cst_btn {
-  @apply border-2 border-colorBorder rounded-md  my-4 shadow cursor-pointer hover:shadow-xl;
+  @apply px-4 py-2 bg-gray-50 flex items-center justify-center gap-1.5  
+  rounded-lg  my-4 shadow cursor-pointer hover:scale-105  hover:shadow-xl transition;
 }
 .cst_btn-primary {
-  @apply bg-primary text-white rounded-md my-4 shadow cursor-pointer hover:bg-[#fd5151] hover:shadow-xl transition;
+  @apply bg-gradient-to-tr from-orange-400 to-red-500 text-white font-bold flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 my-4 
+  shadow cursor-pointer hover:scale-105 hover:shadow-xl transition;
 }

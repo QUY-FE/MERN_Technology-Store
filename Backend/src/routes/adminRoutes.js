@@ -69,12 +69,13 @@ router.post("/login", async (req, res) => {
 router.get("/users", async (req, res) => {
   try {
     const list = await admin.auth().listUsers();
-    const users = list.users.map((u) => ({
-      uid: u.uid,
-      name: u.displayName,
-      email: u.email,
-      phone: u.phoneNumber,
-      createdAt: u.metadata.creationTime,
+    const users = list.users.map((user) => ({
+      uid: user.uid,
+      name: user.displayName,
+      email: user.email,
+      phone: user.phoneNumber,
+      avatar: user.photoURL,
+      createdAt: user.metadata.creationTime,
     }));
 
     res.status(200).json({

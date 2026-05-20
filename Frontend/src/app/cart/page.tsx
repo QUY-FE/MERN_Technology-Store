@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Button from "#/components/Button";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { FaTrash } from "react-icons/fa";
@@ -11,6 +10,8 @@ import {
   clearCart,
 } from "#/redux/features/cartSlice";
 import { useCallback } from "react";
+import { IoIosArrowBack } from "react-icons/io";
+import { TbShoppingCartSearch } from "react-icons/tb";
 
 export default function Cart() {
   const dispatch = useAppDispatch();
@@ -48,7 +49,10 @@ export default function Cart() {
       <section className="min-h-[60vh] flex flex-col items-center justify-center">
         <h2 className="text-2xl font-semibold mb-4">Giỏ hàng trống</h2>
         <Link href="/products">
-          <Button w={218} h={56} text="Tiếp tục mua sắm" />
+          <button className="cst_btn">
+            <TbShoppingCartSearch size={24} className="text-primary" />
+            Tiếp tục mua sắm
+          </button>
         </Link>
       </section>
     );
@@ -58,15 +62,15 @@ export default function Cart() {
     <section className="max-w-[1200px] mx-auto">
       <div className="mt-6 flex items-center justify-between">
         <Link href="/">
-          <Button w={180} h={46} text="Quay về trang chủ" />
+          <button className="cst_btn"> 
+            <IoIosArrowBack />
+            Quay về trang chủ
+          </button>
         </Link>
-        <Button
-          w={180}
-          h={46}
-          primary
-          text="Xoá Giỏ hàng"
-          onClick={handleClear}
-        />
+        
+        <button className="cst_btn-primary" onClick={handleClear}> 
+          Xoá Hết
+        </button>
       </div>
 
       <ul className="w-full h-[56px] shadow flex items-center justify-between mt-8 rounded-xl text-center bg-white">
@@ -142,9 +146,11 @@ export default function Cart() {
               <p className="text-primary">${totalPrice}</p>
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-end">
               <Link href="/products/checkout">
-                <Button primary w={218} h={56} text="Thanh toán" />
+                <button className="cst_btn-primary">
+                  Thanh toán
+                </button>
               </Link>
             </div>
           </div>

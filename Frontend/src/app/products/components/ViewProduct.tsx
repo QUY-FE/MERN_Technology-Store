@@ -1,7 +1,7 @@
 import Button from '#/components/Button'
 import { useGetReviewsByProductQuery } from '#/redux/features/reviewsApi'
 import Image from 'next/image'
-import { FaStar } from 'react-icons/fa'
+import { FaCartPlus, FaStar } from 'react-icons/fa'
 import { FaRotate, FaTruckFast } from 'react-icons/fa6'
 import type { Product } from "../../../components/ProductCard";
 import { useState } from "react";
@@ -147,20 +147,16 @@ const ViewProduct = ({
           </div>
 
           <div className="flex items-center gap-4 my-4">
-            <Button
-              text="Thêm vào giỏ hàng"
-              w={160}
-              h={56}
-              onClick={handleAddToCart}
-            />
+            <button className='cst_btn ' onClick={handleAddToCart}>
+              <FaCartPlus size={24} className='text-primary'/>
+              Thêm vào giỏ hàng
+            </button>
+            <button className='cst_btn-primary' onClick={handleBuyProduct}>
+              Mua ngay
+            </button>
+            
 
-            <Button
-              onClick={handleBuyProduct}
-              text="Mua ngay"
-              w={115}
-              h={56}
-              primary
-            />
+            
           </div>
           {/* Thông tin giao hàng */}
           <div className="border rounded p-4 mb-2 flex flex-col gap-2">
