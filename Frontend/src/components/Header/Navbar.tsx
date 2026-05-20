@@ -1,12 +1,13 @@
 "use client";
 
+import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Navbar({
   list = [],
 }: {
-  list?: { id: number; name: string; href: string }[];
+  list?: { id: number; icon: LucideIcon; name: string; href: string }[];
 }) {
   const pathname = usePathname();
   return (
@@ -19,16 +20,10 @@ export default function Navbar({
             <li key={item.id} className="relative">
               <Link
                 href={item.href}
-                className={`relative p-2 text-md transition-all duration-300 ease-in-out font-semibold 
-                  ${
-                    isActive
-                      ? "text-black "
-                      : "text-gray-400 "
-                  } 
-                  hover:text-primary hover:underline
-                  
-                  `}
+                className={`flex items-center justify-center gap-2 relative p-2 text-md transition-all duration-300 ease-in-out 
+                  ${isActive ? "font-semibold" : "text-gray-500 "} hover:text-primary`}
               >
+                <item.icon size={16} />
                 {item.name}
 
                 {/* underline hiệu ứng mượt */}

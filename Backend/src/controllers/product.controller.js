@@ -1,4 +1,4 @@
-import Product from "../models/Product.js";
+import Product from "../models/product.model.js";
 
 // GET /products
 export const getProducts = async (req, res, next) => {

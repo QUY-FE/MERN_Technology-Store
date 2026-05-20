@@ -3,10 +3,11 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import { usePathname } from "next/navigation";
+import { LucideIcon } from "lucide-react";
 export default function NavbarMobile({
   list = [],
 }: {
-  list?: { id: number; name: string; href: string }[];
+  list?: { id: number; icon: LucideIcon;name: string; href: string }[];
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const pathname = usePathname();
@@ -48,12 +49,7 @@ export default function NavbarMobile({
           >
             <IoIosClose size={36} />
           </button>
-          <Link
-            href="/"
-            className="px-3 py-2 bg-gradient-to-tr from-orange-400 to-red-400 text-white rounded-xl text-lg font-semibold "
-          >
-            Qn
-          </Link>
+          
         </div>
 
         {/* Danh sách các Link */}
@@ -63,12 +59,13 @@ export default function NavbarMobile({
               <Link
                 href={item.href}
                 onClick={() => setIsOpen(false)} // Đóng menu sau khi điều hướng
-                className={`block w-full px-8 py-3 text-lg font-semibold transition-colors rounded-lg ${
+                className={`flex items-center gap-2 w-full pl-4 py-3  font-semibold transition-colors rounded-lg ${
                   pathname === item.href
-                    ? "text-black bg-gray-200"
-                    : "text-gray-600  "
+                    ? "text-primary bg-gray-100"
+                    : "text-gray-500  "
                 }`}
               >
+                <item.icon size={16} />
                 {item.name}
               </Link>
             </li>

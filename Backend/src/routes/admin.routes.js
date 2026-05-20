@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import User from "../models/user.model.js";
 import admin from "firebase-admin";
 import "dotenv/config";
 const router = express.Router();

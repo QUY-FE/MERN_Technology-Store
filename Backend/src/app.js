@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import productRoutes from './routes/productRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
-import orderRoutes from "./routes/orderRoutes.js";
-import reviewRoutes from './routes/reviewRoutes.js';
+import productRoutes from './routes/product.routes.js';
+import adminRoutes from './routes/admin.routes.js';
+import orderRoutes from "./routes/order.routes.js";
+import reviewRoutes from './routes/review.routes.js';
 const app = express();
 
 
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors({
     origin: allOrigin,
     credentials: true,
-    methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+    methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
     allowedHeaders: ["Content-Type","Authorization"],
 }));
 app.use(morgan("dev"));
