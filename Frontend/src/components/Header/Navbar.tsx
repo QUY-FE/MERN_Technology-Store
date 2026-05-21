@@ -10,9 +10,10 @@ export default function Navbar({
   list?: { id: number; icon: LucideIcon; name: string; href: string }[];
 }) {
   const pathname = usePathname();
+  
   return (
-    <nav className="hidden lg:block  lg:w-6/12 h-full leading-20 ">
-      <ul className=" flex items-center justify-center h-full gap-4 ">
+    <nav className="hidden lg:block lg:w-6/12 h-full leading-20">
+      <ul className="flex items-center justify-center h-full gap-4">
         {list.map((item) => {
           const isActive = pathname === item.href;
 
@@ -20,20 +21,20 @@ export default function Navbar({
             <li key={item.id} className="relative">
               <Link
                 href={item.href}
-                className={`flex items-center justify-center gap-2 relative p-2 text-md transition-all duration-300 ease-in-out 
-                  ${isActive ? "font-semibold" : "text-gray-500 "} hover:text-primary`}
+                className={`group flex items-center justify-center gap-2 relative p-2 text-md transition-all duration-300 ease-in-out ${
+                  isActive ? "font-semibold" : "text-gray-500"
+                } hover:text-primary`}
               >
-                <item.icon size={16} />
+                <span className="group-hover:scale-110 transition-transform duration-300">
+                  <item.icon size={16} />
+                </span>
                 {item.name}
 
                 {/* underline hiệu ứng mượt */}
                 <span
-                  className={`absolute bottom-0 left-0 w-full h-[3px] rounded-full bg-gradient-to-r from-red-400 to-orange-400 transform transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
-                    ${
-                      isActive
-                        ? "opacity-100 scale-x-100"
-                        : "opacity-0 scale-x-0"
-                    }`}
+                  className={`absolute bottom-0 left-0 w-full h-[3px] rounded-full bg-gradient-to-r from-primary to-secondary transform transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                  }`}
                 ></span>
               </Link>
             </li>

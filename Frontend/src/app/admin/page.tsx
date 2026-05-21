@@ -64,14 +64,11 @@ export default function SignIn() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden animate-fade-in-up">
         
         {/* Header của Card */}
-        <div className="bg-red-500 p-6 text-center relative">
-            {/* Nút thoát ở góc trái trên cùng */}
-            <Link href="/" className="absolute top-4 left-4 text-white/80 hover:text-white transition-colors" title="Thoát về trang chủ">
-                <IoArrowBack size={24} />
-            </Link>
+        <div className="bg-primary p-6 text-center relative">
+            
 
             <h1 className="text-2xl font-bold text-white uppercase tracking-wide">
-                Admin Portal
+                Admin
             </h1>
             <p className="text-red-100 text-sm mt-1">Đăng nhập để quản lý hệ thống</p>
         </div>
@@ -93,7 +90,7 @@ export default function SignIn() {
                 type="text"
                 placeholder="Nhập username..."
                 className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200 
-                  ${errors.username ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:border-red-500 focus:ring-red-200'}
+                  ${errors.username ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:border-primary focus:ring-primary'}
                 `}
               />
               {/* Nút xóa clear field */}
@@ -123,7 +120,7 @@ export default function SignIn() {
                 type="password"
                 placeholder="••••••••"
                 className={`w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 transition-all duration-200
-                  ${errors.password ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:border-red-500 focus:ring-red-200'}
+                  ${errors.password ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:border-red-500 focus:ring-primary'}
                 `}
               />
                <button
@@ -146,7 +143,7 @@ export default function SignIn() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="cst_btn-primary w-full"
             >
               {isSubmitting ? (
                  <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
@@ -158,7 +155,7 @@ export default function SignIn() {
             {/* Nút Thoát phụ (Option 2) */}
             <Link 
                 href="/"
-                className="w-full flex items-center justify-center gap-2 text-gray-500 hover:text-gray-800 font-medium py-2 transition-colors text-sm"
+                className="cst_btn-secondary-icon"
             >
                 <IoLogOutOutline size={18}/> Thoát ứng dụng
             </Link>

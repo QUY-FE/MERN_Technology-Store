@@ -95,7 +95,7 @@ export default function Page() {
             <FaCaretRight />
           </button>
         </div>
-        <Link href="/admin/products/create" className="cst_btn-primary">
+        <Link href="/admin/products/create" className="cst_btn-secondary-icon">
           <IoMdAdd />
           Thêm mới
         </Link>

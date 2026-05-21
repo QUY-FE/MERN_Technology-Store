@@ -40,14 +40,31 @@ html {
   @apply w-[170px] h-[145px] border-2 border-[#b3b3b3] text-center text-black/80 rounded-lg   transition cursor-pointer;
 }
 .categories_card_active {
-  @apply w-[170px] h-[145px] border-2 text-center bg-[#e34646] text-white rounded-lg transition cursor-pointer;
+  @apply w-[170px] h-[145px] border-2  border-secondary text-center bg-secondary text-white rounded-lg transition cursor-pointer;
 }
 
 .cst_btn {
-  @apply px-4 py-2 bg-gray-50 flex items-center justify-center gap-1.5  
-  rounded-lg  my-4 shadow cursor-pointer hover:scale-105  hover:shadow-xl transition;
+  @apply px-4 py-2 font-semibold bg-gray-100 border-2 border-gray-100 text-gray-700 rounded-xl  shadow hover:scale-105 active:scale-95    transition-transform duration-300;
+}
+.cst_btn-icon {
+  @apply px-4 py-2 flex items-center justify-center gap-2 font-semibold bg-gray-100 border-2 border-gray-100 text-gray-700 rounded-xl  shadow hover:scale-105  active:scale-95   transition-transform duration-300;
 }
 .cst_btn-primary {
-  @apply bg-gradient-to-tr from-orange-400 to-red-500 text-white font-bold flex items-center justify-center gap-1.5 rounded-lg px-4 py-2 my-4 
-  shadow cursor-pointer hover:scale-105 hover:shadow-xl transition;
+  @apply px-4 py-2 font-semibold bg-primary border-[1px] border-primary text-white rounded-xl  shadow hover:scale-105 active:scale-95   transition-transform duration-300;
+}
+.cst_btn-primary-icon {
+  @apply flex items-center justify-center gap-2 px-4 py-2 font-semibold bg-primary border-[1px] border-primary text-white rounded-xl  shadow hover:scale-105 active:scale-95   transition-transform duration-300;
+}
+
+.cst_btn-secondary {
+  @apply px-4 py-2 font-semibold text-primary border-[1px] border-primary rounded-xl  shadow-lg 
+           hover:bg-primary hover:text-white 
+           active:scale-95 
+           transition-colors duration-300 ease-in-out;
+}
+.cst_btn-secondary-icon {
+  @apply flex items-center justify-center gap-2  px-4 py-2 font-semibold text-primary border-[1px] border-primary rounded-xl  shadow-lg 
+           hover:bg-primary hover:text-white 
+           active:scale-95 
+           transition-colors duration-300 ease-in-out;
 }

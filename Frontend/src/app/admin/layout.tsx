@@ -6,7 +6,7 @@ import { useEffect, useMemo } from "react";
 import { IoExitOutline } from "react-icons/io5";
 import { toast, ToastContainer } from "react-toastify";
 import { IoWarningOutline } from "react-icons/io5";
-import {  LuUser } from "react-icons/lu";
+import { LuUser } from "react-icons/lu";
 import { CgShoppingCart } from "react-icons/cg";
 import { BiPackage } from "react-icons/bi";
 import { FaRegBell } from "react-icons/fa";
@@ -46,21 +46,27 @@ export default function AdminLayout({
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token && !isLoginPage) {
-      router.push("/admin");
-    }
-  }, [router, isLoginPage]);
 
- 
+    if (!token && pathname !== "/admin") {
+      router.replace("/admin");
+      return;
+    }
+    if (token && pathname === "/admin") {
+      router.replace("/admin/dashboard");
+    }
+  }, [isLoginPage, router]);
+
   const handleLogout = () => {
     const toastId = toast(
       ({ closeToast }) => (
         <div className="flex flex-col items-center gap-4 p-4 min-w-[300px]">
-          <div className="flex items-center gap-2 text-orange-600">
+          <div className="flex items-center gap-2 text-primary">
             <IoWarningOutline size={32} />
             <span className="font-bold text-lg">Xác nhận đăng xuất</span>
           </div>
-          <p className="text-base text-gray-700">Bạn có muốn thoát khỏi trang Admin?</p>
+          <p className="text-base text-gray-700">
+            Bạn có muốn thoát khỏi trang Admin?
+          </p>
           <div className="flex gap-3 mt-2">
             <button
               onClick={() => {
@@ -73,10 +79,7 @@ export default function AdminLayout({
             >
               Đăng xuất
             </button>
-            <button
-              onClick={() => toast.dismiss(toastId)}
-              className="cst_btn"
-            >
+            <button onClick={() => toast.dismiss(toastId)} className="cst_btn">
               Hủy
             </button>
           </div>
@@ -106,7 +109,7 @@ export default function AdminLayout({
             className={`flex items-center justify-center p-4 rounded-lg transition
               ${
                 isActive
-                  ? "bg-gradient-to-tr from-orange-400 to-orange-600 text-white font-bold"
+                  ? "bg-gradient-to-r from-primary to-secondary text-white font-bold"
                   : "hover:bg-gray-100 text-gray-600"
               }`}
           >
@@ -133,14 +136,13 @@ export default function AdminLayout({
       />
       {!isLoginPage && (
         <header className="sticky top-0 z-[1000] bg-white w-full h-[60px] flex justify-between border-b border-colorBorder">
-          <div className="w-2/12 h-full flex items-center gap-3 p-5">
+          <div className="w-2/12 h-full flex items-center gap-3 px-2">
             <Link
               href="/admin/dashboard"
-              className="px-3 py-2 font-bold text-xl bg-gradient-to-tr from-orange-400 to-red-400 text-white rounded-xl"
+              className="px-4 py-1  bg-gradient-to-r from-primary to-secondary text-white rounded-tl-xl rounded-br-2xl"
             >
-              Qn
+              QN.PC
             </Link>
-            <h1 className="text-2xl font-bold">Admin Panel</h1>
           </div>
         </header>
       )}

@@ -20,7 +20,7 @@ export default function Action() {
       >
         <ShoppingCart size={22} />
         {items.length > 0 && (
-          <span className="absolute top-0.5 right-0 bg-gradient-to-tr from-orange-400 to-red-400 text-white text-xs font-semibold px-1.5 rounded-full animate-pulse">
+          <span className="absolute top-0.5 right-0 bg-gradient-to-tr from-primary to-secondary text-white text-xs font-semibold px-1.5 rounded-full animate-pulse">
             {items.length}
           </span>
         )}

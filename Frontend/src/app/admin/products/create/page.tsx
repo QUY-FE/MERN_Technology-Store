@@ -1,6 +1,7 @@
 "use client";
 
 import { useCreateProductMutation } from "#/redux/features/productApi";
+import { ChevronLeft, Save } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {ChangeEvent, useState } from "react";
@@ -170,16 +171,18 @@ export default function CreateProductPage() {
 
         {/* Button */}
         <div className="flex items-center justify-end gap-4 ">
-          <Link href={"/admin/products"} className="cst_btn px-4 py-2">
+          <Link href={"/admin/products"} className="cst_btn-icon">
+          <ChevronLeft size={20}  />
             Quay lại
           </Link>
 
           <button
             type="submit"
-            className="cst_btn-primary px-4 py-2"
+            className="cst_btn-primary-icon"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Đang xử lý" : "Tạo sản phẩm"}
+            <Save size={20}/>
           </button>
         </div>
       </form>

@@ -1,12 +1,12 @@
 "use client";
 import { useGetAllProductQuery } from "#/redux/features/productApi";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React from "react";
 
 const Page = () => {
   const { id } = useParams();
-  const { data: products = []} = useGetAllProductQuery();
+  const { data: products = [] } = useGetAllProductQuery();
   const product = products.find((p) => p._id === id);
 
   if (!product) {
@@ -15,8 +15,17 @@ const Page = () => {
 
   return (
     <div className="w-full mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Chi tiết sản phẩm</h1>
-      
+       <div className="flex items-center justify-between mt-4">
+        <p>
+
+        </p>
+        <Link href={"/admin/products"} className="cst_btn-icon">
+          <ChevronLeft size={20} />
+          Quay lại
+        </Link>
+      </div>
+      <h1 className="text-2xl font-bold mb-4">Chi tiết sản phẩm : <span className="text-primary">{product.title}</span></h1>
+
       <ul className="border rounded-lg divide-y">
         <li className="flex justify-between p-3">
           <span className="font-semibold">ID:</span>
@@ -26,7 +35,7 @@ const Page = () => {
           <span className="font-semibold">Title:</span>
           <span>{product.title}</span>
         </li>
-        
+
         <li className="flex justify-between p-3">
           <span className="font-semibold">Giá mới:</span>
           <span>${product.newPrice}</span>
@@ -56,9 +65,7 @@ const Page = () => {
           <span>{product.description}</span>
         </li>
       </ul>
-      <div className="mt-4">
-        <Link href={"/admin/products"} className="cst_btn px-4 py-2">Quay lại</Link>
-      </div>
+     
     </div>
   );
 };

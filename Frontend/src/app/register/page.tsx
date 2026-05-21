@@ -153,11 +153,11 @@ export default function SignIn() {
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-3 pt-2">
+              <div className="flex items-center justify-center gap-4 pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="cst_btn-primary"
                 >
                   {isSubmitting ? "Đang xử lý..." : "Đăng ký tài khoản"}
                 </button>
@@ -165,10 +165,10 @@ export default function SignIn() {
                 <button
                   type="button"
                   onClick={loginWithGoogle}
-                  className="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3.5 rounded-lg hover:bg-gray-50 transition-all flex items-center justify-center gap-3 shadow-sm"
+                  className="cst_btn-icon"
                 >
-                  <FcGoogle size={22} />
-                  <span>Đăng nhập với Google</span>
+                  <span>Đăng nhập với</span>
+                  <FcGoogle size={20} />
                 </button>
               </div>
 

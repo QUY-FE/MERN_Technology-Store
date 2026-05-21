@@ -49,7 +49,7 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
       
       <div className="flex justify-between items-end mb-8 border-b pb-4 border-gray-200">
               <div>
-                  <h2 className="text-2xl text-red-600 font-bold uppercase tracking-wide">
+                  <h2 className="text-2xl text-primary font-bold uppercase tracking-wide">
                   Flash Sales
                   </h2>
                   <p className="text-sm text-gray-500 mt-1">Siêu sell ưu đãi </p>
@@ -57,7 +57,7 @@ export default function FlashSales({ targetDate }: CountDownTimeProps) {
               
               <Link
                 href="/products"
-                className="text-sm font-semibold text-gray-600 hover:text-red-600 transition-colors flex items-center gap-1"
+                className="cst_btn-secondary-icon"
               >
                 Xem tất cả
                 <BsArrowRight className="w-4 h-4" />

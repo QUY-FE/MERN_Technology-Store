@@ -11,7 +11,7 @@ import {
 } from "#/redux/features/cartSlice";
 import { useCallback } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { TbShoppingCartSearch } from "react-icons/tb";
+import { Plus } from "lucide-react";
 
 export default function Cart() {
   const dispatch = useAppDispatch();
@@ -49,9 +49,9 @@ export default function Cart() {
       <section className="min-h-[60vh] flex flex-col items-center justify-center">
         <h2 className="text-2xl font-semibold mb-4">Giỏ hàng trống</h2>
         <Link href="/products">
-          <button className="cst_btn">
-            <TbShoppingCartSearch size={24} className="text-primary" />
+          <button className="cst_btn-secondary-icon">
             Tiếp tục mua sắm
+            <Plus size={18} />
           </button>
         </Link>
       </section>
@@ -62,7 +62,7 @@ export default function Cart() {
     <section className="max-w-[1200px] mx-auto">
       <div className="mt-6 flex items-center justify-between">
         <Link href="/">
-          <button className="cst_btn"> 
+          <button className="cst_btn-icon"> 
             <IoIosArrowBack />
             Quay về trang chủ
           </button>

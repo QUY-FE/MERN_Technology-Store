@@ -5,6 +5,7 @@ import { FaCartPlus, FaStar } from 'react-icons/fa'
 import { FaRotate, FaTruckFast } from 'react-icons/fa6'
 import type { Product } from "../../../components/ProductCard";
 import { useState } from "react";
+import { ShoppingCart } from 'lucide-react'
 
 interface ProductInfoProps {
   product: Product;
@@ -147,9 +148,9 @@ const ViewProduct = ({
           </div>
 
           <div className="flex items-center gap-4 my-4">
-            <button className='cst_btn ' onClick={handleAddToCart}>
-              <FaCartPlus size={24} className='text-primary'/>
-              Thêm vào giỏ hàng
+            <button className='cst_btn-icon ' onClick={handleAddToCart}>
+              Thêm vào
+              <ShoppingCart size={20}/>
             </button>
             <button className='cst_btn-primary' onClick={handleBuyProduct}>
               Mua ngay
@@ -182,8 +183,8 @@ const ViewProduct = ({
       </div>
       {/* chi tiết sản phẩm */}
       <div className="p-2  border-t-2 border-gray-200">
-        <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
-          <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
+        <div className="font-bold text-lg mb-4 text-primary flex items-center gap-2">
+          <span className="w-2 h-6 bg-primary rounded mr-2"></span>
            Chi tiết sản phẩm
         </div>
         

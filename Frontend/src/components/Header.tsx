@@ -36,7 +36,7 @@ export default function Header() {
   return (
     <header id="Home" className="sticky top-0 z-[1000] bg-white">
       <Sales
-        // hasSales
+        hasSales
         totalSales={28}
         titleSales="Giảm giá cực sốc trong mùa xuân này với đồ Gaming "
       />
@@ -48,7 +48,7 @@ export default function Header() {
           <div className="w-5/12 lg:w-1/12 h-full justify-center  flex items-center lg:justify-start  text-xl lg:text-left lg:text-2xl font-semibold">
             <Link
               href="/"
-              className="px-2 pb-1  bg-gradient-to-tr from-orange-400 to-red-400 text-white rounded-tl-xl rounded-br-2xl"
+              className="px-2 pb-1  bg-gradient-to-r from-primary to-secondary text-white rounded-tl-xl rounded-br-2xl"
             >
               QN.PC
             </Link>

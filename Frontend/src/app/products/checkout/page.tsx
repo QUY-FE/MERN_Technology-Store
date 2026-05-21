@@ -255,17 +255,17 @@ export default function Checkout() {
             onChange={(e) => setCoupon(e.target.value)}
           />
           <button
-            className="cst_btn"
+            className="cst_btn-secondary-icon"
             
             onClick={handleApplyCoupon}
           >
-            <RiCoupon3Line size={24} className="text-primary"/>
+            <RiCoupon3Line size={24} />
             Áp dụng phiếu giảm giá
           </button>
         </div>
         <div className="mt-6 flex items-center justify-end gap-3">
           <button className="cst_btn" onClick={() => router.push("/products")}>
-            Quay lại giỏ hàng
+            Quay lại
           </button>
            <button
             className="cst_btn-primary"

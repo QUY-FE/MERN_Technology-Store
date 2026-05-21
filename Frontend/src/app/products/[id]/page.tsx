@@ -99,8 +99,8 @@ export default function Product() {
       <ReviewProduct productId={product._id} />
 
       <div className="mt-12 px-2">
-        <h3 className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
-          <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
+        <h3 className="font-bold text-lg mb-4 text-primary flex items-center gap-2">
+          <span className="w-2 h-6 bg-primary rounded mr-2"></span>
           Sản phẩm liên quan
         </h3>
 
@@ -112,8 +112,8 @@ export default function Product() {
       </div>
 
       <div className="mt-12 px-2">
-        <h3 className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
-          <span className="w-2 h-6 bg-red-500 rounded mr-2"></span>
+        <h3 className="font-bold text-lg mb-4 text-primary flex items-center gap-2">
+          <span className="w-2 h-6 bg-primary rounded mr-2"></span>
           Sản phẩm khác
         </h3>
 

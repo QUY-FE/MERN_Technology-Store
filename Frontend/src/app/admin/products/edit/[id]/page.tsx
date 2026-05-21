@@ -4,7 +4,10 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { useGetAllProductQuery, useUpdateProductMutation } from "#/redux/features/productApi";
+import {
+  useGetAllProductQuery,
+  useUpdateProductMutation,
+} from "#/redux/features/productApi";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
@@ -22,13 +25,15 @@ interface FormData {
 }
 
 import { useState } from "react";
+import { MdSave } from "react-icons/md";
+import { ChevronLeft } from "lucide-react";
 
 export default function Page() {
-  const { id } = useParams<{id: string}>();
-  const {data: products = [] } = useGetAllProductQuery();
+  const { id } = useParams<{ id: string }>();
+  const { data: products = [] } = useGetAllProductQuery();
   const router = useRouter();
   const [updateProduct] = useUpdateProductMutation();
-  
+
   const {
     register,
     handleSubmit,
@@ -53,13 +58,9 @@ export default function Page() {
   }, [product, setValue]);
 
   const onSubmit = async (data: FormData) => {
-    
-
     // Gallery mới nếu có, nếu không thì giữ gallery cũ
     const galleryValue =
-      galleryFileNames.length > 0
-        ? galleryFileNames
-        : product?.gallery || [];
+      galleryFileNames.length > 0 ? galleryFileNames : product?.gallery || [];
 
     const editProduct = {
       title: data.title,
@@ -87,7 +88,7 @@ export default function Page() {
     if (files && files.length > 0) {
       const fileArr = Array.from(files);
       setGalleryFiles(fileArr);
-      setGalleryFileNames(fileArr.map(f => f.name));
+      setGalleryFileNames(fileArr.map((f) => f.name));
     } else {
       setGalleryFiles([]);
       setGalleryFileNames([]);
@@ -111,8 +112,6 @@ export default function Page() {
           </div>
         </div>
 
-        
-
         {/* Gallery ảnh */}
         <div>
           <label className="font-semibold text-sm">Gallery hiện tại:</label>
@@ -132,7 +131,9 @@ export default function Page() {
               <span className="text-xs text-gray-400">Không có</span>
             )}
           </div>
-          <label className="font-semibold text-sm">Gallery mới (chọn nhiều ảnh):</label>
+          <label className="font-semibold text-sm">
+            Gallery mới (chọn nhiều ảnh):
+          </label>
           <div className="border-b-2 border-colorBorder">
             <input
               type="file"
@@ -142,7 +143,9 @@ export default function Page() {
               className="cst_input"
             />
             {galleryFileNames.length > 0 && (
-              <div className="mt-2 text-xs text-gray-500">{galleryFileNames.join(', ')}</div>
+              <div className="mt-2 text-xs text-gray-500">
+                {galleryFileNames.join(", ")}
+              </div>
             )}
           </div>
         </div>
@@ -208,12 +211,18 @@ export default function Page() {
         </div>
 
         <div className="flex gap-2 justify-end">
+          <Link href={"/admin/products"} className="cst_btn-icon">
+            <ChevronLeft size={20} />
+            Quay lại
+          </Link>
+
           <button
             type="submit"
-            className="cst_btn-primary px-4 py-2"
+            className="cst_btn-primary-icon"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Đang xử lý..." : "Cập nhật sản phẩm"}
+            <MdSave size={20} />
           </button>
         </div>
       </form>

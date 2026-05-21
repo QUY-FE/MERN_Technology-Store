@@ -15,7 +15,7 @@ interface FormData {
 
 export default function SignIn() {
   const { login, loginWithGoogle } = useAuth();
-  
+
   const {
     register,
     handleSubmit,
@@ -34,7 +34,8 @@ export default function SignIn() {
   const handleClearField = (field: keyof FormData) => setValue(field, "");
 
   // Class tái sử dụng (giống trang Register để đồng bộ)
-  const inputClasses = "w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all duration-200 bg-gray-50 focus:bg-white text-gray-800 placeholder-gray-400";
+  const inputClasses =
+    "w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none transition-all duration-200 bg-gray-50 focus:bg-white text-gray-800 placeholder-gray-400";
   const labelClasses = "block text-sm font-semibold text-gray-700 mb-2";
   const errorClasses = "text-xs text-red-500 mt-1 min-h-[20px]";
 
@@ -42,16 +43,21 @@ export default function SignIn() {
     <section className="min-h-screen flex  justify-center p-4">
       {/* Container chính: Card nổi, bo góc */}
       <div className="bg-white w-full max-w-[1200px] h-auto lg:h-[700px] rounded-2xl shadow-xl overflow-hidden flex flex-col-reverse lg:flex-row">
-        
         {/* --- CỘT TRÁI: FORM --- */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 lg:px-16 py-10">
           <div className="max-w-[450px] mx-auto w-full">
-            
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Chào mừng trở lại!</h1>
-            <p className="text-gray-500 mb-8 text-sm">Vui lòng nhập thông tin để đăng nhập.</p>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              Chào mừng trở lại!
+            </h1>
+            <p className="text-gray-500 mb-8 text-sm">
+              Vui lòng nhập thông tin để đăng nhập.
+            </p>
 
-            <form method="POST" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              
+            <form
+              method="POST"
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-4"
+            >
               {/* Email Field */}
               <div className="relative group">
                 <label className={labelClasses}>Email</label>
@@ -95,25 +101,27 @@ export default function SignIn() {
                     </button>
                   )}
                 </div>
-                
+
                 {/* Error & Forgot Password Layout */}
                 <div className="flex justify-between items-start mt-1">
-                    <p className={`${errorClasses} mt-0`}>{errors.password?.message}</p>
-                    <Link 
-                        href="/login/forgot-password" 
-                        className="text-sm text-red-500 hover:text-red-600 font-semibold hover:underline whitespace-nowrap ml-2"
-                    >
-                        Quên mật khẩu?
-                    </Link>
+                  <p className={`${errorClasses} mt-0`}>
+                    {errors.password?.message}
+                  </p>
+                  <Link
+                    href="/login/forgot-password"
+                    className="text-sm text-red-500 hover:text-red-600 font-semibold hover:underline whitespace-nowrap ml-2"
+                  >
+                    Quên mật khẩu?
+                  </Link>
                 </div>
               </div>
 
               {/* Buttons */}
-              <div className="space-y-3 pt-4">
+              <div className="flex items-center justify-center gap-4 pt-4">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3.5 rounded-lg shadow-md hover:shadow-lg transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="cst_btn-primary-icon"
                 >
                   {isSubmitting ? "Đang xử lý..." : "Đăng nhập"}
                 </button>
@@ -121,31 +129,33 @@ export default function SignIn() {
                 <button
                   type="button"
                   onClick={loginWithGoogle}
-                  className="w-full bg-white border border-gray-300 text-gray-700 font-semibold py-3.5 rounded-lg hover:bg-gray-50 transition-all flex items-center justify-center gap-3 shadow-sm"
+                  className="cst_btn-icon"
                 >
+                  <span>Đăng nhập với</span>
                   <FcGoogle size={22} />
-                  <span>Đăng nhập với Google</span>
                 </button>
               </div>
 
               {/* Footer Link */}
               <p className="text-center text-sm text-gray-600 mt-8">
                 Bạn chưa có tài khoản?
-                <Link href="/register" className="text-red-500 font-bold ml-2 hover:underline">
+                <Link
+                  href="/register"
+                  className="text-red-500 font-bold ml-2 hover:underline"
+                >
                   Tạo tài khoản ngay
                 </Link>
               </p>
-
             </form>
           </div>
         </div>
 
         {/* --- CỘT PHẢI: ẢNH --- */}
         <div className="hidden lg:block w-1/2 relative h-[400px] lg:h-auto">
-           {/* Image component với fill để ảnh luôn đẹp trong khung */}
-          <Image 
-            src={LogInURL} 
-            alt="Ảnh Đăng nhập" 
+          {/* Image component với fill để ảnh luôn đẹp trong khung */}
+          <Image
+            src={LogInURL}
+            alt="Ảnh Đăng nhập"
             fill
             className="object-cover"
             priority
@@ -153,7 +163,6 @@ export default function SignIn() {
           {/* Overlay tối nhẹ nếu cần */}
           <div className="absolute inset-0 bg-black/5"></div>
         </div>
-
       </div>
     </section>
   );

@@ -69,8 +69,8 @@ const ReviewProduct = ({ productId }: { productId: string }) => {
 
   return (
     <div className="p-2 mt-10 max-w-4xl">
-      <div className="font-bold text-lg mb-4 text-red-500 flex items-center gap-2">
-        <span className="w-2 h-6 bg-red-500 rounded"></span>
+      <div className="font-bold text-lg mb-4 text-primary flex items-center gap-2">
+        <span className="w-2 h-6 bg-primary rounded"></span>
         Đánh giá ({reviews.length})
       </div>
 
@@ -143,7 +143,7 @@ const ReviewProduct = ({ productId }: { productId: string }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-red-500 hover:bg-red-600 text-white px-8 py-2 rounded-md font-medium transition disabled:bg-gray-300"
+                className="cst_btn-primary"
               >
                 {isSubmitting ? "Đang gửi..." : "Gửi đánh giá"}
               </button>

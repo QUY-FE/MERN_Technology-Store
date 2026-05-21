@@ -56,7 +56,7 @@ function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {discountPercentage > 0 && (
-        <span className="absolute top-3 left-3 px-2 py-1 bg-red-500 text-white rounded text-xs font-bold shadow-sm z-10">
+        <span className="absolute top-1.5 right-2 px-2 py-1 bg-secondary text-white rounded-tl-lg rounded-br-xl text-xs font-bold shadow-sm z-10">
           -{discountPercentage}%
         </span>
       )}
@@ -70,33 +70,32 @@ function ProductCard({ product }: ProductCardProps) {
         </p>
 
         <div className="mt-auto pt-3">
-          <div className="flex items-center gap-1">
-            {STARS.map((star) => (
-              <FaStar
-                key={star}
-                size={13}
-                className={
-                  star <= (product.countStar || 0)
-                    ? "text-yellow-400"
-                    : "text-gray-200"
-                }
-              />
-            ))}
+          <div className="flex items-end gap-2">
+            <p className="text-lg font-bold text-red-600 leading-none">
+              ${product.newPrice?.toLocaleString()}
+            </p>
+            {product.oldPrice > (product.newPrice || 0) && (
+              <p className="text-sm font-medium text-gray-400 line-through leading-none pb-[2px]">
+                ${product.oldPrice?.toLocaleString()}
+              </p>
+            )}
           </div>
 
           <div className="flex items-center justify-between mt-3">
-            <div className="flex items-end gap-2">
-              <p className="text-lg font-bold text-red-500 leading-none">
-                ${product.newPrice?.toLocaleString()}
-              </p>
-              {product.oldPrice > (product.newPrice || 0) && (
-                <p className="text-sm font-medium text-gray-400 line-through leading-none pb-[2px]">
-                  ${product.oldPrice?.toLocaleString()}
-                </p>
-              )}
+            <div className="flex items-center gap-1">
+              {STARS.map((star) => (
+                <FaStar
+                  key={star}
+                  size={14}
+                  className={
+                    star <= (product.countStar || 0)
+                      ? "text-yellow-400"
+                      : "text-gray-200"
+                  }
+                />
+              ))}
             </div>
-
-            <span className="text-xs text-gray-500 font-medium">
+            <span className="text-xs text-gray-400 font-medium">
               Đã bán {product.totalBuy || 0}
             </span>
           </div>

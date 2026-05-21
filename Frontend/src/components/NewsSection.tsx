@@ -69,7 +69,7 @@ export default function NewsSection() {
       {/* Header Section giữ nguyên */}
       <div className="flex justify-between items-end mb-8 border-b pb-4 border-gray-200">
         <div>
-          <h2 className="text-2xl text-red-600 font-bold uppercase tracking-wide">
+          <h2 className="text-2xl text-primary font-bold uppercase tracking-wide">
             Tin Tức & Đánh Giá
           </h2>
           <p className="text-sm text-gray-500 mt-1">
@@ -79,7 +79,7 @@ export default function NewsSection() {
 
         <Link
           href="/blog"
-          className="text-sm font-semibold text-gray-600 hover:text-red-600 transition-colors flex items-center gap-1"
+          className="cst_btn-secondary-icon"
         >
           Xem tất cả
           <BsArrowRight className="w-4 h-4" />
@@ -107,14 +107,14 @@ export default function NewsSection() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute top-2 left-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">
+                    <div className="absolute top-2 left-2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">
                       {post.category}
                     </div>
                   </div>
 
                   <div className="p-3 flex flex-col flex-grow">
                     {/* Tiêu đề nhỏ lại (text-base) */}
-                    <h3 className="text-base font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors leading-snug">
+                    <h3 className="text-base font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-primary transition-colors leading-snug">
                       {post.title}
                     </h3>
 

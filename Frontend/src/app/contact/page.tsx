@@ -188,14 +188,13 @@ export default function Contact() {
 
           {/* Nút Submit */}
           <div className="mt-4 flex justify-end">
-            <Button
+            <button
               type="submit"
-              primary
-              w={180}
-              h={48}
-              text={isSubmitting ? "Đang gửi..." : "Gửi tin nhắn"}
-              disabled={isSubmitting} // Nếu Button component của bạn có hỗ trợ prop disabled
-            />
+              className="cst_btn-primary"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Đang gửi..." : "Gửi tin nhắn"}
+            </button>
           </div>
         </form>
       </div>

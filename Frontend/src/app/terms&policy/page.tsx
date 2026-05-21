@@ -4,12 +4,12 @@ import React from "react";
 const TermsAndPolicy = () => {
   return (
     <div className="max-w-4xl mx-auto px-6 py-10 text-gray-700 leading-relaxed mt-[60px]">
-      <h1 className="text-3xl font-bold text-red-400 mb-6 text-center">
+      <h1 className="text-3xl font-bold text-secondary mb-6 text-center">
         Điều khoản sử dụng & Chính sách bảo mật
       </h1>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-red-400 mb-3">
+        <h2 className="text-2xl font-semibold text-secondary mb-3">
           1. Giới thiệu
         </h2>
         <p>
@@ -22,7 +22,7 @@ const TermsAndPolicy = () => {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-red-400 mb-3">
+        <h2 className="text-2xl font-semibold text-secondary mb-3">
           2. Tài khoản người dùng
         </h2>
         <p>
@@ -34,7 +34,7 @@ const TermsAndPolicy = () => {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-red-400 mb-3">
+        <h2 className="text-2xl font-semibold text-secondary mb-3">
           3. Quyền và trách nhiệm của người dùng
         </h2>
         <ul className="list-disc list-inside space-y-2">
@@ -54,7 +54,7 @@ const TermsAndPolicy = () => {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-red-400 mb-3">
+        <h2 className="text-2xl font-semibold text-secondary mb-3">
           4. Quyền và trách nhiệm của <strong>Qnshop.vn</strong>
         </h2>
         <ul className="list-disc list-inside space-y-2">
@@ -70,7 +70,7 @@ const TermsAndPolicy = () => {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-red-400 mb-3">
+        <h2 className="text-2xl font-semibold text-secondary mb-3">
           5. Sở hữu trí tuệ
         </h2>
         <p>
@@ -81,7 +81,7 @@ const TermsAndPolicy = () => {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-red-400 mb-3">
+        <h2 className="text-2xl font-semibold text-secondary mb-3">
           6. Chính sách bảo mật
         </h2>
         <p className="mb-3">
@@ -106,7 +106,7 @@ const TermsAndPolicy = () => {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-red-400 mb-3">
+        <h2 className="text-2xl font-semibold text-secondary mb-3">
           7. Quyền của người dùng
         </h2>
         <ul className="list-disc list-inside space-y-2">
@@ -115,7 +115,7 @@ const TermsAndPolicy = () => {
         </ul>
       </section>
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold text-red-400 mb-3">8. Liên hệ</h2>
+        <h2 className="text-2xl font-semibold text-secondary mb-3">8. Liên hệ</h2>
         <p>
           Mọi thắc mắc về điều khoản và chính sách, vui lòng liên hệ qua email:
           CSKH@Qnshop.vn

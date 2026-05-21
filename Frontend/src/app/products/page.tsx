@@ -140,7 +140,7 @@ export default function Page() {
               key={tab.id}
               onClick={() => setSortBy(tab.id)}
               className={` ${
-                sortBy === tab.id ? "cst_btn-primary" : "cst_btn"
+                sortBy === tab.id ? "cst_btn-primary" : "cst_btn-secondary"
               }`}
             >
               {tab.label}
@@ -154,7 +154,7 @@ export default function Page() {
             <select
               value={priceSort}
               onChange={(e) => setPriceSort(e.target.value as any)}
-              className="appearance-none bg-white border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:ring-2 focus:ring-red-100 focus:border-red-400 text-sm font-medium cursor-pointer"
+              className="appearance-none bg-white border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary text-sm font-medium cursor-pointer"
             >
               <option value="default">Giá: Mặc định</option>
               <option value="asc">Giá: Thấp đến Cao</option>
