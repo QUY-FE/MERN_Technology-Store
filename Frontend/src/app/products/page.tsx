@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ReactPaginate from "react-paginate";
 
-// Giả định các import path của bạn giữ nguyên
+
 import Categories from "#/app/products/components/Categories";
 import { useGetAllProductQuery } from "#/redux/features/productApi";
 import ProductCard from "#/components/ProductCard";
@@ -30,8 +30,6 @@ export default function Page() {
     "default",
   );
 
-  // --- TỐI ƯU HIỆU SUẤT VỚI USEMEMO ---
-  // Chỉ tính toán lại khi products, category, hoặc sort options thay đổi
   const processedProducts = useMemo(() => {
     const result =
       selectedCategory.toLowerCase() === "all"
@@ -42,28 +40,8 @@ export default function Page() {
               selectedCategory.toLowerCase(),
           );
 
-    // Xử lý Sort theo Tabs
-    if (sortBy === "latest") {
-      result.sort(
-        (a, b) =>
-          new Date(b.createdAt || 0).getTime() -
-          new Date(a.createdAt || 0).getTime(),
-      );
-    } else if (sortBy === "popular") {
-      result.sort((a, b) => (b.views || 0) - (a.views || 0));
-    } else if (sortBy === "best_selling") {
-      result.sort((a, b) => (b.sold || 0) - (a.sold || 0));
-    }
-
-    // Xử lý Sort theo Giá
-    if (priceSort === "asc") {
-      result.sort((a, b) => (a.newPrice || 0) - (b.newPrice || 0));
-    } else if (priceSort === "desc") {
-      result.sort((a, b) => (b.newPrice || 0) - (a.newPrice || 0));
-    }
-
     return result;
-  }, [products, selectedCategory, sortBy, priceSort]);
+  }, [products, selectedCategory]);
 
   // Phân trang
   const totalPages = Math.ceil(processedProducts.length / ITEMS_PER_PAGE);
@@ -72,7 +50,6 @@ export default function Page() {
     return processedProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [processedProducts, currentPage]);
 
-  // --- HANDLERS ---
   const handleCategoryChange = (categoryTitle: string) => {
     setSelectedCategory(categoryTitle);
     setCurrentPage(1);
@@ -80,22 +57,14 @@ export default function Page() {
     setPriceSort("default");
   };
 
-  // const handlePageChange = (newPage: number) => {
-  //   if (newPage >= 1 && newPage <= totalPages) {
-  //     setCurrentPage(newPage);
-  //   }
-  // };
-
-  // Handler riêng cho react-paginate (vì library này dùng 0-index)
   const handlePaginateClick = (event: { selected: number }) => {
     setCurrentPage(event.selected + 1);
   };
 
-  // --- EFFECT: UX SMOOTH SCROLL ---
   useEffect(() => {
     if (listTopRef.current && currentPage > 1) {
       const topPos =
-        listTopRef.current.getBoundingClientRect().top + window.scrollY - 80; // Offset cho Fixed Header nếu có
+        listTopRef.current.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top: topPos, behavior: "smooth" });
     }
   }, [currentPage]);
@@ -120,7 +89,6 @@ export default function Page() {
 
       <div className="my-8 border-t border-gray-200"></div>
 
-      {/* Gắn ref vào đây để scroll tới đúng vị trí thanh công cụ */}
       <div
         ref={listTopRef}
         className="bg-gray-100 py-3 px-4 rounded-lg mb-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm"
@@ -131,21 +99,32 @@ export default function Page() {
             Sắp xếp:
           </span>
 
-          {[
-            { id: "latest", label: "Mới nhất" },
-            { id: "popular", label: "Phổ biến" },
-            { id: "best_selling", label: "Bán chạy" },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setSortBy(tab.id)}
-              className={` ${
-                sortBy === tab.id ? "cst_btn-primary" : "cst_btn-secondary"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          <button
+            onClick={() => setSortBy("latest")}
+            className={` ${
+              sortBy === "latest" ? "cst_btn-primary" : "cst_btn-secondary"
+            }`}
+          >
+            Mới nhất
+          </button>
+          <button
+            onClick={() => setSortBy("popular")}
+            className={` ${
+              sortBy === "popular" ? "cst_btn-primary" : "cst_btn-secondary"
+            }`}
+          >
+            Phổ biến
+          </button>
+          <button
+            onClick={() => setSortBy("best_selling")}
+            className={` ${
+              sortBy === "best_selling"
+                ? "cst_btn-primary"
+                : "cst_btn-secondary"
+            }`}
+          >
+            Bán chạy
+          </button>
         </div>
 
         {/* Nhóm Lọc giá & Mini Pagination */}
@@ -188,19 +167,17 @@ export default function Page() {
         </div>
       )}
 
-      {/* === PHÂN TRANG CHÍNH VỚI REACT-PAGINATE === */}
       {totalPages > 1 && (
         <ReactPaginate
           breakLabel="..."
           nextLabel={<FaAngleRight />}
           onPageChange={handlePaginateClick}
-          pageRangeDisplayed={3} // Số trang hiển thị ở giữa
-          marginPagesDisplayed={1} // Số trang hiển thị ở 2 đầu
+          pageRangeDisplayed={3}
+          marginPagesDisplayed={1}
           pageCount={totalPages}
           previousLabel={<FaAngleLeft />}
           renderOnZeroPageCount={null}
-          forcePage={currentPage - 1} // Sync state với thư viện
-          // Tailwind Classes để style chuyên nghiệp
+          forcePage={currentPage - 1}
           containerClassName="flex items-center justify-center space-x-1 sm:space-x-2 mt-12"
           pageLinkClassName="w-10 h-10 flex items-center justify-center rounded-md border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 font-medium transition-all"
           previousLinkClassName="w-10 h-10 flex items-center justify-center rounded-md border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition-all"
