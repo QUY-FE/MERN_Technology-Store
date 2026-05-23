@@ -1,43 +1,39 @@
 "use client";
-// 1. Import IconType để gõ cho icon
 import { IconType } from "react-icons";
 import { MdPhoneIphone } from "react-icons/md";
 import { CiLaptop } from "react-icons/ci";
-import { FaHeadphonesAlt, FaHome } from "react-icons/fa";
+import { FaHeadphonesAlt } from "react-icons/fa";
 import { CiCamera } from "react-icons/ci";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { FaComputer } from "react-icons/fa6";
 import { TbHorseToy } from "react-icons/tb";
 import Carousel from "react-multi-carousel";
 import { CustomLeftArrow, CustomRightArrow } from "#/components/Button";
+import { Package } from "lucide-react";
 
 
-// 2. (Nên làm) Định nghĩa type cho một category item
 interface CategoryItem {
   href: string;
   title: string;
-  icon: IconType; // Sử dụng IconType
+  icon: IconType; 
 }
 
-// Gán type cho mảng
 const categoriesList: CategoryItem[] = [
-  { href: "#", title: "All", icon: FaHome },
-  { href: "#", title: "Phone", icon: MdPhoneIphone },
-  { href: "#", title: "Laptop", icon: CiLaptop },
+  { href: "#", title: "all", icon: Package },
+  { href: "#", title: "phone", icon: MdPhoneIphone },
+  { href: "#", title: "laptop", icon: CiLaptop },
   { href: "#", title: "headphone", icon: FaHeadphonesAlt },
   { href: "#", title: "camera", icon: CiCamera },
   { href: "#", title: "gaming", icon: IoGameControllerOutline },
-  { href: "#", title: "Computer", icon: FaComputer },
+  { href: "#", title: "computer", icon: FaComputer },
   { href: "#", title: "toys", icon: TbHorseToy },
 ];
 
-// 3. Định nghĩa Props cho component này
 interface Props {
   selectedCategory: string;
   onCategoryChange: (categoryTitle: string) => void;
 }
 
-// 4. Áp dụng Props và gỡ bỏ useState nội bộ
 export default function Categories({
   selectedCategory,
   onCategoryChange,

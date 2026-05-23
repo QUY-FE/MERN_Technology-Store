@@ -1,6 +1,6 @@
 "use client";
 import { ToastContainer } from "react-toastify";
-import Header from "#/components/Header";
+import Header from "#/components/Header/Header";
 import Footer from "#/components/Footer";
 import { AuthProvider } from "#/context/authContext";
 import { Provider } from "react-redux";

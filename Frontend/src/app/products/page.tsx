@@ -22,7 +22,7 @@ export default function Page() {
   const listTopRef = useRef<HTMLDivElement>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState<"latest" | "popular" | "best_selling">(
     "latest",
   );
