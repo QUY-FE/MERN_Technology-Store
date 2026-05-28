@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import { IoMdAdd } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaCaretLeft, FaCaretRight, FaRegEdit, FaRegEye } from "react-icons/fa";
-import SearchInput from "#/components/SearchInput";
+import SearchInput from "#/components/Common/SearchInput";
 
 export default function Page() {
   const router = useRouter();

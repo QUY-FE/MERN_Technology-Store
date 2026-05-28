@@ -7,7 +7,7 @@ import ReactPaginate from "react-paginate";
 
 import Categories from "#/app/products/components/Categories";
 import { useGetAllProductQuery } from "#/redux/features/productApi";
-import ProductCard from "#/components/ProductCard";
+import ProductCard from "#/components/Common/ProductCard";
 import ProductsLoading from "./ProductsLoading";
 
 const ITEMS_PER_PAGE = 15;
@@ -87,11 +87,11 @@ export default function Page() {
         onCategoryChange={handleCategoryChange}
       />
 
-      <div className="my-8 border-t border-gray-200"></div>
+      
 
       <div
         ref={listTopRef}
-        className="bg-gray-100 py-3 px-4 rounded-lg mb-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm"
+        className="bg-gray-100 py-3 px-4 rounded-lg mb-6 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm mt-4"
       >
         {/* Nhóm nút Sắp xếp */}
         <div className="flex items-center gap-2 text-sm overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-hide">
@@ -155,12 +155,12 @@ export default function Page() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center min-h-[300px] ">
-          <p className="text-lg text-gray-500 font-medium">
+          <p className="text-lg text-gray-500 font-medium mb-2">
             Không tìm thấy sản phẩm nào phù hợp.
           </p>
           <button
             onClick={() => handleCategoryChange("ALL")}
-            className="cst_btn-primary"
+            className="cst_btn-secondary"
           >
             Xóa bộ lọc
           </button>

@@ -12,7 +12,7 @@ import {
 import ReviewProduct from "../components/ReviewProduct";
 import ViewProduct from "../components/ViewProduct";
 import Error from "#/components/Error";
-import ProductCard from "#/components/ProductCard";
+import ProductCard from "#/components/Common/ProductCard";
 import ProductDetailLoading from "./ProductDetailLoading";
 
 export default function Product() {

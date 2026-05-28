@@ -11,11 +11,10 @@ import Carousel from "react-multi-carousel";
 import { CustomLeftArrow, CustomRightArrow } from "#/components/Button";
 import { Package } from "lucide-react";
 
-
 interface CategoryItem {
   href: string;
   title: string;
-  icon: IconType; 
+  icon: IconType;
 }
 
 const categoriesList: CategoryItem[] = [
@@ -39,14 +38,10 @@ export default function Categories({
   onCategoryChange,
 }: Props) {
   return (
-    <section className="my-10">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold">Chọn sản phẩm cần mua</h1>
-      </div>
+    <section className="mt-4">
       <div className="max-w-[1200px]">
         <div className="w-full">
           <Carousel
-            // ... (props của Carousel giữ nguyên) ...
             arrows
             additionalTransfrom={0}
             centerMode={false}
@@ -71,12 +66,10 @@ export default function Categories({
               <article
                 key={index}
                 className={
-                  // 5. Dùng prop 'selectedCategory'
                   selectedCategory === category.title
                     ? "categories_card_active"
                     : "categories_card_default"
                 }
-                // 6. Gọi hàm 'onCategoryChange' từ prop
                 onClick={() => onCategoryChange(category.title)}
               >
                 <div className="w-full h-2/3 ">

@@ -3,7 +3,7 @@ import { useGetReviewsByProductQuery } from '#/redux/features/reviewsApi'
 import Image from 'next/image'
 import { FaCartPlus, FaStar } from 'react-icons/fa'
 import { FaRotate, FaTruckFast } from 'react-icons/fa6'
-import type { Product } from "../../../components/ProductCard";
+import type { Product } from "../../../components/Common/ProductCard";
 import { useState } from "react";
 import { ShoppingCart } from 'lucide-react'
 

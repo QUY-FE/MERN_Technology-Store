@@ -1,6 +1,6 @@
 "use client";
 
-import SearchInput from "#/components/SearchInput";
+import SearchInput from "#/components/Common/SearchInput";
 import useDebounce from "#/hooks/useDebounce";
 import { useGetAllOrdersQuery } from "#/redux/features/ordersApi";
 import Link from "next/link";

@@ -5,7 +5,7 @@ import { useState, useEffect, useMemo } from "react";
 import { FaCaretLeft, FaCaretRight, FaRegEdit, FaRegEye } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import Link from "next/link";
-import SearchInput from "#/components/SearchInput";
+import SearchInput from "#/components/Common/SearchInput";
 import useDebounce from "#/hooks/useDebounce";
 
 interface User {

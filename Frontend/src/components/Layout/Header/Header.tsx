@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Clock, Info, Package, Phone } from "lucide-react";
 
-import Sales from "#/components/Sales";
+import Sales from "#/components/Common/Sales";
 import Navbar from "./Navbar";
 import Action from "./Action";
 import NavbarMobile from "./NavbarMobile";

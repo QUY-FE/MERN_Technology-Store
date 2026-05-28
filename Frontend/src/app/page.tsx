@@ -1,9 +1,9 @@
 "use client";
 
-import Banner from "#/components/Banner";
-import FlashSales from "#/components/FlashSales";
-import NewsSection from "#/components/NewsSection";
-import ServicesFeature from "#/components/ServicesFeature";
+import Banner from "#/components/UI/Banner";
+import FlashSales from "#/components/UI/FlashSales";
+import NewsSection from "#/components/UI/NewsSection";
+import ServicesFeature from "#/components/UI/ServicesFeature";
 
 export default function Home() {
   return (

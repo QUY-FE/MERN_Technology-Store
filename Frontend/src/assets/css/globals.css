@@ -57,13 +57,13 @@ html {
 }
 
 .cst_btn-secondary {
-  @apply px-4 py-2 font-semibold text-primary border-[1px] border-primary rounded-xl  shadow-lg 
+  @apply px-4 py-2 font-semibold bg-white text-primary border-[1px] border-primary rounded-xl  shadow-lg 
            hover:bg-primary hover:text-white 
            active:scale-95 
            transition-colors duration-300 ease-in-out;
 }
 .cst_btn-secondary-icon {
-  @apply flex items-center justify-center gap-2  px-4 py-2 font-semibold text-primary border-[1px] border-primary rounded-xl  shadow-lg 
+  @apply flex items-center justify-center gap-2  bg-white px-4 py-2 font-semibold text-primary border-[1px] border-primary rounded-xl  shadow-lg 
            hover:bg-primary hover:text-white 
            active:scale-95 
            transition-colors duration-300 ease-in-out;
