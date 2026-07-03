@@ -1,0 +1,163 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { CircleUserRound, ShoppingCart, User, Package, LogOut, Bell } from "lucide-react";
+import { useAuth } from "#/context/authContext";
+import { useAppSelector } from "#/hooks/redux.hook";
+import Search from "./Search";
+import Login from "#/components/Common/Login";
+
+
+const menuItems = [
+  {
+    title: "Quản lý tài khoản",
+    href: "/profile",
+    icon: <User size={18} className="text-gray-400" />,
+  },
+  {
+    title: "Đơn hàng",
+    href: "/orders",
+    icon: <Package size={18} className="text-gray-400" />,
+  },
+  {
+    title: "Thông báo",
+    href: "/notifications",
+    icon: <Bell size={18} className="text-gray-400" />,
+  }
+]
+
+
+export default function Action() {
+  const { user, logout } = useAuth();
+  const { items } = useAppSelector((state) => state.cart);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    setIsDropdownOpen(false);
+    if (logout) logout();
+  };
+
+  return (
+    <>
+      <div className="w-4/12 h-full lg:w-5/12 flex items-center justify-end gap-0.5">
+        <Search />
+
+        <Link
+          href="/cart"
+          className="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/10 transition-transform duration-300 hover:scale-110"
+        >
+          <ShoppingCart size={24} />
+          {items.length > 0 && (
+            <span className="absolute top-0.5 right-0 bg-gradient-to-tr from-primary to-secondary text-white text-xs font-semibold px-1.5 rounded-full animate-pulse">
+              {items.length}
+            </span>
+          )}
+        </Link>
+
+        {user ? (
+          <div ref={dropdownRef} className="relative hidden lg:flex">
+            {/* Nút trigger mở dropdown */}
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="w-10 h-10 flex items-center justify-center rounded-full transition-transform duration-300 hover:scale-110 focus:outline-none"
+            >
+              <Image
+                src={user?.photoURL || "/default_avatar.jpg"}
+                alt="Avatar user"
+                width={32}
+                height={32}
+                className="rounded-full object-cover border border-gray-200"
+              />
+            </button>
+
+            {/* Nội dung Dropdown */}
+            {isDropdownOpen && (
+              <div className="absolute right-0 top-[calc(100%+12px)] w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="px-4 py-3 border-b border-gray-100">
+                  <p className="text-sm font-medium text-gray-900 truncate">
+                    {user?.username || "Người dùng"}
+                  </p>
+                  <p className="text-xs text-gray-500 truncate">
+                    {user?.email || "Chưa cập nhật email"}
+                  </p>
+                </div>
+
+                <div className="py-2">
+                  {
+                    menuItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors"
+                      >
+                        {item.icon}
+                        <span>{item.title}</span>
+                      </Link>
+                    ))
+                  }
+                  
+                </div>
+
+                <div className="py-2 border-t border-gray-100">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors text-left"
+                  >
+                    <LogOut size={18} />
+                    <span>Đăng xuất</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setIsModalOpen(true)}
+            className="w-10 h-10 hidden lg:flex items-center justify-center rounded-full transition-transform duration-300 hover:scale-110"
+          >
+            <CircleUserRound size={24} />
+          </button>
+        )}
+      </div>
+
+      {/* Modal Đăng nhập (Giữ nguyên) */}
+      {isModalOpen && (
+        <div
+          onClick={() => setIsModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-opacity"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-transparent animate-in fade-in zoom-in duration-200"
+          >
+            <Login onClose={() => setIsModalOpen(false)} />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

@@ -1,0 +1,16 @@
+import mongoose from "mongoose";
+
+const productShema = new mongoose.Schema({
+    title: {type: String ,require:true},
+    gallery: [{ type: String ,require:true}],
+    price: { type: Number, require: true},
+    countStar: {type:Number, default: 0},
+    totalBuy: {type:Number,default: 0},
+    category: {type: String, require:true},
+    description: {type: String, require:true},
+    quantity: {type: Number, require:true},
+},{timestamps: true});
+
+const Product = mongoose.model('Product',productShema);
+
+export default Product;

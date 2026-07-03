@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* custom scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+.active {
+  @apply border-b-[2.5px] border-[#b3b3b3] font-bold text-black/80;
+}
+
+.cst_input {
+  @apply w-full text-black/85 font-semibold py-3 pl-2  outline-none;
+}
+
+.categories_card_default {
+  @apply w-[170px] h-[145px] select-none border border-[#b3b3b3] text-center text-black/80 rounded-lg   transition cursor-pointer;
+}
+.categories_card_active {
+  @apply w-[170px] h-[145px] select-none border  border-secondary text-center bg-secondary text-white rounded-lg transition cursor-pointer;
+}
+
+.cst_btn {
+  @apply px-4 py-2 bg-white select-none  border border-gray-300 text-gray-700 rounded-lg  font-medium hover:bg-gray-100 transition-colors duration-300 ease-in-out;
+}
+.cst_btn-icon {
+  @apply px-4 py-2 bg-white select-none  border border-gray-300 text-gray-700 rounded-lg  font-medium hover:bg-gray-100 transition-colors duration-300 ease-in-out flex items-center justify-center gap-2;
+}
+.cst_btn-primary {
+  @apply px-4 py-2 font-medium select-none  bg-primary border border-primary text-white rounded-xl  shadow hover:scale-105 active:scale-95   transition-transform duration-300;
+}
+.cst_btn-primary-icon {
+  @apply flex items-center justify-center gap-2 select-none  px-4 py-2 font-medium bg-primary border border-primary text-white rounded-xl  shadow hover:scale-105 active:scale-95   transition-transform duration-300;
+}
+
+.cst_btn-secondary {
+  @apply px-4 py-2 text-gray-700 font-medium select-none  bg-white  border border-primary rounded-xl  shadow-lg 
+           hover:bg-primary hover:text-white 
+           active:scale-95 
+           transition-colors duration-300 ease-in-out;
+}
+.cst_btn-secondary-icon {
+  @apply flex items-center justify-center gap-2 select-none  text-gray-700  bg-white px-4 py-2 font-medium  border border-primary rounded-xl  shadow-lg 
+           hover:bg-primary hover:text-white 
+           active:scale-95 
+           transition-colors duration-300 ease-in-out;
+}
+
+.cst_btn-disabled {
+  @apply px-4 py-2 flex  select-none items-center justify-center gap-2 font-medium bg-gray-200 border-[1px] border-gray-200 text-gray-400 rounded-xl  shadow cursor-not-allowed;
+}
