@@ -13,20 +13,7 @@ import { useCreateOrderMutation } from "#/redux/features/ordersApi";
 import { RiCoupon3Line } from "react-icons/ri";
 import getImageUrl from "#/utils/getImageUrl";
 import Login from "#/components/Common/Login";
-
-type FormData = {
-  username: string;
-  address: string;
-  phone: string;
-  email: string;
-  saveInfo: boolean;
-  status: string;
-  productPay?: {
-    product: string;
-    name: string;
-    quantity: number;
-  }[];
-};
+import type { CheckoutForm } from "#/types";
 
 export default function Checkout() {
   const { items, totalPrice } = useAppSelector((state) => state.cart);
@@ -41,7 +28,7 @@ export default function Checkout() {
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({
+  } = useForm<CheckoutForm>({
     defaultValues: {
       username: user?.username || "",
       email: user?.email || "",
@@ -64,7 +51,7 @@ export default function Checkout() {
     }
   };
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: CheckoutForm) => {
     const newOrder = {
       ...data,
       payment,

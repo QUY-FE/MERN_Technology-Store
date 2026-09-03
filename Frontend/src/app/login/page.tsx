@@ -7,11 +7,7 @@ import { useAuth } from "#/context/authContext";
 import { useForm } from "react-hook-form";
 import { loginValidation } from "#/utils/validation";
 import { FcGoogle } from "react-icons/fc";
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import type { LoginForm } from "#/types";
 
 export default function SignIn() {
   const { login, loginWithGoogle } = useAuth();
@@ -20,14 +16,13 @@ export default function SignIn() {
     register,
     handleSubmit,
     setValue,
-    watch, // Dùng watch để theo dõi giá trị input
+    watch,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<LoginForm>();
 
-  // Theo dõi value để hiển thị nút xoá
   const watchFields = watch();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginForm) => {
     await login(data.email, data.password);
   };
 

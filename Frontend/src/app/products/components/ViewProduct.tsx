@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { useGetReviewsByProductQuery } from "#/redux/features/reviewsApi";
-import type { Product } from "../../../components/Common/ProductCard";
+import type { Product } from "#/types";
 import getImageUrl from "#/utils/getImageUrl";
 
 import { FaStar } from "react-icons/fa";

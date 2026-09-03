@@ -3,20 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import getImageUrl from "#/utils/getImageUrl";
 import { Tag } from "lucide-react";
-
-export interface Product {
-  _id: string;
-  title: string;
-  gallery?: string[];
-  price: number;
-  countStar: number;
-  totalBuy: number;
-  category: string;
-  description: string;
-  quantity: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import type { Product } from "#/types";
 
 interface ProductCardProps {
   product: Product;

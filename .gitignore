@@ -9,4 +9,7 @@ dist/
 build/
 .next/
 
+.agents/
+*.log
+Frontend/next-env.d.ts
 .vscode/

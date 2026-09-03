@@ -8,11 +8,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { IoLogOutOutline } from "react-icons/io5";
-
-interface FormData {
-  username: string;
-  password: string;
-}
+import type { LoginForm } from "#/types";
 
 export default function SignIn() {
   const {
@@ -20,11 +16,11 @@ export default function SignIn() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<LoginForm>();
   
   const router = useRouter();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginForm) => {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/admin/login`,

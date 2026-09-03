@@ -9,8 +9,8 @@ import { Save, FileText, ArrowLeft } from "lucide-react";
 import {
   useGetOneContactQuery,
   useUpdateContactMutation,
-  UpdateContactDto,
 } from "#/redux/features/contactApi";
+import type { UpdateContactDto } from "#/types";
 
 const statusOptions = ["Đang xử lý", "Hoàn thành", "Đã hủy"];
 

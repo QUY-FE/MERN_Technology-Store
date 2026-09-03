@@ -4,10 +4,7 @@ import { loginValidation } from "#/utils/validation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { TiDelete } from "react-icons/ti";
-
-interface FormData {
-  email: string;
-}
+import type { ForgotPasswordForm } from "#/types";
 
 export default function Page() {
   const { resetPassword } = useAuth();
@@ -16,13 +13,13 @@ export default function Page() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<ForgotPasswordForm>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ForgotPasswordForm) => {
     console.log(data.email);
     await resetPassword(data.email);
   };
-  const handleClearField = (field: keyof FormData) => {
+  const handleClearField = (field: keyof ForgotPasswordForm) => {
     setValue(field, "");
   };
   return (

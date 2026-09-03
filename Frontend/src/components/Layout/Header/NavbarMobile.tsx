@@ -9,12 +9,7 @@ import { FaFacebook, FaTiktok } from "react-icons/fa";
 import { LucideIcon, LogIn, X } from "lucide-react";
 import { useAuth } from "#/context/authContext";
 import Login from "#/components/Common/Login";
-
-interface SocialItem {
-  name: string;
-  icon: ReactNode;
-  link: string;
-}
+import type { SocialItem } from "#/types";
 
 export default function NavbarMobile({
   list = [],

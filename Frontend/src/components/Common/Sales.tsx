@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { JSX } from "react";
 
-type SalesProps = {
+interface SalesProps {
   hasSales?: boolean;
   totalSales?: number;
   titleSales?: string;
-};
+}
 
 export default function Sales({
   hasSales = false,

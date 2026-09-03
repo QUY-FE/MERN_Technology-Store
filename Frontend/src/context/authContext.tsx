@@ -13,27 +13,7 @@ import {
   updateProfile,
   User as FirebaseUser,
 } from "firebase/auth";
-
-interface User {
-  id: string;
-  username: string | null;
-  email: string | null;
-  photoURL: string | null;
-}
-
-interface AuthContextType {
-  user: User | null;
-  loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  registerUser: (
-    username: string,
-    email: string,
-    password: string
-  ) => Promise<void>;
-  logout: () => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
-}
+import type { User, AuthContextType } from "#/types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 

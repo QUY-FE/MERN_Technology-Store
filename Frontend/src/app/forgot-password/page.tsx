@@ -5,11 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify/unstyled";
-
-
-interface FormData {
-  email: string;
-}
+import type { ForgotPasswordForm } from "#/types";
 
 export default function ForgotPasswordPage() {
   const { resetPassword } = useAuth();
@@ -17,9 +13,9 @@ export default function ForgotPasswordPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<ForgotPasswordForm>();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ForgotPasswordForm) => {
     try {
       await resetPassword(data.email);
       toast.success("Vui lòng kiểm tra email của bạn để đặt lại mật khẩu!");

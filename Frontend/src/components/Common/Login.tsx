@@ -7,11 +7,7 @@ import { useAuth } from "#/context/authContext";
 import { loginValidation } from "#/utils/validation";
 import { useState } from "react";
 import { Eye } from "lucide-react";
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import type { LoginForm } from "#/types";
 
 interface LoginProps {
   onClose?: () => void;
@@ -26,11 +22,11 @@ export default function Login({ onClose }: LoginProps) {
     setValue,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<LoginForm>();
 
   const watchFields = watch();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: LoginForm) => {
     await login(data.email, data.password);
     if (onClose) onClose(); 
   };

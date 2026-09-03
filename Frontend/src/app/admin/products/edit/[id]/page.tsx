@@ -15,17 +15,7 @@ import {
 } from "#/redux/features/productApi";
 import getImageUrl from "#/utils/getImageUrl";
 import { useUploadProductImageMutation } from "#/redux/features/uploadApi";
-
-interface FormData {
-  title: string;
-  price: number;
-  quantity: number;
-  countStar: number;
-  totalBuy: number;
-  salePercent: number;
-  category: string;
-  description: string;
-}
+import type { ProductForm } from "#/types";
 
 const categories = [
   { title: "Điện thoại", value: "Phone" },
@@ -50,7 +40,7 @@ export default function EditProductPage() {
     handleSubmit,
     setValue,
     formState: { isSubmitting, errors },
-  } = useForm<FormData>();
+  } = useForm<ProductForm>();
 
   const product = products.find((p) => p._id === id);
 
@@ -73,7 +63,7 @@ export default function EditProductPage() {
     };
   }, [galleryPreviews]);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ProductForm) => {
     let uploadedUrls: string[] = [];
 
     if (galleryFiles.length > 0) {

@@ -9,7 +9,7 @@ import SearchInput from "#/components/Common/SearchInput";
 import useDebounce from "#/hooks/useDebounce";
 import ReactPaginate from "react-paginate";
 
-interface User {
+interface AdminUser {
   uid: string;
   name: string;
   email: string;

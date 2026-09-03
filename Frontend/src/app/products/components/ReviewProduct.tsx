@@ -9,32 +9,11 @@ import {
 } from "#/redux/features/reviewsApi";
 import { toast } from "react-toastify";
 import { useGetOrderByEmailQuery } from "#/redux/features/ordersApi";
-
-interface IReview {
-  _id: string;
-  productId: string;
-  username: string;
-  email: string;
-  rating: number;
-  comment: string;
-  createdAt?: string;
-}
-
-interface IReviewForm {
-  rating: number;
-  comment: string;
-}
-
-interface IOrderProduct {
-  product: string;
-  name: string;
-  quantity: number;
-  _id: string;
-}
+import type { Review, ReviewForm, OrderProduct } from "#/types";
 
 const ReviewProduct = ({ productId }: { productId: string }) => {
   const { data: reviews = [] } = useGetReviewsByProductQuery(productId) as {
-    data: IReview[];
+    data: Review[];
   };
 
   const { user } = useAuth();
@@ -46,12 +25,12 @@ const ReviewProduct = ({ productId }: { productId: string }) => {
 
   const [createReview, { isLoading: isSubmitting }] = useCreateReviewMutation();
 
-  const hasReviewed = reviews.some((rv: IReview) => rv.email === emailUser);
+  const hasReviewed = reviews.some((rv: Review) => rv.email === emailUser);
 
   const hasPurchased = orders.some(
     (order: any) =>
       order.productPay.some(
-        (item: IOrderProduct) => item.product === productId,
+        (item: OrderProduct) => item.product === productId,
       ) && order.status === "Hoàn thành",
   );
 

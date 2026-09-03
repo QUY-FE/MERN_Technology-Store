@@ -10,14 +10,7 @@ import {
     useGetAllOrdersQuery,
   useUpdateOrderMutation,
 } from "#/redux/features/ordersApi";
-
-interface OrderFormData {
-  username?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  status?: string;
-}
+import type { OrderFormData } from "#/types";
 
 const statusOptions = ["Đang xử lý", "Hoàn thành", "Đã hủy"];
 

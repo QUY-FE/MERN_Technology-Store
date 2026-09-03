@@ -7,12 +7,7 @@ import { registerValidation } from "#/utils/validation";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import Login from "#/components/Common/Login";
-
-interface FormData {
-  username: string;
-  email: string;
-  password: string;
-}
+import type { RegisterForm } from "#/types";
 
 export default function Register() {
   const { registerUser, login, loginWithGoogle } = useAuth();
@@ -23,11 +18,11 @@ export default function Register() {
     setValue,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>();
+  } = useForm<RegisterForm>();
 
   const watchFields = watch();
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: RegisterForm) => {
     await registerUser(data.username, data.email, data.password);
     setTimeout(() => {
       login(data.email, data.password);

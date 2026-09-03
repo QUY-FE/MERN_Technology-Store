@@ -9,17 +9,7 @@ import { ChangeEvent, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useUploadProductImageMutation } from "#/redux/features/uploadApi";
-
-interface FormData {
-  title: string;
-  price: number;
-  quantity: number;
-  countStar: number;
-  totalBuy: number;
-  salePercent: number;
-  category: string;
-  description: string;
-}
+import type { ProductForm } from "#/types";
 
 const categories = [
   { title: "Điện thoại", value: "Phone" },
@@ -43,7 +33,7 @@ export default function CreateProductPage() {
     handleSubmit,
     reset,
     formState: { isSubmitting, errors },
-  } = useForm<FormData>();
+  } = useForm<ProductForm>();
 
   
   useEffect(() => {
@@ -52,7 +42,7 @@ export default function CreateProductPage() {
     };
   }, [galleryPreviews]);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ProductForm) => {
     try {
       let uploadedUrls: string[] = [];
 

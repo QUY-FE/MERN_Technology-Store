@@ -17,22 +17,7 @@ import Link from "next/link";
 import { JSX, type ReactNode } from "react";
 
 import { FaFacebook, FaTiktok } from "react-icons/fa";
-
-interface MenuItem {
-  name: string;
-  icon: LucideIcon;
-  link: string;
-}
-
-interface MenuListProps {
-  items: MenuItem[];
-}
-
-interface SocialItem {
-  name: string;
-  icon: ReactNode;
-  link: string;
-}
+import type { MenuItem, MenuListProps, SocialItem } from "#/types";
 
 const socialArr: SocialItem[] = [
   {

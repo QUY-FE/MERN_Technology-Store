@@ -1,22 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export interface Contact {
-    _id: string;
-    username: string;
-    number: string;
-    description: string;
-    status: string;
-    createdAt: string;
-    updatedAt: string;
-}
-
-export type CreateContactDto = {
-    username: string;
-    number: string;
-    description: string;
-    status: string;
-};
-export type UpdateContactDto = Partial<CreateContactDto>;
+import type { Contact, CreateContactDto, UpdateContactDto } from "#/types";
 
 const contactApi = createApi({
   reducerPath: "contactApi",

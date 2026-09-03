@@ -1,7 +1,7 @@
 import { Truck, Headphones, ShieldCheck } from "lucide-react";
 import { IconType } from "react-icons";
 
-interface ServicesFeature {
+interface ServicesFeatureProps {
   title: string;
   description: string;
   icon: IconType;
@@ -28,7 +28,7 @@ const featuresData = [
   },
 ];
 
-const FeatureItem = ({ icon: Icon, title, description }: ServicesFeature) => {
+const FeatureItem = ({ icon: Icon, title, description }: ServicesFeatureProps) => {
   return (
     <div className="flex flex-col items-center justify-center text-center">
       <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gray-300">

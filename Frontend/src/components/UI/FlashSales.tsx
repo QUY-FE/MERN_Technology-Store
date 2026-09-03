@@ -9,10 +9,7 @@ import ProductCard from "../Common/ProductCard";
 import FlashSalesLoading from "./FlashSalesLoading";
 import { ChevronRight } from "lucide-react";
 import { FaFire } from "react-icons/fa";
-
-interface CountDownTimeProps {
-  targetDate: string;
-}
+import type { CountDownTimeProps } from "#/types";
 
 export default function FlashSales({ targetDate }: CountDownTimeProps) {
   const {
