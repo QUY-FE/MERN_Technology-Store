@@ -10,6 +10,7 @@ build/
 .next/
 
 .agents/
+.AGENTS.md
 *.log
 Frontend/next-env.d.ts
 .vscode/

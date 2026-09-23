@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URI2 ||process.env.MONGO_URI);
+        const uri = process.env.MONGO_URI || process.env.MONGO_URI2;
+        await mongoose.connect(uri);
         console.log("*Kết nối cơ sở dữ liệu thành công ✓");
         
 
