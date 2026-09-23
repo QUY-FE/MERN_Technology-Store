@@ -71,7 +71,7 @@ function MenuList({ items }: MenuListProps): JSX.Element {
 
 function Footer(): JSX.Element {
   return (
-    <footer className="mt-10 text-grayNormal border-t-[1px] border-grayLow pt-10 ">
+    <footer className=" text-grayNormal  pt-10 ">
       <div className="mx-auto max-w-7xl px-4 lg:px-0">
         <div className="mb-16 grid gap-12 md:grid-cols-4">
           <div className="space-y-6">

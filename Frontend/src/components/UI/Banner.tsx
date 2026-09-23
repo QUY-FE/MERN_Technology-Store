@@ -18,8 +18,8 @@ const paginationConfig = {
 
 export default function Banner() {
   return (
-    <section className="w-full lg:flex my-2 lg:mt-4 lg:mb-8">
-      <div className="w-full lg:pt-1 px-1 lg:px-0">
+    <section className="w-full lg:flex lg:mb-8">
+      <div className="w-full px-1 lg:px-0">
         <Swiper
           pagination={paginationConfig}
           modules={[Pagination, Autoplay]}
