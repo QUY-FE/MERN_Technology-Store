@@ -41,13 +41,13 @@ const ReviewProduct = ({ productId }: { productId: string }) => {
     watch,
     reset,
     formState: { errors },
-  } = useForm<IReviewForm>({
+  } = useForm<ReviewForm>({
     defaultValues: { rating: 5, comment: "" },
   });
 
   const currentRating = watch("rating");
 
-  const onSubmit: SubmitHandler<IReviewForm> = async (data) => {
+  const onSubmit: SubmitHandler<ReviewForm> = async (data) => {
     if (!hasPurchased)
       return toast.error("Bạn cần mua sản phẩm này để đánh giá.");
     if (hasReviewed)
@@ -79,7 +79,7 @@ const ReviewProduct = ({ productId }: { productId: string }) => {
       {/* List Reviews */}
       <div className="space-y-4 mb-8">
         {reviews.length > 0 ? (
-          reviews.map((review: IReview) => (
+          reviews.map((review: Review) => (
             <div
               key={review._id}
               className="border rounded-lg p-4 shadow-sm bg-white hover:shadow-md transition"

@@ -3,7 +3,8 @@ import { useEffect, useState, useRef } from "react";
 import { TiDelete } from "react-icons/ti";
 import Link from "next/link";
 import useDebounce from "#/hooks/useDebounce";
-import { Product, useGetAllProductQuery } from "#/redux/features/productApi";
+import { useGetAllProductQuery } from "#/redux/features/productApi";
+import type { Product } from "#/types";
 import { BiSearchAlt } from "react-icons/bi";
 
 const EMPTY_PRODUCTS: Product[] = [];

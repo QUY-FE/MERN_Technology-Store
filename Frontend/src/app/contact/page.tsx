@@ -1,6 +1,7 @@
 "use client";
 
-import { CreateContactDto, useCreateContactMutation } from "#/redux/features/contactApi";
+import { useCreateContactMutation } from "#/redux/features/contactApi";
+import type { CreateContactDto } from "#/types";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FaPhone } from "react-icons/fa6";
 import { TbMail } from "react-icons/tb";

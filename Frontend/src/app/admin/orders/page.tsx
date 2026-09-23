@@ -12,7 +12,7 @@ import { FaCaretLeft, FaCaretRight, FaRegEdit, FaRegEye } from "react-icons/fa";
 import { MdDeleteOutline, MdClose } from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
-import type { AdminOrderItem, AdminOrder } from "#/types";
+import type { Order } from "#/types";
 
 export default function OrdersPage() {
   const { data: orders = [], error, isLoading } = useGetAllOrdersQuery();

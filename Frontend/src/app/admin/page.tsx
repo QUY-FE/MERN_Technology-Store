@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { IoLogOutOutline } from "react-icons/io5";
-import type { LoginForm } from "#/types";
+import type { AdminLoginForm } from "#/types";
 
 export default function SignIn() {
   const {
@@ -16,11 +16,11 @@ export default function SignIn() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<LoginForm>();
+  } = useForm<AdminLoginForm>();
   
   const router = useRouter();
 
-  const onSubmit = async (data: LoginForm) => {
+  const onSubmit = async (data: AdminLoginForm) => {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/admin/login`,
@@ -49,7 +49,7 @@ export default function SignIn() {
     }
   };
 
-  const handleClearField = (field: keyof FormData) => setValue(field, "");
+  const handleClearField = (field: keyof AdminLoginForm) => setValue(field, "");
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">

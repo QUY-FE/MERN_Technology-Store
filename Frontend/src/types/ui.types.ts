@@ -1,4 +1,5 @@
-import { LucideIcon, ReactNode } from "react";
+import type { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
 
 export interface MenuItem {
   name: string;
@@ -17,9 +18,10 @@ export interface SocialItem {
 }
 
 export interface SearchInputProps {
-  keyword: string;
-  setKeyword: (value: string) => void;
+  value: string;
+  onChange: (value: string) => void;
   placeholder?: string;
+  className?: string;
 }
 
 export interface CountDownTimeProps {
