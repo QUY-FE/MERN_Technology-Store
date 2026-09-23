@@ -1,13 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// Định nghĩa kiểu dữ liệu trả về từ Backend sau khi upload thành công
-export interface UploadResponse {
-  success: boolean;
-  message?: string;
-  data: {
-    urls: string[];
-  };
-}
+import type { UploadResponse } from "#/types";
 
 const uploadApi = createApi({
   reducerPath: "uploadApi",

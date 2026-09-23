@@ -13,27 +13,7 @@ import {
   updateProfile,
   User as FirebaseUser,
 } from "firebase/auth";
-
-interface User {
-  id: string;
-  username: string | null;
-  email: string | null;
-  photoURL: string | null;
-}
-
-interface AuthContextType {
-  user: User | null;
-  loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  registerUser: (
-    username: string,
-    email: string,
-    password: string
-  ) => Promise<void>;
-  logout: () => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
-}
+import type { User, AuthContextType } from "#/types";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -75,10 +55,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       await signInWithPopup(auth, googleProvider);
       toast.success("Chào mừng bạn đến với QN Shop!");
-      router.push("/");
     } catch (error) {
-      const err = error as Error;
       toast.error( "Đăng nhập Google thất bại!");
+      throw error;
     }
   };
 
@@ -86,10 +65,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      router.push("/");
     } catch (error) {
       const err = error as Error;
       toast.error(err.message ||  "Đăng nhập thất bại!");
+      throw error;
     }
   };
 
@@ -106,11 +85,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         password
       );
       if (username) await updateProfile(user, { displayName: username });
+      const formattedUser: User = {
+        id: user.uid,
+        username: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      };
+      setUser(formattedUser);
+      localStorage.setItem("user", JSON.stringify(formattedUser));
       toast.success("Đăng ký thành công!");
-      router.push("/");
     } catch (error) {
       const err = error as Error;
       toast.error(err.message || "Đăng ký thất bại!");
+      throw error;
     }
   };
 
@@ -134,6 +121,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       const err = error as Error;
       toast.error(err.message || "Không thể gửi email khôi phục!");
+      throw error;
     }
   };
 

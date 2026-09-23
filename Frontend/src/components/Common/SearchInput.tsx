@@ -1,11 +1,5 @@
 import { TiDelete } from "react-icons/ti";
-
-interface SearchInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-}
+import type { SearchInputProps } from "#/types";
 
 export default function SearchInput({ value, onChange, placeholder, className }: SearchInputProps) {
   return (

@@ -22,32 +22,41 @@ html {
   @apply w-[170px] h-[145px] select-none border  border-secondary text-center bg-secondary text-white rounded-lg transition cursor-pointer;
 }
 
-.cst_btn {
-  @apply px-4 py-2 bg-white select-none  border border-gray-300 text-gray-700 rounded-lg  font-medium hover:bg-gray-100 transition-colors duration-300 ease-in-out;
-}
-.cst_btn-icon {
-  @apply px-4 py-2 bg-white select-none  border border-gray-300 text-gray-700 rounded-lg  font-medium hover:bg-gray-100 transition-colors duration-300 ease-in-out flex items-center justify-center gap-2;
-}
-.cst_btn-primary {
-  @apply px-4 py-2 font-medium select-none  bg-primary border border-primary text-white rounded-xl  shadow hover:scale-105 active:scale-95   transition-transform duration-300;
-}
-.cst_btn-primary-icon {
-  @apply flex items-center justify-center gap-2 select-none  px-4 py-2 font-medium bg-primary border border-primary text-white rounded-xl  shadow hover:scale-105 active:scale-95   transition-transform duration-300;
+.cst_btn,
+.cst_btn-icon,
+.cst_btn-primary,
+.cst_btn-primary-icon,
+.cst_btn-secondary,
+.cst_btn-secondary-icon,
+.cst_btn-disabled {
+  @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-[10px] border px-4 py-2 text-sm font-semibold leading-5 select-none transition-colors duration-200 ease-in-out;
 }
 
-.cst_btn-secondary {
-  @apply px-4 py-2 text-gray-700 font-medium select-none  bg-white  border border-primary rounded-xl  shadow-lg 
-           hover:bg-primary hover:text-white 
-           active:scale-95 
-           transition-colors duration-300 ease-in-out;
+.cst_btn,
+.cst_btn-icon,
+.cst_btn-primary,
+.cst_btn-primary-icon {
+  @apply border-primary bg-primary text-white hover:border-sky-600 hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
 }
+
+.cst_btn-secondary,
 .cst_btn-secondary-icon {
-  @apply flex items-center justify-center gap-2 select-none  text-gray-700  bg-white px-4 py-2 font-medium  border border-primary rounded-xl  shadow-lg 
-           hover:bg-primary hover:text-white 
-           active:scale-95 
-           transition-colors duration-300 ease-in-out;
+  @apply border-primary bg-white text-primary hover:bg-sky-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
 }
 
 .cst_btn-disabled {
-  @apply px-4 py-2 flex  select-none items-center justify-center gap-2 font-medium bg-gray-200 border-[1px] border-gray-200 text-gray-400 rounded-xl  shadow cursor-not-allowed;
+  @apply cursor-not-allowed border-gray-200 bg-gray-200 text-gray-400;
+}
+
+.auth-panel {
+  animation: auth-panel-enter 200ms ease-out both;
+}
+
+@keyframes auth-panel-enter {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-panel { animation: none; }
 }

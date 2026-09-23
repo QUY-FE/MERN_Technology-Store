@@ -37,11 +37,7 @@ export const metadata = {
     type: "website",
     contryName: "Việt Nam",
   },
-  alternates: {
-    canonical: "https://qn-technology-store.vercel.app",
-  },
-
-  metadateBase: "https://qn-technology-store.vercel.app",
+  metadataBase: new URL("https://qn-technology-store.vercel.app"),
 };
 
 export default function RootLayout({

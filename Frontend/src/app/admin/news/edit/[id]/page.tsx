@@ -8,10 +8,10 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { Save, UploadCloud, X } from "lucide-react";
 import {
-  CreateNewsDto,
   useGetOneNewsQuery,
   useUpdateNewsMutation,
 } from "#/redux/features/newsApi";
+import type { CreateNewsDto } from "#/types";
 import getImageUrl from "#/utils/getImageUrl";
 import { useUploadNewsImageMutation } from "#/redux/features/uploadApi";
 
@@ -21,7 +21,7 @@ export default function EditNewsPage() {
 
   const { data: news, isLoading } = useGetOneNewsQuery(id);
   const [updateNews] = useUpdateNewsMutation();
-const [uploadNewsImage] = useUploadNewsImageMutation();
+  const [uploadNewsImage] = useUploadNewsImageMutation();
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState<string>("");
 
@@ -70,11 +70,7 @@ const [uploadNewsImage] = useUploadNewsImageMutation();
           throw new Error(uploadData.message || "Lỗi upload ảnh");
         }
 
-        const finalThumbnailUrl = uploadData.data.urls[0];
-        const newNews = {
-          ...data,
-          thumbnail: finalThumbnailUrl,
-        };
+        finalThumbnailUrl = uploadData.data.urls[0];
       }
 
       const editData = {

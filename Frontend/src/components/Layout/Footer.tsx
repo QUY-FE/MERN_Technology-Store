@@ -17,22 +17,7 @@ import Link from "next/link";
 import { JSX, type ReactNode } from "react";
 
 import { FaFacebook, FaTiktok } from "react-icons/fa";
-
-interface MenuItem {
-  name: string;
-  icon: LucideIcon;
-  link: string;
-}
-
-interface MenuListProps {
-  items: MenuItem[];
-}
-
-interface SocialItem {
-  name: string;
-  icon: ReactNode;
-  link: string;
-}
+import type { MenuItem, MenuListProps, SocialItem } from "#/types";
 
 const socialArr: SocialItem[] = [
   {
@@ -86,7 +71,7 @@ function MenuList({ items }: MenuListProps): JSX.Element {
 
 function Footer(): JSX.Element {
   return (
-    <footer className="mt-10 text-grayNormal border-t-[1px] border-grayLow pt-10 ">
+    <footer className=" text-grayNormal  pt-10 ">
       <div className="mx-auto max-w-7xl px-4 lg:px-0">
         <div className="mb-16 grid gap-12 md:grid-cols-4">
           <div className="space-y-6">

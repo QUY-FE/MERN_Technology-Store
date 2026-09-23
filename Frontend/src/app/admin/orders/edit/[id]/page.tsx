@@ -10,14 +10,7 @@ import {
     useGetAllOrdersQuery,
   useUpdateOrderMutation,
 } from "#/redux/features/ordersApi";
-
-interface OrderFormData {
-  username?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  status?: string;
-}
+import type { OrderFormData } from "#/types";
 
 const statusOptions = ["Đang xử lý", "Hoàn thành", "Đã hủy"];
 
@@ -39,10 +32,10 @@ export default function EditOrderPage() {
 
   useEffect(() => {
     if (order) {
-      setValue("username", order?.username);
-      setValue("email", order?.email);
-      setValue("phone", order?.phone);
-      setValue("address", order?.address);
+      setValue("username", order.username ?? "");
+      setValue("email", order.email ?? "");
+      setValue("phone", order.phone ?? "");
+      setValue("address", order.address ?? "");
       setValue("status", order?.status || "Đang xử lý");
     }
   }, [order, setValue]);

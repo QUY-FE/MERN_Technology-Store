@@ -3,7 +3,8 @@ import { useEffect, useState, useRef } from "react";
 import { TiDelete } from "react-icons/ti";
 import Link from "next/link";
 import useDebounce from "#/hooks/useDebounce";
-import { Product, useGetAllProductQuery } from "#/redux/features/productApi";
+import { useGetAllProductQuery } from "#/redux/features/productApi";
+import type { Product } from "#/types";
 import { BiSearchAlt } from "react-icons/bi";
 
 const EMPTY_PRODUCTS: Product[] = [];
@@ -16,7 +17,7 @@ const Search = () => {
 
   const searchRef = useRef<HTMLDivElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const debounceQuery = useDebounce(keyword, 800);
 
@@ -51,7 +52,7 @@ const Search = () => {
         !searchRef.current.contains(event.target as Node)
       ) {
         setShowDropdown(false);
-        setIsMobileSearchOpen(false);
+        setIsSearchOpen(false);
       }
     };
 
@@ -70,14 +71,14 @@ const Search = () => {
   const handleProductClick = () => {
     setShowDropdown(false);
     setKeyword("");
-    setIsMobileSearchOpen(false);
+    setIsSearchOpen(false);
   };
 
   const renderSearchResults = () => {
     if (!showDropdown || !keyword) return null;
 
     return (
-      <div className="absolute top-[calc(100%+8px)] left-0 w-full max-h-[350px] overflow-y-auto bg-white rounded-md shadow-xl border border-gray-200 z-50 p-2 transition-all duration-300 scrollbar-thin scrollbar-thumb-gray-300">
+      <div className="mt-2 max-h-[350px] w-full overflow-y-auto rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-all duration-200 scrollbar-thin scrollbar-thumb-gray-300">
         {isLoading ? (
           <div className="text-center py-4">
             <p className="text-sm text-gray-500">Đang tìm kiếm...</p>
@@ -104,7 +105,7 @@ const Search = () => {
         ) : keyword ? (
           <div className="text-center py-4">
             <p className="text-sm text-gray-500">
-              Không tìm thấy sản phẩm "{keyword}"
+              Không tìm thấy sản phẩm &quot;{keyword}&quot;
             </p>
           </div>
         ) : null}
@@ -114,53 +115,26 @@ const Search = () => {
 
   return (
     <div ref={searchRef} className="relative">
-      {/* 1. GIAO DIỆN PC & TABLET */}
-      <div className="hidden md:flex relative bg-[#f5f5f5] rounded-full items-center py-1 px-2 group transition-all duration-200">
-        <input
-          type="text"
-          value={keyword}
-          onChange={(e) => {
-            setKeyword(e.target.value);
-            if (e.target.value.length > 0) setShowDropdown(true);
-          }}
-          onFocus={() => {
-            if (keyword) setShowDropdown(true);
-          }}
-          placeholder="Nhập sản phẩm cần tìm..."
-          className="w-[300px] h-[32px] pl-6 outline-none bg-[#f5f5f5] text-black rounded-full"
-        />
-
-        {keyword.length > 0 ? (
-          <button
-            onClick={handleDeleteInput}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 cursor-pointer text-gray-500"
-          >
-            <TiDelete size={26} />
-          </button>
-        ) : (
-          <div className="w-10 h-10 flex items-center justify-center">
-            <BiSearchAlt className="mx-auto text-gray-500" size={20} />
-          </div>
-        )}
-
-        {renderSearchResults()}
-      </div>
-
-      {/* 2. GIAO DIỆN MOBILE */}
       <button
-        onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
-        className="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5"
+        type="button"
+        onClick={() => {
+          setIsSearchOpen((current) => !current);
+          if (isSearchOpen) setShowDropdown(false);
+        }}
+        aria-label={isSearchOpen ? "Đóng tìm kiếm" : "Mở tìm kiếm"}
+        aria-expanded={isSearchOpen}
+        className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-900 transition-colors hover:bg-gray-100"
       >
-        {isMobileSearchOpen ? (
-          <TiDelete size={28} className="text-gray-600" />
+        {isSearchOpen ? (
+          <TiDelete size={26} className="text-gray-600" />
         ) : (
-          <BiSearchAlt size={24} />
+          <BiSearchAlt size={22} />
         )}
       </button>
 
-      {isMobileSearchOpen && (
-        <div className="absolute top-[150%] right-[-235%] w-[100vw] sm:w-[350px] bg-white shadow-2xl border border-gray-100 rounded-lg p-3 z-50 md:hidden origin-top-right transition-all">
-          <div className="relative flex items-center bg-[#f5f5f5] rounded-full px-2">
+      {isSearchOpen && (
+        <div className="absolute right-[-44px] top-[calc(100%+14px)] z-50 w-[min(88vw,380px)] origin-top-right rounded-xl border border-gray-200 bg-white p-3 shadow-2xl sm:right-0">
+          <div className="relative flex items-center rounded-lg bg-gray-100 px-2 ring-gray-900/10 focus-within:ring-2">
             <input
               type="text"
               autoFocus
@@ -173,23 +147,25 @@ const Search = () => {
                 if (keyword) setShowDropdown(true);
               }}
               placeholder="Tìm kiếm sản phẩm..."
-              className="w-full h-[38px] pl-2 outline-none bg-transparent text-black text-sm"
+              className="h-10 w-full bg-transparent pl-2 text-sm text-gray-950 outline-none"
             />
             {keyword.length > 0 ? (
               <button
+                type="button"
                 onClick={handleDeleteInput}
-                className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-black"
+                aria-label="Xóa từ khóa tìm kiếm"
+                className="flex h-9 w-9 items-center justify-center text-gray-500 hover:text-black"
               >
                 <TiDelete size={24} />
               </button>
             ) : (
-              <div className="w-9 h-9 flex items-center justify-center ">
+              <div className="flex h-9 w-9 items-center justify-center text-gray-500">
                 <BiSearchAlt size={20} />
               </div>
             )}
           </div>
 
-          <div className="relative w-full">{renderSearchResults()}</div>
+          {renderSearchResults()}
         </div>
       )}
     </div>

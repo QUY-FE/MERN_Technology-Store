@@ -9,7 +9,7 @@ import SearchInput from "#/components/Common/SearchInput";
 import useDebounce from "#/hooks/useDebounce";
 import ReactPaginate from "react-paginate";
 
-interface User {
+interface AdminUser {
   uid: string;
   name: string;
   email: string;
@@ -19,7 +19,7 @@ interface User {
 }
 
 export default function UsersPage() {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   

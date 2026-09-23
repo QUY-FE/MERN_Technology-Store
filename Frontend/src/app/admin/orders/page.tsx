@@ -12,24 +12,7 @@ import { FaCaretLeft, FaCaretRight, FaRegEdit, FaRegEye } from "react-icons/fa";
 import { MdDeleteOutline, MdClose } from "react-icons/md";
 import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
-
-interface OrderItem {
-  product: any;
-  name?: string;
-  quantity: number;
-}
-
-interface Order {
-  _id: string;
-  username?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  status?: string;
-  totalPrice?: number;
-  createdAt?: string;
-  productPay?: OrderItem[];
-}
+import type { Order } from "#/types";
 
 export default function OrdersPage() {
   const { data: orders = [], error, isLoading } = useGetAllOrdersQuery();

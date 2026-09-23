@@ -7,8 +7,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { Save, UploadCloud, X } from "lucide-react";
-import { CreateNewsDto, useCreateNewsMutation } from "#/redux/features/newsApi";
+import { useCreateNewsMutation } from "#/redux/features/newsApi";
 import { useUploadNewsImageMutation } from "#/redux/features/uploadApi";
+import type { CreateNewsDto } from "#/types";
 
 
 

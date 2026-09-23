@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "#/context/authContext";
+import { useAuthModal } from "#/context/authModalContext";
 import { useGetOrderByEmailQuery } from "#/redux/features/ordersApi";
 import { BsArrowLeft } from "react-icons/bs";
 import Link from "next/link";
@@ -10,17 +11,33 @@ import Link from "next/link";
 export default function OrderHistoryPage() {
   const router = useRouter();
   const { user, loading } = useAuth();
+  const { openAuth } = useAuthModal();
+  const promptedRef = useRef(false);
   const emailUser = user?.email;
 
   const {
     data: orders = [],
     isLoading,
     isError,
-  } = useGetOrderByEmailQuery(emailUser!);
+  } = useGetOrderByEmailQuery(emailUser ?? "", { skip: !emailUser });
 
   useEffect(() => {
-    if (!loading && !user) router.push("/register");
-  }, [user, loading, router]);
+    if (user) promptedRef.current = false;
+    if (!loading && !user && !promptedRef.current) {
+      promptedRef.current = true;
+      openAuth("login");
+    }
+  }, [user, loading, openAuth]);
+
+  if (!loading && !user) {
+    return (
+      <section className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 text-center">
+        <h1 className="text-2xl font-bold">Lịch sử đơn hàng</h1>
+        <p className="text-gray-600">Vui lòng đăng nhập để xem đơn hàng của bạn.</p>
+        <button type="button" onClick={() => openAuth("login")} className="cst_btn-primary">Đăng nhập</button>
+      </section>
+    );
+  }
 
   if (loading || isLoading) {
     return (
@@ -97,11 +114,9 @@ export default function OrderHistoryPage() {
                   Sản phẩm đã mua
                 </p>
                 <div className="space-y-3">
-                  {order.productPay?.map((item: any, index: number) => {
-                    const productId =
-                      typeof item.product === "object"
-                        ? item.product._id
-                        : item.product;
+                  {order.productPay?.map((item, index) => {
+                    const product = item.product as string | { _id: string };
+                    const productId = typeof product === "string" ? product : product._id;
 
                     return (
                       <div

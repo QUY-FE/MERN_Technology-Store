@@ -8,6 +8,7 @@ import reviewApi  from './features/reviewsApi';
 import contactApi from './features/contactApi';
 import newsApi from './features/newsApi';
 import uploadApi from './features/uploadApi';
+import type { RootState, AppDispatch } from '#/types';
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,4 @@ export const store = configureStore({
     getDefaultMiddleware().concat(ordersApi.middleware,productApi.middleware,reviewApi.middleware,contactApi.middleware,newsApi.middleware,uploadApi.middleware),
 });
 
-// Type hỗ trợ cho useSelector / useDispatch
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type { RootState, AppDispatch };

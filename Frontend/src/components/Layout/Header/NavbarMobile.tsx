@@ -2,34 +2,33 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import { FaFacebook, FaTiktok } from "react-icons/fa";
-import { LucideIcon, LogIn, X } from "lucide-react";
+import { LogIn } from "lucide-react";
 import { useAuth } from "#/context/authContext";
-import Login from "#/components/Common/Login";
-
-interface SocialItem {
-  name: string;
-  icon: ReactNode;
-  link: string;
-}
+import { useAuthModal } from "#/context/authModalContext";
+import type { SocialItem } from "#/types";
 
 export default function NavbarMobile({
   list = [],
 }: {
-  list?: { id: number; icon: LucideIcon; name: string; href: string }[];
+  list?: { id: number; name: string; href: string }[];
 }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { openAuth } = useAuthModal();
   
   const pathname = usePathname();
   const { user } = useAuth();
 
-  // Khóa cuộn trang khi mở Menu HOẶC mở Modal
   useEffect(() => {
-    if (isOpen || isModalOpen) {
+    setIsOpen(false);
+  }, [pathname]);
+
+  // Khóa cuộn trang khi mở menu mobile.
+  useEffect(() => {
+    if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -37,11 +36,11 @@ export default function NavbarMobile({
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [isOpen, isModalOpen]);
+  }, [isOpen]);
 
   const handleOpenLoginModal = () => {
-    setIsOpen(false); // Đóng menu mobile trước
-    setIsModalOpen(true); // Mở modal đăng nhập
+    setIsOpen(false);
+    openAuth("login");
   };
 
   const socialArr: SocialItem[] = [
@@ -59,9 +58,12 @@ export default function NavbarMobile({
 
   return (
     <>
-      <nav className="w-3/12 sm:block lg:hidden h-full flex items-center">
+      <nav className="flex h-full shrink-0 items-center lg:hidden">
         <button
-          className="flex h-full items-center text-black/85"
+          type="button"
+          aria-label="Mở menu điều hướng"
+          aria-expanded={isOpen}
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-gray-900 transition-colors hover:bg-gray-100"
           onClick={() => setIsOpen(true)}
         >
           <IoIosMenu size={32} />
@@ -83,6 +85,8 @@ export default function NavbarMobile({
         >
           <div className="flex items-center justify-between h-[60px] px-4 border-b border-gray-100">
             <button
+              type="button"
+              aria-label="Đóng menu điều hướng"
               className="flex items-center text-black/85 hover:text-gray-500 transition-colors"
               onClick={() => setIsOpen(false)}
             >
@@ -108,7 +112,7 @@ export default function NavbarMobile({
             ) : (
               <button
                 onClick={handleOpenLoginModal}
-                className="flex items-center justify-center gap-2 p-2 text-primary font-semibold active:scale-95"
+                className="cst_btn-primary-icon"
               >
                 <LogIn size={20} />
                 <span className="text-sm">Đăng nhập</span>
@@ -118,22 +122,29 @@ export default function NavbarMobile({
 
           {/* Danh sách các Link */}
           <ul className="flex-1 overflow-y-auto py-4">
-            {list.map((item) => (
-              <li key={item.id}>
-                <Link
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-3 w-full pl-6 py-3 transition-colors rounded-lg ${
-                    pathname === item.href
-                      ? "text-primary bg-gray-50 font-medium"
-                      : "text-gray-600 hover:bg-gray-50"
-                  }`}
-                >
-                  <item.icon size={20} />
-                  {item.name}
-                </Link>
-              </li>
-            ))}
+            {list.map((item) => {
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
+
+              return (
+                <li key={item.id}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`mx-3 flex rounded-lg px-4 py-3 text-sm transition-colors ${
+                      isActive
+                        ? "bg-gray-100 font-semibold text-gray-950"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-950"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Footer Mobile Menu */}
@@ -171,21 +182,6 @@ export default function NavbarMobile({
         </div>
       </nav>
 
-      {/* MODAL ĐĂNG NHẬP */}
-      {isModalOpen && (
-              <div
-                onClick={() => setIsModalOpen(false)}
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-opacity"
-              >
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-transparent animate-in fade-in zoom-in duration-200"
-                >
-      
-                  <Login onClose={() => setIsModalOpen(false)} />
-                </div>
-              </div>
-            )}
     </>
   );
 }
