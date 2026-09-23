@@ -12,13 +12,13 @@ import { toast } from "react-toastify";
 import { useCreateOrderMutation } from "#/redux/features/ordersApi";
 import { RiCoupon3Line } from "react-icons/ri";
 import getImageUrl from "#/utils/getImageUrl";
-import Login from "#/components/Common/Login";
+import { useAuthModal } from "#/context/authModalContext";
 import type { CheckoutForm } from "#/types";
 
 export default function Checkout() {
   const { items, totalPrice } = useAppSelector((state) => state.cart);
   const { user } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openAuth } = useAuthModal();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [createOrder] = useCreateOrderMutation();
@@ -34,7 +34,6 @@ export default function Checkout() {
       email: user?.email || "",
       address: "",
       phone: "",
-      status: "Đang xử lý",
     },
   });
 
@@ -43,15 +42,13 @@ export default function Checkout() {
 
  
 
-  const handerHasUser = () => {
+  const onSubmit = async (data: CheckoutForm) => {
     if (!user) {
       toast.error("Bạn cần đăng nhập để đặt hàng");
-      setIsModalOpen(true);
+      openAuth("login");
       return;
     }
-  };
 
-  const onSubmit = async (data: CheckoutForm) => {
     const newOrder = {
       ...data,
       payment,
@@ -285,7 +282,13 @@ export default function Checkout() {
               Quay lại
             </button>
             <button
-              onClick={handerHasUser}
+              onClick={(event) => {
+                if (!user) {
+                  event.preventDefault();
+                  toast.error("Bạn cần đăng nhập để đặt hàng");
+                  openAuth("login");
+                }
+              }}
               className="cst_btn-primary"
               type="submit"
               disabled={isSubmitting}
@@ -296,19 +299,6 @@ export default function Checkout() {
         </div>
       </form>
 
-      {isModalOpen && (
-        <div
-          onClick={() => setIsModalOpen(false)}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-opacity"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-transparent animate-in fade-in zoom-in duration-200"
-          >
-            <Login onClose={() => setIsModalOpen(false)} />
-          </div>
-        </div>
-      )}
     </>
   );
 }

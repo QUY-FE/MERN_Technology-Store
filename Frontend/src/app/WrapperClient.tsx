@@ -3,17 +3,20 @@ import { ToastContainer } from "react-toastify";
 import Header from "#/components/Layout/Header/Header";
 import Footer from "#/components/Layout/Footer";
 import { AuthProvider } from "#/context/authContext";
+import { AuthModalProvider } from "#/context/authModalContext";
 import { Provider } from "react-redux";
 import { store } from "#/redux/store";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { loadCartFromStorage } from "#/redux/features/cartSlice";
 import { usePathname } from "next/navigation";
+import StorefrontBreadcrumbs from "#/components/Common/StorefrontBreadcrumbs";
 
 export default function WrapperClient({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     store.dispatch(loadCartFromStorage());
   }, []);
   const pathname = usePathname();
+  const isAdminPath = pathname === "/admin" || pathname.startsWith("/admin/");
   const decoration =
     pathname === "/admin" ||
     pathname === "/admin/dashboard" ||
@@ -44,11 +47,20 @@ export default function WrapperClient({ children }: { children: React.ReactNode 
         theme="light"
       />
       <Provider store={store}>
-        {decoration ? null : <Header />}
-        <div className="w-full min-h-screen">
-          <main>{children}</main>
-        </div>
-        {decoration ? null : <Footer />}
+        <AuthModalProvider>
+          {decoration ? null : <Header />}
+          <div className={`w-full min-h-screen${isAdminPath ? "" : " bg-[#F7F9FC]"}`}>
+            <main>
+              {!isAdminPath && (
+                <Suspense fallback={null}>
+                  <StorefrontBreadcrumbs />
+                </Suspense>
+              )}
+              {children}
+            </main>
+          </div>
+          {decoration ? null : <Footer />}
+        </AuthModalProvider>
       </Provider>
     </AuthProvider>
   );

@@ -4,6 +4,7 @@ import { useAuth } from "#/context/authContext";
 import { useAppDispatch } from "#/hooks/redux.hook";
 import { addToCart } from "#/redux/features/cartSlice";
 import { useParams, useRouter } from "next/navigation";
+import { useAuthModal } from "#/context/authModalContext";
 import {
   useGetAllProductQuery,
   useGetOneProductQuery,
@@ -19,6 +20,7 @@ export default function Product() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { user } = useAuth();
+  const { openAuth } = useAuthModal();
 
   const [quantity, setQuantity] = useState<number>(1);
 
@@ -48,12 +50,15 @@ export default function Product() {
 
   const handleBuyProduct = useCallback(() => {
     if (!user) {
-      router.push("/login");
+      openAuth("login", () => {
+        handleAddToCart();
+        router.push("/products/checkout");
+      });
       return;
     }
     handleAddToCart();
     router.push("/products/checkout");
-  }, [user, router, handleAddToCart]);
+  }, [user, router, handleAddToCart, openAuth]);
 
   const { related, anotherProducts } = useMemo(() => {
     if (!product || !products.length)

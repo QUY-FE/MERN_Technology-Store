@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, Info, Package, Phone } from "lucide-react";
 
 import Sales from "#/components/Common/Sales";
 import Navbar from "./Navbar";
@@ -10,26 +9,27 @@ import NavbarMobile from "./NavbarMobile";
 
 const navbarListDefault = [
   {
-    id: 4,
-    icon: Package,
+    id: 1,
+    name: "Trang chủ",
+    href: "/",
+  },
+  {
+    id: 2,
     name: "Sản phẩm",
     href: "/products",
   },
   {
-    id: 5,
-    icon: Clock,
+    id: 3,
     name: "Tin tức",
     href: "/news",
   },
   {
-    id: 2,
-    icon: Info,
+    id: 4,
     name: "Giới thiệu",
     href: "/about",
   },
   {
-    id: 3,
-    icon: Phone,
+    id: 5,
     name: "Liên hệ",
     href: "/contact",
   },
@@ -39,25 +39,25 @@ export default function Header() {
   return (
     <header id="Home" className="sticky top-0 z-[1000] bg-white">
       <Sales
-        // hasSales
+        hasSales
         totalSales={28}
         titleSales="Giảm giá cực sốc trong mùa xuân này với đồ Gaming"
       />
-      
-      <div className="sticky top-0 z-[10] border-b-2 border-gray-100 bg-white">
-        <div className="mx-auto flex h-[80px] max-w-[1200px] items-center px-2 xl:px-0">
+
+      <div className="bg-white px-2 py-2 sm:px-4 sm:py-3">
+        <div className="mx-auto flex h-[64px] max-w-[1200px] items-center gap-2 bg-white px-2 sm:h-[68px] sm:px-0 lg:gap-5">
           {/* Navbar mobile */}
           <NavbarMobile list={navbarListDefault} />
-          
+
           {/* Logo Section */}
-          <div className="flex h-full w-full max-w-[240px] items-center justify-center lg:w-auto lg:justify-start">
-            <Link href="/" className="block">
+          <div className="flex h-full min-w-0 flex-1 items-center justify-center lg:max-w-[190px] lg:flex-none lg:justify-start">
+            <Link href="/" className="block" aria-label="Về trang chủ QN Shop">
               <Image
                 src="/LOGO_qn.png"
                 alt="Logo QN Computer"
-                width={240} 
-                height={80} 
-                className="h-10 w-auto object-contain md:h-12 lg:h-14" 
+                width={240}
+                height={80}
+                className="h-9 w-auto max-w-[145px] object-contain sm:h-10 sm:max-w-[170px] lg:max-w-[190px]"
                 priority
               />
             </Link>
@@ -65,7 +65,7 @@ export default function Header() {
 
           {/* Navbar Desktop */}
           <Navbar list={navbarListDefault} />
-          
+
           {/* Action (Cart, User, etc.) */}
           <Action />
         </div>

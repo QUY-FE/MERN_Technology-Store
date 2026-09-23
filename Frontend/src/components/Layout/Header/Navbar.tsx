@@ -1,41 +1,39 @@
 "use client";
 
-import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Navbar({
   list = [],
 }: {
-  list?: { id: number; icon: LucideIcon; name: string; href: string }[];
+  list?: { id: number; name: string; href: string }[];
 }) {
   const pathname = usePathname();
-  
+
   return (
-    <nav className="hidden lg:block lg:w-6/12 h-full leading-20">
-      <ul className="flex items-center justify-center h-full gap-4">
+    <nav className="hidden h-full flex-1 lg:block">
+      <ul className="flex h-full items-center justify-center gap-1 xl:gap-3">
         {list.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive =
+            item.href === "/"
+              ? pathname === "/"
+              : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
           return (
-            <li key={item.id} className="relative">
+            <li key={item.id} className="h-full">
               <Link
                 href={item.href}
-                className={`group flex items-center justify-center gap-2 relative p-2 text-md transition-all duration-300 ease-in-out ${
-                  isActive ? "font-semibold" : "text-gray-500"
-                } hover:text-primary`}
+                aria-current={isActive ? "page" : undefined}
+                className={`group relative flex h-full items-center justify-center px-2 text-sm font-medium transition-colors duration-200 xl:px-3 xl:text-[15px] ${
+                  isActive ? "text-gray-950" : "text-gray-600 hover:text-gray-950"
+                }`}
               >
-                <span className="group-hover:scale-110 transition-transform duration-300">
-                  <item.icon size={16} />
-                </span>
                 {item.name}
-
-                {/* underline hiệu ứng mượt */}
                 <span
-                  className={`absolute bottom-0 left-0 w-full h-[3px] rounded-full bg-gradient-to-r from-primary to-secondary transform transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isActive ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
+                  className={`absolute bottom-3 left-2 right-2 h-px origin-center bg-gray-950 transition-transform duration-200 xl:left-3 xl:right-3 ${
+                    isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                   }`}
-                ></span>
+                />
               </Link>
             </li>
           );

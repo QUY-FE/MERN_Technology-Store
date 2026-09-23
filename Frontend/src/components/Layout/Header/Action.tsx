@@ -3,11 +3,11 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { CircleUserRound, ShoppingCart, User, Package, LogOut, Bell } from "lucide-react";
+import { ShoppingCart, User, Package, LogOut, Bell } from "lucide-react";
 import { useAuth } from "#/context/authContext";
 import { useAppSelector } from "#/hooks/redux.hook";
 import Search from "./Search";
-import Login from "#/components/Common/Login";
+import { useAuthModal } from "#/context/authModalContext";
 
 
 const menuItems = [
@@ -33,7 +33,7 @@ export default function Action() {
   const { user, logout } = useAuth();
   const { items } = useAppSelector((state) => state.cart);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openAuth } = useAuthModal();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -61,12 +61,13 @@ export default function Action() {
 
   return (
     <>
-      <div className="w-4/12 h-full lg:w-5/12 flex items-center justify-end gap-0.5">
+      <div className="flex h-full shrink-0 items-center justify-end gap-0.5 sm:gap-1">
         <Search />
 
         <Link
           href="/cart"
-          className="relative w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/10 transition-transform duration-300 hover:scale-110"
+          aria-label="Xem giỏ hàng"
+          className="relative flex h-10 w-10 items-center justify-center rounded-lg text-gray-900 transition-colors hover:bg-gray-100"
         >
           <ShoppingCart size={24} />
           {items.length > 0 && (
@@ -80,8 +81,10 @@ export default function Action() {
           <div ref={dropdownRef} className="relative hidden lg:flex">
             {/* Nút trigger mở dropdown */}
             <button
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="w-10 h-10 flex items-center justify-center rounded-full transition-transform duration-300 hover:scale-110 focus:outline-none"
+              onClick={() => setIsDropdownOpen((current) => !current)}
+              aria-label="Mở menu tài khoản"
+              aria-expanded={isDropdownOpen}
+              className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-gray-100 focus:outline-none"
             >
               <Image
                 src={user?.photoURL || "/default_avatar.jpg"}
@@ -136,28 +139,14 @@ export default function Action() {
         ) : (
           <button
             type="button"
-            onClick={() => setIsModalOpen(true)}
-            className="w-10 h-10 hidden lg:flex items-center justify-center rounded-full transition-transform duration-300 hover:scale-110"
+            onClick={() => openAuth("login")}
+            className="cst_btn-primary hidden lg:inline-flex"
           >
-            <CircleUserRound size={24} />
+            Đăng nhập
           </button>
         )}
       </div>
 
-      {/* Modal Đăng nhập (Giữ nguyên) */}
-      {isModalOpen && (
-        <div
-          onClick={() => setIsModalOpen(false)}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 transition-opacity"
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-transparent animate-in fade-in zoom-in duration-200"
-          >
-            <Login onClose={() => setIsModalOpen(false)} />
-          </div>
-        </div>
-      )}
     </>
   );
 }

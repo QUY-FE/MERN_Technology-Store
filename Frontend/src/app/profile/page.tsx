@@ -1,32 +1,37 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "#/context/authContext";
+import { useAuthModal } from "#/context/authModalContext";
 import Image from "next/image";
 // Import React Icons
 import { 
   FaClipboardList, 
   FaKey, 
-  FaPhoneAlt, 
   FaCamera, 
   FaSignOutAlt, 
   FaBell 
 } from "react-icons/fa";
-import { FaUserTie } from "react-icons/fa6";
 import Link from "next/link";
 import { toast } from "react-toastify";
 
 export default function ProfilePage() {
   const { user, loading, logout } = useAuth();
+  const { openAuth } = useAuthModal();
   const router = useRouter();
+  const promptedRef = useRef(false);
 
   useEffect(() => {
-    if (!loading && !user) router.push("/");
-  }, [user, loading, router]);
+    if (user) promptedRef.current = false;
+    if (!loading && !user && !promptedRef.current) {
+      promptedRef.current = true;
+      openAuth("login");
+    }
+  }, [user, loading, openAuth]);
 
   const menuItems = [
     { id: 2, href: "/orders", label: "Đơn mua", icon: <FaClipboardList />, color: "text-orange-500" },
-    { id: 3, href: "/forgot-password", label: "Đổi mật khẩu", icon: <FaKey />, color: "text-yellow-500" },
+    { id: 3, href: null, label: "Đổi mật khẩu", icon: <FaKey />, color: "text-yellow-500" },
     { id: 6, href: "/notifications", label: "Thông báo", icon: <FaBell />, color: "text-red-500" },
   ];
 
@@ -50,7 +55,13 @@ export default function ProfilePage() {
     );
   }
 
-  if (!user) return null;
+  if (!user) return (
+    <section className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 text-center">
+      <h1 className="text-2xl font-bold">Tài khoản của bạn</h1>
+      <p className="text-gray-600">Vui lòng đăng nhập để xem tài khoản của bạn.</p>
+      <button type="button" onClick={() => openAuth("login")} className="cst_btn-primary">Đăng nhập</button>
+    </section>
+  );
 
   return (
     <section className="min-h-screen w-full bg-[#f5f5f5] py-8">
@@ -78,18 +89,22 @@ export default function ProfilePage() {
           </div>
 
           <nav className="space-y-1">
-            {menuItems.map((item) => (
-              <Link
-              href={item.href}
-                key={item.id}
-                className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all group"
-              >
-                <span className={`text-lg ${item.color} group-hover:scale-110 transition-transform`}>
-                  {item.icon}
-                </span>
-                <span className="text-sm font-medium">{item.label}</span>
-              </Link>
-            ))}
+            {menuItems.map((item) => {
+              const content = (
+                <>
+                  <span className={`text-lg ${item.color} group-hover:scale-110 transition-transform`}>
+                    {item.icon}
+                  </span>
+                  <span className="text-sm font-medium">{item.label}</span>
+                </>
+              );
+              const className = "w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-all group";
+              return item.href ? (
+                <Link href={item.href} key={item.id} className={className}>{content}</Link>
+              ) : (
+                <button type="button" key={item.id} onClick={() => openAuth("forgot")} className={className}>{content}</button>
+              );
+            })}
             
             <hr className="my-4 border-gray-200" />
             

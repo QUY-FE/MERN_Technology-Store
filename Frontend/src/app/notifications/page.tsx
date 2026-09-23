@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useAuth } from "#/context/authContext"; // Giả sử path này đúng
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from "react";
+import { useAuth } from "#/context/authContext";
+import { useAuthModal } from "#/context/authModalContext";
 
 // Icons
 import {  FaBell, FaTicketAlt, FaBoxOpen, FaCheckDouble 
@@ -36,8 +36,9 @@ const initialNotifications = [
 ];
 
 export default function NotificationPage() {
-  const router = useRouter();
   const { user, loading } = useAuth();
+  const { openAuth } = useAuthModal();
+  const promptedRef = useRef(false);
   
   // State quản lý danh sách thông báo để tương tác (Đánh dấu đã đọc)
   const [notifications, setNotifications] = useState(initialNotifications);
@@ -45,8 +46,12 @@ export default function NotificationPage() {
   
 
   useEffect(() => {
-    if (!loading && !user) router.push("/login");
-  }, [user, loading, router]);
+    if (user) promptedRef.current = false;
+    if (!loading && !user && !promptedRef.current) {
+      promptedRef.current = true;
+      openAuth("login");
+    }
+  }, [user, loading, openAuth]);
 
   // Hàm xử lý "Đánh dấu đã đọc tất cả"
   const handleMarkAllRead = () => {
@@ -72,7 +77,13 @@ export default function NotificationPage() {
   };
 
   if (loading) return <div className="h-screen flex items-center justify-center">Loading...</div>;
-  if (!user) return null;
+  if (!user) return (
+    <section className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 text-center">
+      <h1 className="text-2xl font-bold">Thông báo</h1>
+      <p className="text-gray-600">Vui lòng đăng nhập để xem thông báo của bạn.</p>
+      <button type="button" onClick={() => openAuth("login")} className="cst_btn-primary">Đăng nhập</button>
+    </section>
+  );
 
   return (
     <section className="min-h-screen w-full bg-[#f5f5f5] py-8">
