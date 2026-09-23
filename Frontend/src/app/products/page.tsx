@@ -1,6 +1,7 @@
 "use client";
-import { useState, useMemo, useRef, useEffect } from "react";
+import { Suspense, useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import ReactPaginate from "react-paginate";
 
@@ -9,10 +10,14 @@ import Categories from "#/app/products/components/Categories";
 import { useGetAllProductQuery } from "#/redux/features/productApi";
 import ProductCard from "#/components/Common/ProductCard";
 import ProductsLoading from "./ProductsLoading";
+import { normalizeProductCategory, productCategoryHref } from "#/utils/productCategories";
 
 const ITEMS_PER_PAGE = 15;
 
-export default function Page() {
+function ProductsContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedCategory = normalizeProductCategory(searchParams.get("category")) ?? "all";
   const {
     data: products = [],
     isLoading,
@@ -22,7 +27,6 @@ export default function Page() {
   const listTopRef = useRef<HTMLDivElement>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState<"latest" | "popular" | "best_selling">(
     "latest",
   );
@@ -51,7 +55,10 @@ export default function Page() {
   }, [processedProducts, currentPage]);
 
   const handleCategoryChange = (categoryTitle: string) => {
-    setSelectedCategory(categoryTitle);
+    const category = normalizeProductCategory(categoryTitle);
+    router.push(category ? productCategoryHref(category) : "/products", {
+      scroll: false,
+    });
     setCurrentPage(1);
     setSortBy("latest");
     setPriceSort("default");
@@ -60,6 +67,10 @@ export default function Page() {
   const handlePaginateClick = (event: { selected: number }) => {
     setCurrentPage(event.selected + 1);
   };
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory]);
 
   useEffect(() => {
     if (listTopRef.current && currentPage > 1) {
@@ -132,7 +143,9 @@ export default function Page() {
           <div className="relative">
             <select
               value={priceSort}
-              onChange={(e) => setPriceSort(e.target.value as any)}
+              onChange={(e) =>
+                setPriceSort(e.target.value as "default" | "asc" | "desc")
+              }
               className="appearance-none bg-white border border-gray-200 text-gray-700 py-2 px-4 pr-8 rounded-md leading-tight focus:outline-none focus:ring-2 focus:ring-secondary focus:border-secondary text-sm font-medium cursor-pointer"
             >
               <option value="default">Giá: Mặc định</option>
@@ -188,5 +201,13 @@ export default function Page() {
         />
       )}
     </section>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<ProductsLoading />}>
+      <ProductsContent />
+    </Suspense>
   );
 }

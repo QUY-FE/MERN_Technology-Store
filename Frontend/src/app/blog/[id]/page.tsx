@@ -5,51 +5,15 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { BiChevronLeft, BiTag, BiUser } from "react-icons/bi";
 import { CgLock } from "react-icons/cg";
+import { blogDetailPosts } from "#/data/blogPosts";
 
-// === GIẢ LẬP DATA (Thực tế bạn nên tách file này ra folder /data riêng để import vào) ===
-const mockNewsData = [
-  {
-    id: 1,
-    slug: "danh-gia-laptop-gaming-2025",
-    imageUrl: "/laptop.jpg",
-    category: "Đánh giá",
-    title: "Top 3 Laptop Gaming đáng mua nhất 2025",
-    date: "18/11/2025",
-    author: "Admin QnShop",
-    description: "lmao",
-    // Nội dung HTML giả lập
-    content: `
-      <p>Năm 2025 đánh dấu sự bùng nổ của các dòng card đồ họa RTX 50-series, kéo theo sự nâng cấp mạnh mẽ của các dòng Laptop Gaming. Dưới đây là 3 cái tên sáng giá nhất:</p>
-      <h3>1. Asus ROG Strix G16 (2025)</h3>
-      <p>Vẫn giữ vững phong độ "quốc dân", dòng Strix năm nay nâng cấp hệ thống tản nhiệt 3 quạt cực mát...</p>
-      <h3>2. Acer Nitro 5 Tiger New Gen</h3>
-      <p>Ông vua phân khúc giá rẻ đã trở lại với diện mạo hoàn toàn mới...</p>
-      <h3>3. Lenovo Legion 5 Pro</h3>
-      <p>Không cần nói quá nhiều về Legion, màn hình 2K 240Hz chuẩn màu vẫn là điểm ăn tiền nhất...</p>
-    `,
-  },
-  {
-    id: 2,
-    slug: "thu-thuat-tang-toc-window-11",
-    imageUrl: "/laptop.jpg",
-    category: "Thủ thuật",
-    title: "5 Mẹo đơn giản giúp tăng tốc Windows 11",
-    date: "17/11/2025",
-    author: "Kỹ thuật viên",
-    description: "lmao",
-    content: `
-      <p>Windows 11 tuy đẹp nhưng khá ngốn tài nguyên. Hãy thử tắt các hiệu ứng animation không cần thiết...</p>
-    `,
-  },
-  // ... Thêm các bài khác tương tự để test
-];
 type Props = {
   params: { id: string }; // Folder tên là [id] nên ở đây phải là id
 };
 // === HÀM TẠO METADATA (SEO) ===
 // Sửa lại hàm metadata như sau:
 export async function GenerateMetadata({ params }: Props): Promise<Metadata>{
-  const post = mockNewsData.find((p) => p.slug === params.id);
+  const post = blogDetailPosts.find((p) => p.slug === params.id);
   if (!post) return { title: "Không tìm thấy bài viết" };
   return {
     title: `${post.title} | Qn Shop News`,
@@ -60,7 +24,7 @@ export async function GenerateMetadata({ params }: Props): Promise<Metadata>{
 export default function BlogDetailPage() {
   // 1. Tìm bài viết dựa trên slug trên URL
   const { id } = useParams();
-const post = mockNewsData.find((p) => p.slug === id);
+const post = blogDetailPosts.find((p) => p.slug === id);
 
   // 2. Nếu không thấy bài viết -> Chuyển hướng sang trang 404
   if (!post) {
@@ -144,7 +108,7 @@ const post = mockNewsData.find((p) => p.slug === id);
         <h3 className="text-2xl font-bold text-gray-900 mb-6">Bài viết liên quan</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
              {/* Lọc ra 3 bài khác bài hiện tại để hiển thị */}
-             {mockNewsData
+             {blogDetailPosts
                 .filter(p => p.id !== post.id)
                 .slice(0, 3)
                 .map(related => (
